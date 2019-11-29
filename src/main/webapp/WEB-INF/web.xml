@@ -1,0 +1,174 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+    <context-param>
+        <param-name>profileImgsPath</param-name>
+        <param-value>C:\Users\Bob\Desktop\ProgettoWeb\profileImgs</param-value>
+    </context-param>
+
+
+
+
+
+    <filter>
+        <filter-name>checkIfNotLogged</filter-name>
+        <filter-class>Filters.checkIfNotLogged</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>checkIfAlreadyLogged</filter-name>
+        <filter-class>Filters.checkIfAlreadyLogged</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>checkIfDoctor</filter-name>
+        <filter-class>Filters.checkIfDoctor</filter-class>
+    </filter>
+
+
+
+
+
+    <filter-mapping>
+        <filter-name>checkIfAlreadyLogged</filter-name>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/userPage</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/logoutServlet</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfAlreadyLogged</filter-name>
+        <url-pattern>/loginServlet</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/doctorPage</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/doctorPage</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/changeDoctorServlet</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/changeProfileImgServlet</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/profileImage/*</url-pattern>
+    </filter-mapping>
+
+
+
+
+
+
+
+
+
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>Servlets.loginServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>loginPage</servlet-name>
+        <jsp-file>/login.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>userPage</servlet-name>
+        <jsp-file>/userPage.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>logoutServlet</servlet-name>
+        <servlet-class>Servlets.logoutServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>doctorPage</servlet-name>
+        <jsp-file>/doctorPage.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>changeDoctorServlet</servlet-name>
+        <servlet-class>Servlets.changeDoctorServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>changeProfileImgServlet</servlet-name>
+        <servlet-class>Servlets.changeProfileImgServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>profileImage</servlet-name>
+        <servlet-class>Servlets.profileImage</servlet-class>
+    </servlet>
+
+
+
+
+
+
+
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/loginServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>loginPage</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>userPage</servlet-name>
+        <url-pattern>/userPage</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>logoutServlet</servlet-name>
+        <url-pattern>/logoutServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>doctorPage</servlet-name>
+        <url-pattern>/doctorPage</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>changeDoctorServlet</servlet-name>
+        <url-pattern>/changeDoctorServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>changeProfileImgServlet</servlet-name>
+        <url-pattern>/changeProfileImgServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>profileImage</servlet-name>
+        <url-pattern>/profileImage/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>

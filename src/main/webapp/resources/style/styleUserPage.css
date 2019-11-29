@@ -1,0 +1,207 @@
+html {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.row {
+    margin: 0;
+    padding: 0;
+    height: max-content;
+}
+#navBar {
+    height: max-content;
+    z-index: 997;
+}
+#openSidebar {
+    width: max-content;
+    cursor: pointer;
+    margin-right: 1em;
+    transition: all 0.3s;
+}
+#openSidebar:focus {
+    box-shadow: 0 0;
+    background-color: #138496;
+}
+#overlay {
+    top: 0;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+#overlay.active {
+    display: block;
+    opacity: 1;
+}
+#sidebar {
+    width: 400px;
+    position: fixed;
+    top: 0;
+    left: -400px;
+    height: 100%;
+    z-index: 999;
+    background: #138496;
+    color: white;
+    transition: all 0.3s;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+#sidebar.active {
+    left: 0;
+}
+#dismiss {
+    width: max-content;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 0;
+    z-index: 1002;
+}
+.sidebarButton {
+    background: #17a2b8;
+}
+.sidebarButton:hover {
+    background: #fff;
+    color: #138496;
+}
+#openSidebarButtonText {
+    transition: all 0.3s;
+}
+#profileImage {
+    z-index: 1001;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 3px solid white;
+    user-select: none;
+    margin-bottom: 1em;
+}
+.sidebarTitle {
+    margin-bottom: 1em;
+}
+.InfoTableRow {
+    width: 100%;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+.InfoTableRow:nth-child(odd) {
+    background-color: #17a2b8;
+}
+.InfoTableCol:first-child {
+    text-align: right;
+    font-weight: bold;
+}
+#userInfoTable {
+    margin-bottom: 3em;
+}
+#doctorInfoTable {
+    margin-bottom: 0.5em;
+}
+#mainPagePC {
+    background-color: #f8f9fa;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+}
+.testoIncavato {
+    font-size: 6em;
+    height: 6em;
+    background-color: #565656;
+    color: transparent;
+    text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+    -webkit-background-clip: text;
+    user-select: none;
+}
+#rowChangeMedicoDiBase {
+    position: relative;
+    width: 200%;
+    left: 0;
+    transition: all 0.2s;
+    height: max-content;
+    margin-bottom: 2em;
+}
+#rowChangeMedicoDiBase.active {
+    left: -100%;
+}
+#formChangeMedicoDiBase {
+    display: inline-flex;
+    width: max-content;
+}
+#dismissChangeMedicoDiBase {
+    height: max-content;
+}
+#confirmChangeMedicoDiBase {
+    height: max-content;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+#divChangeMedicoDiBase {
+    display: inline-flex;
+    height: max-content;
+    width: 100%;
+}
+#rowChangeProfileImg {
+    position: relative;
+    width: 200%;
+    left: 0;
+    transition: all 0.2s;
+    height: max-content;
+    margin-bottom: 3em;
+}
+#rowChangeProfileImg.active {
+    left: -100%;
+}
+#formChangeProfileImg {
+    display: inline-flex;
+    width: max-content;
+}
+#dismissChangeProfileImg {
+    height: max-content;
+}
+#confirmChangeProfileImg {
+    height: max-content;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+#divChangeProfileImg {
+    display: inline-flex;
+    height: max-content;
+    width: 100%;
+}
+@media screen and (max-width: 575px) {
+    #navBar {
+        z-index: 1000;
+    }
+    #sidebar {
+        width: 100%;
+        position: fixed;
+        top: -100%;
+        left: 0;
+        z-index: 999;
+    }
+    #sidebar.active {
+        top: 0;
+        left: 0;
+    }
+    #dismiss {
+        visibility: hidden;
+    }
+    #rowChangeProfileImg {
+        margin-bottom: 5vh;
+    }
+}
