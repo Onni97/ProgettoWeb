@@ -120,12 +120,12 @@ body {
 }
 .testoIncavato {
     font-size: 6em;
-    height: 6em;
     background-color: #565656;
     color: transparent;
     text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
     -webkit-background-clip: text;
     user-select: none;
+    line-height: unset;
 }
 #rowChangeMedicoDiBase {
     position: relative;

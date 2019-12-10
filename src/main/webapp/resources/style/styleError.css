@@ -1,0 +1,45 @@
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #f8f9fa;
+    margin: 0;
+    text-align: center;
+}
+
+.testoIncavato {
+    background-color: #565656;
+    color: transparent;
+    text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+    -webkit-background-clip: text;
+    user-select: none;
+    margin-bottom: 0;
+    line-height: unset;
+}
+h1 {
+    font-size: 5em;
+}
+h2 {
+    font-size: 3em;
+}
+
+.row {
+    height: 80%;
+    width: 100%;
+}
+
+.opsContainer{
+    height: max-content;
+    width: max-content;
+}
+
+.col {
+    width: 100%;
+    height: max-content;
+}

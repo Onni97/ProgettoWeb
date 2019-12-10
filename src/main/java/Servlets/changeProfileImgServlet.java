@@ -28,7 +28,7 @@ public class changeProfileImgServlet extends javax.servlet.http.HttpServlet {
         String fileName = getFileName(filePart);
         assert fileName != null;
         String[] fileNameParts = fileName.split("\\.");
-        String fileFormat = fileNameParts[1];
+        String fileFormat = fileNameParts[fileNameParts.length - 1];
 
         String path = getServletContext().getInitParameter("profileImgsPath") + "\\";
 

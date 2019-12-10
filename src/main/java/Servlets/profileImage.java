@@ -10,19 +10,18 @@ import java.net.URLDecoder;
 public class profileImage extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String requestedFile = req.getPathInfo();
+        String requestedFile = req.getPathInfo().substring(1);
         String path = getServletContext().getInitParameter("profileImgsPath");
-        //File file = new File(path, URLDecoder.decode(requestedFile, "UTF-8"));
 
         resp.setContentType("image/jpeg");
         ServletOutputStream out = resp.getOutputStream();
         FileInputStream fin = new FileInputStream(path + "\\" + requestedFile);
+        System.out.println(path + "\\" + requestedFile);
 
         BufferedInputStream bin = new BufferedInputStream(fin);
         BufferedOutputStream bout = new BufferedOutputStream(out);
-        int ch =0; ;
-        while((ch=bin.read())!=-1)
-        {
+        int ch = 0;
+        while ((ch = bin.read()) != -1) {
             bout.write(ch);
         }
 
@@ -30,5 +29,7 @@ public class profileImage extends javax.servlet.http.HttpServlet {
         fin.close();
         bout.close();
         out.close();
+        
+
     }
 }

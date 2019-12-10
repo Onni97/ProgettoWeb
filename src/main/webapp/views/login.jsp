@@ -35,7 +35,7 @@
                         Codice Fiscale
                     </td>
                     <td>
-                        <label><input type="text" name="codiceFiscale" placeholder="ABCDFG12H34I567J" /></label>
+                        <label><input type="text" name="codiceFiscale" /></label>
                     </td>
                 </tr>
                 <tr>

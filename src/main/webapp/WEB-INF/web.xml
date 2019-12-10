@@ -92,12 +92,12 @@
 
     <servlet>
         <servlet-name>loginPage</servlet-name>
-        <jsp-file>/login.jsp</jsp-file>
+        <jsp-file>/views/login.jsp</jsp-file>
     </servlet>
 
     <servlet>
         <servlet-name>userPage</servlet-name>
-        <jsp-file>/userPage.jsp</jsp-file>
+        <jsp-file>/views/userPage.jsp</jsp-file>
     </servlet>
 
     <servlet>
@@ -107,7 +107,7 @@
 
     <servlet>
         <servlet-name>doctorPage</servlet-name>
-        <jsp-file>/doctorPage.jsp</jsp-file>
+        <jsp-file>/views/doctorPage.jsp</jsp-file>
     </servlet>
 
     <servlet>
@@ -170,5 +170,27 @@
         <servlet-name>profileImage</servlet-name>
         <url-pattern>/profileImage/*</url-pattern>
     </servlet-mapping>
+
+
+
+
+
+
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/views/notFoundError.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.io.FileNotFoundException</exception-type>
+        <location>/views/notFoundError.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/views/serverError.jsp</location>
+    </error-page>
+
+
 
 </web-app>

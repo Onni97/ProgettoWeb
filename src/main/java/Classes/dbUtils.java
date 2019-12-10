@@ -2,7 +2,6 @@ package Classes;
 
 import Beans.userBean;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -261,7 +260,4 @@ public class dbUtils {
         }
         return status;
     }
-
-
-
 }
