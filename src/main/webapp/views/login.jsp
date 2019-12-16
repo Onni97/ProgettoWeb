@@ -69,6 +69,12 @@
                     <strong>Errore!</strong> Login errato
                 </div>
             </c:if>
+            <c:if test="${param.error == -3}">
+                <div class="alert alert-danger alert-dismissible text-left">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Errore!</strong> Non riesco a connettermi al db
+                </div>
+            </c:if>
         </c:if>
     </div>
 </div>

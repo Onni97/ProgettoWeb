@@ -1,4 +1,4 @@
-package Filters;
+package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "loggedFilter")
+
 public class checkIfNotLogged implements Filter {
     public void destroy() {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpSession session = ((HttpServletRequest)req).getSession();
-        if(session.getAttribute("user") == null ) {
+        if(session.getAttribute("codiceFiscale") == null ) {
             System.out.println("FILTERED: not logged");
             ServletContext sc = req.getServletContext();
             String contextPath = sc.getContextPath();

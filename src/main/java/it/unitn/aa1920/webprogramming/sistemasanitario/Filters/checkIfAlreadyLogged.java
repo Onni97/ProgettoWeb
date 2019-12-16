@@ -1,4 +1,4 @@
-package Filters;
+package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "alreadyLoggedFilter")
+
 public class checkIfAlreadyLogged implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
@@ -18,7 +18,7 @@ public class checkIfAlreadyLogged implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest)req).getSession();
 
-        if(session.getAttribute("user") != null ) {
+        if(session.getAttribute("codiceFiscale") != null ) {
             System.out.println("FILTERED: already logged");
             ServletContext sc = req.getServletContext();
             String contextPath = sc.getContextPath();

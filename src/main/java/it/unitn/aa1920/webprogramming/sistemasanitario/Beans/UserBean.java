@@ -1,8 +1,8 @@
-package Beans;
+package it.unitn.aa1920.webprogramming.sistemasanitario.Beans;
 
 import java.util.Date;
 
-public class userBean {
+public class UserBean {
     private String codiceFiscale;
     private String nome;
     private String cognome;

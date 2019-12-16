@@ -2,7 +2,7 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <display-name>Archetype Created Web Application</display-name>
 
     <context-param>
@@ -10,24 +10,58 @@
         <param-value>C:\Users\Bob\Desktop\ProgettoWeb\profileImgs</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>dburl</param-name>
+        <param-value>jdbc:mysql://localhost:3306/sistemasanitario</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbuser</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbpassword</param-name>
+        <param-value/>
+    </context-param>
+
+
+
+
+
+
+
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>it.unitn.aa1920.webprogramming.sistemasanitario.Listeners.WebAppContextListener</listener-class>
+    </listener>
+
+
+
+
 
 
 
 
     <filter>
         <filter-name>checkIfNotLogged</filter-name>
-        <filter-class>Filters.checkIfNotLogged</filter-class>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.checkIfNotLogged</filter-class>
     </filter>
 
     <filter>
         <filter-name>checkIfAlreadyLogged</filter-name>
-        <filter-class>Filters.checkIfAlreadyLogged</filter-class>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.checkIfAlreadyLogged</filter-class>
     </filter>
 
     <filter>
         <filter-name>checkIfDoctor</filter-name>
-        <filter-class>Filters.checkIfDoctor</filter-class>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.checkIfDoctor</filter-class>
     </filter>
+
+    <filter>
+        <filter-name>fillUserData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillUserData</filter-class>
+    </filter>
+
+
 
 
 
@@ -40,6 +74,10 @@
 
     <filter-mapping>
         <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/userPage</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillUserData</filter-name>
         <url-pattern>/userPage</url-pattern>
     </filter-mapping>
 
@@ -87,7 +125,7 @@
 
     <servlet>
         <servlet-name>loginServlet</servlet-name>
-        <servlet-class>Servlets.loginServlet</servlet-class>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.loginServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -102,7 +140,7 @@
 
     <servlet>
         <servlet-name>logoutServlet</servlet-name>
-        <servlet-class>Servlets.logoutServlet</servlet-class>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.logoutServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -112,17 +150,17 @@
 
     <servlet>
         <servlet-name>changeDoctorServlet</servlet-name>
-        <servlet-class>Servlets.changeDoctorServlet</servlet-class>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.changeDoctorServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>changeProfileImgServlet</servlet-name>
-        <servlet-class>Servlets.changeProfileImgServlet</servlet-class>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.changeProfileImgServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>profileImage</servlet-name>
-        <servlet-class>Servlets.profileImage</servlet-class>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.profileImage</servlet-class>
     </servlet>
 
 

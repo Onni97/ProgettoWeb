@@ -1,6 +1,6 @@
-package Classes;
+package it.unitn.aa1920.webprogramming.sistemasanitario.Classes;
 
-import Beans.userBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,7 +50,7 @@ public class dbUtils {
      * @param user userBean dell'utente da "riempire"
      * @return status, -1 se non esiste il codice fiscale nel db, 0 se va tutto bene, -2 se non ci si riesce a connettere al db
      */
-    public static int getUserData(String codiceFiscale, userBean user) {
+    public static int getUserData(String codiceFiscale, UserBean user) {
         int status = 0;
         Statement statement;
         String query = "select * from " +
@@ -102,7 +102,7 @@ public class dbUtils {
      * @param doctor userBean del medico da "riempire"
      * @return status, -1 se non esiste il codice medico nel db, 0 se va tutto bene, -2 se non ci si riesce a connettere al db
      */
-    public static int getDoctorData(int codiceMedico, userBean doctor) {
+    public static int getDoctorData(int codiceMedico, UserBean doctor) {
         //prendo il codice fiscale del medico con questo codice medico
         int status = 0;
         Statement statement;

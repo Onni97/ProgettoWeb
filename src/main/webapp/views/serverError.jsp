@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col opsContainer container-fluid my-auto mx-auto">
             <h1 class="testoIncavato">OPS! :(</h1>
-            <h2 class="testoIncavato">Error 500 - C'è stato un errore sul server :(</h2>
+            <h2 class="testoIncavato">Error 500 - C'è stato un errore sul server</h2>
         </div>
     </div>
 </body>

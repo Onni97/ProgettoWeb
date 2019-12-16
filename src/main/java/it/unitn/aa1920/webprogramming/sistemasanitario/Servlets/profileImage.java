@@ -1,11 +1,10 @@
-package Servlets;
+package it.unitn.aa1920.webprogramming.sistemasanitario.Servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLDecoder;
 
 public class profileImage extends javax.servlet.http.HttpServlet {
     @Override
@@ -16,7 +15,6 @@ public class profileImage extends javax.servlet.http.HttpServlet {
         resp.setContentType("image/jpeg");
         ServletOutputStream out = resp.getOutputStream();
         FileInputStream fin = new FileInputStream(path + "\\" + requestedFile);
-        System.out.println(path + "\\" + requestedFile);
 
         BufferedInputStream bin = new BufferedInputStream(fin);
         BufferedOutputStream bout = new BufferedOutputStream(out);

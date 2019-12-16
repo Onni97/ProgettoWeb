@@ -1,6 +1,5 @@
-<jsp:useBean id="user" scope="session" class="Beans.userBean"/>
-<jsp:useBean id="usersDoctor" scope="session" class="Beans.userBean"/>
-<jsp:useBean id="listaMediciDellaProvincia" scope="session" class="Beans.listaMediciBean"/>
+<jsp:useBean id="user" scope="request" class="it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean"/>
+<jsp:useBean id="usersDoctor" scope="request" class="it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
@@ -144,13 +143,13 @@
                 Sesso
             </div>
             <div class="col-7 InfoTableCol my-auto">
-                <c:if test="${sessionScope.user.sesso == '1'}">
+                <c:if test="${requestScope.user.sesso == '1'}">
                     <c:out value="M" />
                 </c:if>
-                <c:if test="${sessionScope.user.sesso == 2}">
+                <c:if test="${requestScope.user.sesso == 2}">
                     <c:out value="F" />
                 </c:if>
-                <c:if test="${sessionScope.user.sesso == 3}">
+                <c:if test="${requestScope.user.sesso == 3}">
                     <c:out value="Altro" />
                 </c:if>
             </div>
@@ -226,8 +225,8 @@
                 <form id="formChangeMedicoDiBase" class="my-auto" method="post" action="changeDoctorServlet">
                     <label class="my-auto">
                         <select name="newDoctor" class="form-control">
-                            <c:forEach items="${sessionScope.listaMediciDellaProvincia.listaMedici}" var="medico">
-                                <c:if test="${sessionScope.user.medicoDiBase != medico.codiceMedico}">
+                            <c:forEach items="${requestScope.listaMediciDellaProvincia}" var="medico">
+                                <c:if test="${requestScope.user.medicoDiBase != medico.codiceMedico}">
                                     <option>
                                         <c:out value="${medico.codiceMedico}"/> - <c:out value="${medico.nome}"/> <c:out value="${medico.cognome}"/>
                                     </option>
@@ -281,8 +280,8 @@
         $('#dismiss, #overlay').on('click', function () {
             $('#sidebar').removeClass('active');
             $('#overlay').removeClass('active');
-            document.getElementById("openSidebarButtonText").innerHTML = "<c:out value="${sessionScope.user.nome}"/>" + " "
-                + "<c:out value="${sessionScope.user.cognome}"/>";
+            document.getElementById("openSidebarButtonText").innerHTML = "<c:out value="${requestScope.user.nome}"/>" + " "
+                + "<c:out value="${requestScope.user.cognome}"/>";
             opened = false;
             setTimeout(function(){ $('#rowChangeMedicoDiBase').removeClass('active');}, 300);
             setTimeout(function(){ $('#rowChangeProfileImg').removeClass('active');}, 300);
@@ -291,8 +290,8 @@
             if (opened) {
                 $('#sidebar').removeClass('active');
                 $('#overlay').removeClass('active');
-                document.getElementById("openSidebarButtonText").innerHTML = "<c:out value="${sessionScope.user.nome}"/>" + " "
-                    + "<c:out value="${sessionScope.user.cognome}"/>";
+                document.getElementById("openSidebarButtonText").innerHTML = "<c:out value="${requestScope.user.nome}"/>" + " "
+                    + "<c:out value="${requestScope.user.cognome}"/>";
                 opened = false;
                 setTimeout(function(){ $('#rowChangeMedicoDiBase').removeClass('active');}, 300);
                 setTimeout(function(){ $('#rowChangeProfileImg').removeClass('active');}, 300);

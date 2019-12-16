@@ -1,4 +1,4 @@
-package Servlets;
+package it.unitn.aa1920.webprogramming.sistemasanitario.Servlets;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
