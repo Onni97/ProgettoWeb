@@ -34,7 +34,7 @@ public class JDBCUserDAO extends JDBCDAO<UserBean, String> implements UserDAO {
                 user.setProvincia(result.getString("provincia"));
 
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
-                int codiceMedico = doctorDAO.getCodiceMedico(codiceFiscale);
+                int codiceMedico = doctorDAO.getDoctorCode(codiceFiscale);
                 if (codiceMedico != -1) {
                     user.setIsDoctor(true);
                     user.setCodiceMedico(codiceMedico);

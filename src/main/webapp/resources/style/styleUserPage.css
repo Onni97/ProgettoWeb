@@ -3,30 +3,37 @@ html {
     margin: 0;
     padding: 0;
 }
+
 body {
     height: 100vh;
     margin: 0;
     padding: 0;
+    top: 0;
 }
+
 .row {
     margin: 0;
     padding: 0;
     height: max-content;
 }
+
 #navBar {
     height: max-content;
     z-index: 997;
 }
+
 #openSidebar {
     width: max-content;
     cursor: pointer;
     margin-right: 1em;
     transition: all 0.3s;
 }
+
 #openSidebar:focus {
     box-shadow: 0 0;
     background-color: #138496;
 }
+
 #overlay {
     top: 0;
     display: none;
@@ -38,10 +45,12 @@ body {
     opacity: 0;
     transition: all 0.5s ease-in-out;
 }
+
 #overlay.active {
     display: block;
     opacity: 1;
 }
+
 #sidebar {
     width: 400px;
     position: fixed;
@@ -58,9 +67,11 @@ body {
     padding-top: 5vh;
     padding-bottom: 5vh;
 }
+
 #sidebar.active {
     left: 0;
 }
+
 #dismiss {
     width: max-content;
     cursor: pointer;
@@ -70,16 +81,20 @@ body {
     border: 0;
     z-index: 1002;
 }
+
 .sidebarButton {
     background: #17a2b8;
 }
+
 .sidebarButton:hover {
     background: #fff;
     color: #138496;
 }
+
 #openSidebarButtonText {
     transition: all 0.3s;
 }
+
 #profileImage {
     z-index: 1001;
     width: 150px;
@@ -91,42 +106,44 @@ body {
     user-select: none;
     margin-bottom: 1em;
 }
+
 .sidebarTitle {
     margin-bottom: 1em;
 }
+
 .InfoTableRow {
     width: 100%;
     padding-top: 0.3em;
     padding-bottom: 0.3em;
 }
+
 .InfoTableRow:nth-child(odd) {
     background-color: #17a2b8;
 }
+
 .InfoTableCol:first-child {
     text-align: right;
     font-weight: bold;
 }
+
 #userInfoTable {
     margin-bottom: 3em;
 }
+
 #doctorInfoTable {
     margin-bottom: 0.5em;
 }
-#mainPagePC {
-    background-color: #f8f9fa;
-    height: 100vh;
-    width: 100%;
-    text-align: center;
-}
+
 .testoIncavato {
     font-size: 6em;
     background-color: #565656;
     color: transparent;
-    text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
     -webkit-background-clip: text;
     user-select: none;
     line-height: unset;
 }
+
 #rowChangeMedicoDiBase {
     position: relative;
     width: 200%;
@@ -135,58 +152,166 @@ body {
     height: max-content;
     margin-bottom: 2em;
 }
+
 #rowChangeMedicoDiBase.active {
     left: -100%;
 }
+
 #formChangeMedicoDiBase {
     display: inline-flex;
     width: max-content;
 }
+
 #dismissChangeMedicoDiBase {
     height: max-content;
 }
+
 #confirmChangeMedicoDiBase {
     height: max-content;
     margin-right: 0.5em;
     margin-left: 0.5em;
 }
+
 #divChangeMedicoDiBase {
     display: inline-flex;
     height: max-content;
     width: 100%;
 }
+
 #rowChangeProfileImg {
     position: relative;
     width: 200%;
     left: 0;
     transition: all 0.2s;
     height: max-content;
-    margin-bottom: 3em;
+    margin-bottom: 2em;
 }
+
 #rowChangeProfileImg.active {
     left: -100%;
 }
+
 #formChangeProfileImg {
     display: inline-flex;
     width: max-content;
 }
+
 #dismissChangeProfileImg {
     height: max-content;
 }
+
 #confirmChangeProfileImg {
     height: max-content;
     margin-right: 0.5em;
     margin-left: 0.5em;
 }
+
 #divChangeProfileImg {
     display: inline-flex;
     height: max-content;
     width: 100%;
 }
+
+/* MAIN PAGE */
+
+#mainPagePC {
+    background-color: #f8f9fa;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+}
+
+#mainHeader {
+    padding: 1em 2em;
+    background-color: lightgray;
+}
+
+#mainContent {
+    overflow-y: hidden;
+    padding-right: 2em;
+    padding-left: 2em;
+}
+
+#mainContent .col {
+    height: inherit;
+    overflow-y: auto;
+    padding-top: 2em;
+    padding-right: 1em;
+    padding-left: 1em;
+    display: flex;
+}
+
+.visita {
+    position: relative;
+    background-color: white;
+    cursor: pointer;
+    width: 90%;
+    border-radius: 0.3rem;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    height: max-content;
+    padding-bottom: 0.5em;
+}
+
+.visita a {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 50;
+}
+
+.visita:hover {
+    box-shadow: 0 7px 6px -3px rgba(0, 0, 0, 0.2), 0 9px 12px 2px rgba(0, 0, 0, 0.14), 0 4px 17px 3px rgba(0, 0, 0, 0.12);
+}
+
+.visitaInfo {
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+}
+
+.visitaResoconto {
+    position: relative;
+    overflow-y: hidden;
+    max-height: 7.5em;
+    z-index: 48;
+}
+
+.visitaResoconto span {
+    height: 7.5em;
+    max-height: 7.5em;
+}
+
+.sfumatura {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    background-image: linear-gradient(to bottom, transparent, white);
+    z-index: 49;
+}
+
+.altro {
+    color: #17a2b8;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+/* MODAL */
+
+.modal-dialog {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
 @media screen and (max-width: 575px) {
     #navBar {
         z-index: 1000;
     }
+
     #sidebar {
         width: 100%;
         position: fixed;
@@ -194,13 +319,16 @@ body {
         left: 0;
         z-index: 999;
     }
+
     #sidebar.active {
         top: 0;
         left: 0;
     }
+
     #dismiss {
         visibility: hidden;
     }
+
     #rowChangeProfileImg {
         margin-bottom: 5vh;
     }

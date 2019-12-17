@@ -14,7 +14,7 @@ public class JDBCDoctorDAO extends JDBCDAO<UserBean, Integer> implements DoctorD
     }
 
     @Override
-    public int getCodiceMedico(String codiceFiscale) throws DAOException {
+    public int getDoctorCode(String codiceFiscale) throws DAOException {
         String query = "select codiceMedico from medicidibase where codiceFiscale = '" + codiceFiscale + "'";
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             ResultSet result = statement.executeQuery(query);
@@ -56,7 +56,7 @@ public class JDBCDoctorDAO extends JDBCDAO<UserBean, Integer> implements DoctorD
     public UserBean getByPrimaryKey(Integer codiceMedico) throws DAOException {
         String query = "select utenti.codiceFiscale from " +
                 "utenti, medicidibase " +
-                "where utenti.codiceFiscale = medicidibase.codiceFiscale and medicidibase.codiceMedico = '" + codiceMedico + "'";
+                "where utenti.codiceFiscale = medicidibase.codiceFiscale and medicidibase.codiceMedico = " + codiceMedico;
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             ResultSet result = statement.executeQuery(query);
             if( !result.next() ) {
@@ -65,8 +65,7 @@ public class JDBCDoctorDAO extends JDBCDAO<UserBean, Integer> implements DoctorD
                 return doctor;
             } else {
                 JDBCUserDAO userDAO = new JDBCUserDAO(CON);
-                UserBean doctor = userDAO.getByPrimaryKey(result.getString("codiceFiscale"));
-                return doctor;
+                return userDAO.getByPrimaryKey(result.getString("codiceFiscale"));
             }
         } catch (SQLException ex) {
             throw new DAOException("Error", ex);

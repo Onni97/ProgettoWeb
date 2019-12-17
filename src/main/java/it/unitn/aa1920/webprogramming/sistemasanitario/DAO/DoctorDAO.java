@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DoctorDAO extends DAO<UserBean, Integer> {
 
-    int getCodiceMedico(String codiceFiscale) throws DAOException;
+    int getDoctorCode(String codiceFiscale) throws DAOException;
     List<UserBean> getListaMediciPerProfincia(String provincia) throws DAOException;
 
 }
