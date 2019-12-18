@@ -30,7 +30,9 @@ public class JDBCVisitDAO extends JDBCDAO<VisitBean, Integer> implements VisitDA
                 visita.setCodice(result.getInt("codice"));
                 visita.setData(result.getDate("data"));
                 visita.setResoconto(result.getString("resoconto"));
-                visita.setUtente(codiceFiscale);
+
+                JDBCUserDAO userDAO = new JDBCUserDAO(CON);
+                visita.setUtente(userDAO.getByPrimaryKey(result.getString("utente")));
 
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
                 visita.setMedicoDiBase(doctorDAO.getByPrimaryKey(result.getInt("codiceMedicoDiBase")));
@@ -56,7 +58,8 @@ public class JDBCVisitDAO extends JDBCDAO<VisitBean, Integer> implements VisitDA
                 visita.setCodice(result.getInt("codice"));
                 visita.setData(result.getDate("data"));
                 visita.setResoconto(result.getString("resoconto"));
-                visita.setUtente(result.getString("utente"));
+                JDBCUserDAO userDAO = new JDBCUserDAO(CON);
+                visita.setUtente(userDAO.getByPrimaryKey(result.getString("utente")));
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
                 visita.setMedicoDiBase(doctorDAO.getByPrimaryKey(result.getInt("codiceMedicoDiBase")));
             }

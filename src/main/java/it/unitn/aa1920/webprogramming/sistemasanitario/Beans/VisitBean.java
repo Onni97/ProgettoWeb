@@ -6,7 +6,7 @@ public class VisitBean {
     private int codice;
     private Date data;
     private String resoconto;
-    private String utente;
+    private UserBean utente;
     private UserBean medicoDiBase;
 
     public int getCodice() {
@@ -33,11 +33,11 @@ public class VisitBean {
         this.resoconto = resoconto;
     }
 
-    public String getUtente() {
+    public UserBean getUtente() {
         return utente;
     }
 
-    public void setUtente(String utente) {
+    public void setUtente(UserBean utente) {
         this.utente = utente;
     }
 
