@@ -222,8 +222,11 @@ body {
 }
 
 #mainHeader {
+    position: relative;
+    z-index: 51;
     padding: 1em 2em;
     background-color: lightgray;
+    box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.14), 0 2px 15px 0 rgba(0, 0, 0, 0.12);
 }
 
 #mainContent {
@@ -246,6 +249,7 @@ body {
 }
 
 .visita {
+    z-index: 47;
     margin: 0 auto 2em;
     position: relative;
     top: 0;
@@ -262,16 +266,6 @@ body {
     padding-bottom: 0.5em;
 }
 
-.visita a {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 50;
-}
-
 .visita:hover {
     box-shadow: 0 7px 6px -3px rgba(0, 0, 0, 0.2), 0 9px 12px 2px rgba(0, 0, 0, 0.14), 0 4px 17px 3px rgba(0, 0, 0, 0.12);
 }
@@ -279,6 +273,10 @@ body {
 .visitaInfo {
     width: 100%;
     border-bottom: 1px solid lightgray;
+}
+
+.dataVisita {
+    text-align: left;
 }
 
 .visitaResoconto {
@@ -312,8 +310,29 @@ body {
 
 /* MODAL */
 
+.modal-header {
+    display: block;
+}
+
 .modal-dialog {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+#modalTitle1 {
+    margin: 0 auto;
+    width: max-content;
+}
+
+#modalTitle2 {
+    margin: 0 auto;
+    width: max-content;
+}
+
+#modalFooter {
+    width: max-content;
+    margin-right: 0;
+    font-size: 0.8em;
+    color: gray();
 }
 
 @media screen and (max-width: 575px) {
