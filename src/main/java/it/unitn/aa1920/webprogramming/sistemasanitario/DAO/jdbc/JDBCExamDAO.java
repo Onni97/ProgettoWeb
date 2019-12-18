@@ -17,8 +17,8 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
     @Override
     public List<ExamBean> getExamsOfUser(String codiceFiscale) throws DAOException {
         String query = "select * " +
-                "from esami " +
-                "where utente = '" + codiceFiscale + "'";
+                "from esami, visite " +
+                "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "'";
         try (PreparedStatement statement = CON.prepareStatement(query)){
             List<ExamBean> listaEsami = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
@@ -30,6 +30,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
+                listaEsami.add(esame);
             }
             return listaEsami;
         } catch (SQLException ex) {
@@ -39,7 +40,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
 
     @Override
     public ExamBean getByPrimaryKey(Integer codiceEsame) throws DAOException {
-        String query = "select * from" +
+        String query = "select * from " +
                 "esami " +
                 "where codice =" + codiceEsame;
         try (PreparedStatement stmt = CON.prepareStatement(query)){

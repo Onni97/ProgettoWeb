@@ -1,6 +1,10 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Servlets;
 
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.ExamBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.RecipeBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.ExamDAO;
+import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.RecipeDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.UserDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOFactoryException;
@@ -11,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 
 public class loginServlet extends javax.servlet.http.HttpServlet {
@@ -23,6 +28,8 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
     }
 
     private UserDAO userDAO;
+    private ExamDAO examDAO;
+    private RecipeDAO recipeDAO;
 
     @Override
     public void init() throws ServletException {
@@ -32,6 +39,8 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         }
 
         try {
+            examDAO = daoFactory.getDAO(ExamDAO.class);
+            recipeDAO = daoFactory.getDAO(RecipeDAO.class);
             userDAO = daoFactory.getDAO(UserDAO.class);
         } catch (DAOFactoryException e) {
             e.printStackTrace();
@@ -40,11 +49,38 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         HttpSession session = req.getSession(true);
         String codiceFiscale = req.getParameter("codiceFiscale");
         String password = req.getParameter("password");
         String userLogin = req.getParameter("user");
+
+        //test
+        System.out.println("INIZIO TEST");
+        try {
+            List<ExamBean> esami = examDAO.getExamsOfUser(codiceFiscale);
+            for (ExamBean exam : esami) {
+                System.out.println(exam.getCodice());
+                System.out.println(exam.getCodiceVisita());
+                System.out.println(exam.getData());
+                System.out.println(exam.getFatto());
+                System.out.println(exam.getReferto());
+                System.out.println(exam.getTicket());
+            }
+
+            List<RecipeBean> ricette = recipeDAO.getRecipesOfUser(codiceFiscale);
+            for (RecipeBean recipe : ricette) {
+                System.out.println(recipe.getCodice());
+                System.out.println(recipe.getCodiceEsame());
+                System.out.println(recipe.getCodiceVisita());
+                System.out.println(recipe.getEvasa());
+                System.out.println(recipe.getFarmaco());
+                System.out.println(recipe.getQuantita());
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("FINE TEST");
+        //fine test
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
