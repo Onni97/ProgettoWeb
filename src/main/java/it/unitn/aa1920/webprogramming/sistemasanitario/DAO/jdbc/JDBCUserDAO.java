@@ -54,7 +54,7 @@ public class JDBCUserDAO extends JDBCDAO<UserBean, String> implements UserDAO {
     public boolean checkUserPassword(String codiceFiscale, String password) throws DAOException {
         String query = "select * from utenti where codiceFiscale = '" + codiceFiscale + "' and password = '" + password + "'";
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
-            ResultSet result = stmt.executeQuery();
+                ResultSet result = stmt.executeQuery();
             return result.next();
         } catch (SQLException ex) {
             throw new DAOException("Error", ex);

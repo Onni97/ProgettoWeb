@@ -51,7 +51,7 @@ public class fillUserData implements Filter {
             List<UserBean> DoctorForProvinceList = doctorDAO.getListaMediciPerProfincia(user.getProvincia());
             servletRequest.setAttribute("DoctorForProvinceList", DoctorForProvinceList);
 
-            List<VisitBean> userVisitsList = visitDAO.getVisitOfUser(codiceFiscale);
+            List<VisitBean> userVisitsList = visitDAO.getVisitsOfUser(codiceFiscale);
             servletRequest.setAttribute("userVisits", userVisitsList);
 
             filterChain.doFilter(servletRequest, servletResponse);

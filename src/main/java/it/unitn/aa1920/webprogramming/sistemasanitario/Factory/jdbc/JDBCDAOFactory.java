@@ -153,29 +153,5 @@ public class JDBCDAOFactory implements DAOFactory {
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | SecurityException ex) {
             throw new DAOFactoryException("Impossible to return the DAO", ex);
         }
-
-
-        /*
-        DAO dao = DAO_CACHE.get(daoInterface);
-        if (dao != null) {
-            return (DAO_CLASS) dao;
-        }
-
-        Package pkg = daoInterface.getPackage();
-        String prefix = pkg.getName() + ".jdbc.JDBC";
-
-        try {
-            System.out.println(prefix + daoInterface.getSimpleName());
-            Class daoClass = Class.forName(prefix + daoInterface.getSimpleName());
-            Constructor<DAO_CLASS> constructor = daoClass.getConstructor(Connection.class);
-            DAO_CLASS instance = constructor.newInstance(CON);
-            if (!(instance instanceof JDBCDAO)) {
-                throw new DAOFactoryException("The daoInterface passed as parameter doesn't extend JDBCDAO class");
-            }
-            DAO_CACHE.put(daoClass, instance);
-            return instance;
-        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | SecurityException ex) {
-            throw new DAOFactoryException("Impossible to return the DAO", ex);
-        }*/
     }
 }

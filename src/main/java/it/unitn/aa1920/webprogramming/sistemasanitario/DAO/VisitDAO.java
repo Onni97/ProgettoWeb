@@ -6,5 +6,5 @@ import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 import java.util.List;
 
 public interface VisitDAO extends DAO<VisitBean, Integer> {
-    List<VisitBean> getVisitOfUser(String codiceFiscale) throws DAOException;
+    List<VisitBean> getVisitsOfUser(String codiceFiscale) throws DAOException;
 }

@@ -59,19 +59,21 @@
     <div id="mainContent" class="row">
         <div class="col col-4 justify-content-center">
             <c:forEach items="${requestScope.userVisits}" var="visita">
-                <div class="visita">
-                    <a data-toggle="modal" data-target=".bd-example-modal-lg"></a>
-                    <div class="visitaInfo">
-                        codice visita: <c:out value="${visita.codice}"/><br/>
-                        data: <c:out value="${visita.data}"/><br/>
-                        medico: <c:out value="${visita.medicoDiBase.codiceMedico}"/> - <c:out
-                            value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/>
+                <div class="row rowVisita">
+                    <div class="visita">
+                        <a data-toggle="modal" data-target=".bd-example-modal-lg"></a>
+                        <div class="visitaInfo">
+                            codice visita: <c:out value="${visita.codice}"/><br/>
+                            data: <c:out value="${visita.data}"/><br/>
+                            medico: <c:out value="${visita.medicoDiBase.codiceMedico}"/> - <c:out
+                                value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/>
+                        </div>
+                        <div class="visitaResoconto">
+                            <span><c:out value="${visita.resoconto}"/></span>
+                            <div class="sfumatura"></div>
+                        </div>
+                        <span class="altro">Mostra tutto...</span>
                     </div>
-                    <div class="visitaResoconto">
-                        <span><c:out value="${visita.resoconto}"/></span>
-                        <div class="sfumatura"></div>
-                    </div>
-                    <span class="altro">Mostra tutto...</span>
                 </div>
             </c:forEach>
         </div>
@@ -86,7 +88,8 @@
 
 
 <!--MODAL POPUP -->
-<div class="modal fade bd-example-modal-lg my-auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg my-auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
