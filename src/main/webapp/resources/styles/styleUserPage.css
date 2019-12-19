@@ -280,10 +280,13 @@ body {
 }
 
 .visitaResoconto {
+    width: 95%;
+    margin: 0 auto;
     position: relative;
     overflow-y: hidden;
     max-height: 7.5em;
     z-index: 48;
+    text-align: justify;
 }
 
 .visitaResoconto span {
@@ -328,11 +331,15 @@ body {
     width: max-content;
 }
 
+.modal-body {
+    text-align: justify;
+}
+
 #modalFooter {
     width: max-content;
-    margin-right: 0;
     font-size: 0.8em;
     color: gray();
+    float: right;
 }
 
 @media screen and (max-width: 575px) {

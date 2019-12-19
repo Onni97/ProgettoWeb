@@ -66,7 +66,7 @@
                         <div class="visitaInfo">
                             <span style="display: none">codice visita: <span class="codiceVisita"><c:out value="${visita.codice}"/></span><br/></span>
                             <span class="dataVisita"><fmt:formatDate value='${visita.data}' type='date' pattern='dd-MM-yyyy'/></span><br/>
-                            medico: <span class="medicoVisita"><c:out value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/></span>
+                            Medico: <span class="medicoVisita"><c:out value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/></span>
                         </div>
                         <div class="visitaResoconto">
                             <span class="resocontoVisita"><c:out value="${visita.resoconto}"/></span>
@@ -88,10 +88,10 @@
 
 
 <!--MODAL POPUP -->
-<div class="modal fade bd-example-modal-lg my-auto" id="modal" tabindex="-1" role="dialog"
+<div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog"
      aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <h5 class="modal-title" id="exampleModalLongTitle"></h5> -->
