@@ -16,10 +16,13 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
 
     @Override
     public List<RecipeBean> getRecipesOfUser(String codiceFiscale) throws DAOException {
-        //TODO
-        String query = "select * " +
-                "from ricetta, visite, esami " +
-                "where ricetta.codiceVisita = visite.codice and ricetta.codiceEsame = esami.codice and utente = '" + codiceFiscale + "'";
+        String query = "select r.* " +
+                "from ricette r " +
+                "left join visite v on r.codiceVisita = v.codice " +
+                "left join (select esami.*, visite.utente " +
+                "            from esami, visite " +
+                "            where esami.codiceVisita = visite.codice) e on r.codiceEsame = e.codice " +
+                "where e.utente = '" + codiceFiscale + "' or v.utente = '" + codiceFiscale + "';";
         try (PreparedStatement statement = CON.prepareStatement(query)){
             List<RecipeBean> listaRicette = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
@@ -42,7 +45,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
     @Override
     public RecipeBean getByPrimaryKey(Integer codiceRicetta) throws DAOException {
         String query = "select * from " +
-                "ricetta " +
+                "ricette " +
                 "where codice = '" + codiceRicetta + "'";
         try (PreparedStatement stmt = CON.prepareStatement(query)){
             ResultSet result = stmt.executeQuery();

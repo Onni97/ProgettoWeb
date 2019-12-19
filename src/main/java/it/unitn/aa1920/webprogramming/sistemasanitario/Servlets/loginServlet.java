@@ -54,34 +54,6 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         String password = req.getParameter("password");
         String userLogin = req.getParameter("user");
 
-        //test
-        System.out.println("INIZIO TEST");
-        try {
-            List<ExamBean> esami = examDAO.getExamsOfUser(codiceFiscale);
-            for (ExamBean exam : esami) {
-                System.out.println(exam.getCodice());
-                System.out.println(exam.getCodiceVisita());
-                System.out.println(exam.getData());
-                System.out.println(exam.getFatto());
-                System.out.println(exam.getReferto());
-                System.out.println(exam.getTicket());
-            }
-
-            List<RecipeBean> ricette = recipeDAO.getRecipesOfUser(codiceFiscale);
-            for (RecipeBean recipe : ricette) {
-                System.out.println(recipe.getCodice());
-                System.out.println(recipe.getCodiceEsame());
-                System.out.println(recipe.getCodiceVisita());
-                System.out.println(recipe.getEvasa());
-                System.out.println(recipe.getFarmaco());
-                System.out.println(recipe.getQuantita());
-            }
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("FINE TEST");
-        //fine test
-
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
