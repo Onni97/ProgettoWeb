@@ -2,6 +2,7 @@
 <jsp:useBean id="usersDoctor" scope="request" class="it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
@@ -11,8 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/styleUserPage.css">
-    <link rel="script" href="">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleUserPage.css">
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
             integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
@@ -24,6 +24,7 @@
 
 
 <body>
+
 
 <!-- NAVBAR -->
 <nav id="navBar" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
@@ -42,6 +43,7 @@
     </form>
 </nav>
 
+
 <!--MAIN PAGE PC -->
 <div id="mainPagePC">
     <!-- <h1 class="testoIncavato">Main page</h1> -->
@@ -59,22 +61,20 @@
     <div id="mainContent" class="row">
         <div class="col col-4 justify-content-center">
             <c:forEach items="${requestScope.userVisits}" var="visita">
-                <div class="row rowVisita">
+                <a data-toggle="modal" data-target=".bd-example-modal-lg">
                     <div class="visita">
-                        <a data-toggle="modal" data-target=".bd-example-modal-lg"></a>
                         <div class="visitaInfo">
-                            codice visita: <c:out value="${visita.codice}"/><br/>
-                            data: <c:out value="${visita.data}"/><br/>
-                            medico: <c:out value="${visita.medicoDiBase.codiceMedico}"/> - <c:out
-                                value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/>
+                            <span style="display: none">codice visita: <span class="codiceVisita"><c:out value="${visita.codice}"/></span><br/></span>
+                            <span class="dataVisita"><fmt:formatDate value='${visita.data}' type='date' pattern='dd-MM-yyyy'/></span><br/>
+                            Medico: <span class="medicoVisita"><c:out value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/></span>
                         </div>
                         <div class="visitaResoconto">
-                            <span><c:out value="${visita.resoconto}"/></span>
+                            <span class="resocontoVisita"><c:out value="${visita.resoconto}"/></span>
                             <div class="sfumatura"></div>
                         </div>
                         <span class="altro">Mostra tutto...</span>
                     </div>
-                </div>
+                </a>
             </c:forEach>
         </div>
         <div class="col col-4 justify-content-center">
@@ -88,21 +88,24 @@
 
 
 <!--MODAL POPUP -->
-<div class="modal fade bd-example-modal-lg my-auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle"></h5> -->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                <h5 id="modalTitle1"></h5><br/>
+                <h5 id="modalTitle2"></h5><br/>
+                <h5 id="modalTitle3"></h5>
+
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <p id="modalBody"></p>
+                <span id="modalFooter"></span>
             </div>
         </div>
     </div>
@@ -303,17 +306,15 @@
         </div>
     </div>
 </nav>
-
-
 <!-- ombra scura per sidebar -->
 <div id="overlay"></div>
 
 
-<!-- Script for sidebar -->
+<!-- Script -->
 <script type="text/javascript">
     $(document).ready(function () {
-        var opened = false;
 
+        //IMPOSTO LE ALTEZZE DELLA PAGINA, CHE RISULTANO SBALLATE PER COLPA DELLA NAVBAR
         var $navBar = $('#navBar');
         var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
         document.getElementById("mainPagePC").style.marginTop = navHeight;
@@ -346,6 +347,9 @@
             }
         }, false);
 
+
+        //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DELLA SIDEBAR
+        var opened = false;
         $('#dismiss, #overlay').on('click', function () {
             $('#sidebar').removeClass('active');
             $('#overlay').removeClass('active');
@@ -403,8 +407,27 @@
             console.log(fileName);
             //replace the "Choose a file" label
             $(this).next('.custom-file-label').html(fileName);
-        })
+        });
+
+
+        //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DEI MODAL
+        $('#modal').on('show.bs.modal', function (event) {
+            var a = $(event.relatedTarget);
+            var codiceVisita = a.find('.codiceVisita').text();
+            var dataVisita = a.find('.dataVisita').text();
+            var medicoVisita = a.find('.medicoVisita').text();
+            var resocontoVisita = a.find('.resocontoVisita').text();
+
+            var modal = $(this);
+            modal.find('#modalTitle1').text(dataVisita);
+            modal.find('#modalTitle2').text("Medico: " + medicoVisita);
+            modal.find('#modalTitle3').hide();
+            modal.find('#modalBody').text(resocontoVisita);
+            modal.find('#modalFooter').text("#" + codiceVisita);
+        });
     });
+
+
 </script>
 
 </body>
