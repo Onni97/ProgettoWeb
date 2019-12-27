@@ -2,10 +2,15 @@ html {
     height: 100vh;
     margin: 0;
     padding: 0;
+    width: 100%;
+    overflow:hidden;
 }
 
 body {
     height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
+    width: 100%;
     margin: 0;
     padding: 0;
     top: 0;
@@ -135,7 +140,6 @@ body {
 }
 
 .testoIncavato {
-    font-size: 6em;
     background-color: #565656;
     color: transparent;
     text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
@@ -227,12 +231,18 @@ body {
     padding: 1em 2em;
     background-color: lightgray;
     box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.14), 0 2px 15px 0 rgba(0, 0, 0, 0.12);
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 #mainContent {
     overflow-y: hidden;
     padding-right: 2em;
     padding-left: 2em;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 #mainContent .col {
@@ -241,14 +251,13 @@ body {
     padding-top: 2em;
     padding-right: 1em;
     padding-left: 1em;
-    /*display: flex;*/
 }
 
 .rowVisita {
     width: 100%;
 }
 
-.visita {
+.scheda {
     z-index: 47;
     margin: 0 auto 2em;
     position: relative;
@@ -266,20 +275,23 @@ body {
     padding-bottom: 0.5em;
 }
 
-.visita:hover {
+.scheda:hover {
     box-shadow: 0 7px 6px -3px rgba(0, 0, 0, 0.2), 0 9px 12px 2px rgba(0, 0, 0, 0.14), 0 4px 17px 3px rgba(0, 0, 0, 0.12);
 }
 
-.visitaInfo {
+.schedaHeader {
     width: 100%;
     border-bottom: 1px solid lightgray;
+    padding-bottom: 0.3em;
 }
 
-.dataVisita {
+.schedaHeader div {
+    width: 95%;
     text-align: left;
+    margin: 0 auto;
 }
 
-.visitaResoconto {
+.schedaBody {
     width: 95%;
     margin: 0 auto;
     position: relative;
@@ -287,9 +299,10 @@ body {
     max-height: 7.5em;
     z-index: 48;
     text-align: justify;
+    padding-top: 0.3em;
 }
 
-.visitaResoconto span {
+.schedaBody span {
     height: 7.5em;
     max-height: 7.5em;
 }
@@ -306,41 +319,38 @@ body {
 
 .altro {
     color: #17a2b8;
-    width: 100%;
     text-align: center;
-    margin: 0;
+    margin: 0 auto;
+    width: max-content;
+    display: block;
+}
+
+.schedaIndex {
+    font-size: 0.8em;
+    color: gray;
+    margin-right: 0.6em;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 0.5em;
+}
+
+.bodyRicetta {
+    padding-top: 1em;
+    text-align: center;
+    padding-bottom: 1em;
 }
 
 /* MODAL */
-
-.modal-header {
-    display: block;
-}
 
 .modal-dialog {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-#modalTitle1 {
-    margin: 0 auto;
-    width: max-content;
+.modal-content {
+    padding: 1em;
 }
 
-#modalTitle2 {
-    margin: 0 auto;
-    width: max-content;
-}
-
-.modal-body {
-    text-align: justify;
-}
-
-#modalFooter {
-    width: max-content;
-    font-size: 0.8em;
-    color: gray();
-    float: right;
-}
 
 @media screen and (max-width: 575px) {
     #navBar {

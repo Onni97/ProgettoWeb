@@ -1,10 +1,10 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.ExamBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.RecipeBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.VisitBean;
-import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.DoctorDAO;
-import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.UserDAO;
-import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.VisitDAO;
+import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.*;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOFactoryException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Factory.DAOFactory;
@@ -20,6 +20,8 @@ public class fillUserData implements Filter {
     private UserDAO userDAO;
     private DoctorDAO doctorDAO;
     private VisitDAO visitDAO;
+    private ExamDAO examDAO;
+    private RecipeDAO recipeDAO;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,6 +33,8 @@ public class fillUserData implements Filter {
             userDAO = daoFactory.getDAO(UserDAO.class);
             doctorDAO = daoFactory.getDAO(DoctorDAO.class);
             visitDAO = daoFactory.getDAO(VisitDAO.class);
+            examDAO = daoFactory.getDAO(ExamDAO.class);
+            recipeDAO = daoFactory.getDAO(RecipeDAO.class);
         } catch (DAOFactoryException e) {
             e.printStackTrace();
         }
@@ -53,6 +57,16 @@ public class fillUserData implements Filter {
 
             List<VisitBean> userVisitsList = visitDAO.getVisitsOfUser(codiceFiscale);
             servletRequest.setAttribute("userVisits", userVisitsList);
+
+            List<ExamBean> examListNotDone = examDAO.getExamsNotDoneOfUser(codiceFiscale);
+            servletRequest.setAttribute("examListNotDone", examListNotDone);
+            List<ExamBean> examListDone = examDAO.getExamsDoneOfUser(codiceFiscale);
+            servletRequest.setAttribute("examListDone", examListDone);
+
+            List<RecipeBean> recipesNotTaken = recipeDAO.getRecipesNotTakenOfUser(codiceFiscale);
+            servletRequest.setAttribute("recipesNotTaken", recipesNotTaken);
+            List<RecipeBean> recipesTaken = recipeDAO.getRecipesTakenOfUser(codiceFiscale);
+            servletRequest.setAttribute("recipesTaken", recipesTaken);
 
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (DAOException e) {

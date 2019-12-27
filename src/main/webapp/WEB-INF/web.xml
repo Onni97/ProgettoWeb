@@ -60,6 +60,21 @@
         <filter-name>fillUserData</filter-name>
         <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillUserData</filter-class>
     </filter>
+    
+    <filter>
+        <filter-name>fillVisitData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillVisitData</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>fillRecipeData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillRecipeData</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>fillExamData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillExamData</filter-class>
+    </filter>
 
 
 
@@ -115,6 +130,33 @@
         <url-pattern>/profileImage/*</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/visitData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillVisitData</filter-name>
+        <url-pattern>/visitData</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/recipeData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillRecipeData</filter-name>
+        <url-pattern>/recipeData</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/examData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillExamData</filter-name>
+        <url-pattern>/examData</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -163,6 +205,21 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.profileImage</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>visitData</servlet-name>
+        <jsp-file>/views/visitData.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>recipeData</servlet-name>
+        <jsp-file>/views/recipeData.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>examData</servlet-name>
+        <jsp-file>/views/examData.jsp</jsp-file>
+    </servlet>
+
 
 
 
@@ -209,6 +266,21 @@
         <url-pattern>/profileImage/*</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>visitData</servlet-name>
+        <url-pattern>/visitData</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>recipeData</servlet-name>
+        <url-pattern>/recipeData</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>examData</servlet-name>
+        <url-pattern>/examData</url-pattern>
+    </servlet-mapping>
+
 
 
 
@@ -217,16 +289,26 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/views/notFoundError.jsp</location>
+        <location>/errors/notFoundError.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.io.FileNotFoundException</exception-type>
-        <location>/views/notFoundError.jsp</location>
+        <location>/errors/notFoundError.jsp</location>
     </error-page>
 
     <error-page>
         <error-code>500</error-code>
-        <location>/views/serverError.jsp</location>
+        <location>/errors/serverError.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>400</error-code>
+        <location>/errors/badRequestError.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>401</error-code>
+        <location>/errors/unauthorizedError.jsp</location>
     </error-page>
 
 

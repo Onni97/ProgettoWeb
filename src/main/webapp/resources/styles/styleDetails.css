@@ -1,0 +1,36 @@
+#detailHeader {
+    width: 100%;
+    display: block;
+    border-bottom: lightgray;
+    overflow-y: hidden;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#detailContent {
+    overflow-y: hidden;
+    padding-top: 0.5em;
+}
+
+.date {
+    margin: 0 auto;
+    width: max-content;
+}
+
+.title {
+    margin: 0 auto;
+    font-size: 1.5em;
+    width: max-content;
+}
+
+.mainText {
+    text-align: justify;
+}
+
+.index {
+    width: max-content;
+    font-size: 0.8em;
+    color: gray;
+    float: right;
+    padding-right: 1em;
+}

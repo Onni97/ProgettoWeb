@@ -1,12 +1,16 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Beans;
 
+import java.util.Date;
+
 public class RecipeBean {
     private int codice;
     private String farmaco;
     private int quantita;
-    private int codiceVisita;
-    private int codiceEsame;
-    private boolean evasa;
+    private VisitBean visita;
+    private ExamBean esame;
+    private Date dataOraEvasa;
+    private String descrizioneFarmaco;
+    private Date data;
 
     public int getCodice() { return codice; }
 
@@ -20,15 +24,23 @@ public class RecipeBean {
 
     public void setQuantita(int quantita) { this.quantita = quantita; }
 
-    public int getCodiceVisita() { return codiceVisita; }
+    public VisitBean getVisita() { return visita; }
 
-    public void setCodiceVisita(int codiceVisita) { this.codiceVisita = codiceVisita; }
+    public void setVisita(VisitBean visita) { this.visita = visita; }
 
-    public int getCodiceEsame() { return codiceEsame; }
+    public ExamBean getEsame() { return esame; }
 
-    public void setCodiceEsame(int codiceEsame) { this.codiceEsame = codiceEsame; }
+    public void setEsame(ExamBean esame) { this.esame = esame; }
 
-    public boolean getEvasa() { return evasa; }
+    public void setDataOraEvasa(Date evasa) { this.dataOraEvasa = evasa; }
 
-    public void setEvasa(boolean evasa) { this.evasa = evasa; }
+    public Date getDataOraEvasa() { return dataOraEvasa; }
+
+    public String getDescrizioneFarmaco() { return descrizioneFarmaco; }
+
+    public void setDescrizioneFarmaco(String descrizioneFarmaco) { this.descrizioneFarmaco = descrizioneFarmaco; }
+
+    public Date getData() { return data; }
+
+    public void setData(Date data) { this.data = data; }
 }

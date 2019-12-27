@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class VisitBean {
     private int codice;
-    private Date data;
+    private Date dataOra;
     private String resoconto;
     private UserBean utente;
     private UserBean medicoDiBase;
@@ -17,12 +17,12 @@ public class VisitBean {
         this.codice = codice;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataOra() {
+        return dataOra;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataOra(Date dataOra) {
+        this.dataOra = dataOra;
     }
 
     public String getResoconto() {

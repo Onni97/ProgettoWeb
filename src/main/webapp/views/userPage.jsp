@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
@@ -46,40 +47,221 @@
 
 <!--MAIN PAGE PC -->
 <div id="mainPagePC">
-    <!-- <h1 class="testoIncavato">Main page</h1> -->
+
+    <div id="mainDropdown">
+
+    </div>
     <div id="mainHeader" class="row">
-        <div class="col col-4">
+        <div class="col col-3">
             <h2>In programma</h2>
         </div>
-        <div class="col col-4">
+        <div class="col col-3">
             <h2>Visite fatte</h2>
         </div>
-        <div class="col col-4">
+        <div class="col col-3">
             <h2>Ricette evase</h2>
+        </div>
+        <div class="col col-3">
+            <h2>Ticket pagati</h2>
         </div>
     </div>
     <div id="mainContent" class="row">
-        <div class="col col-4 justify-content-center">
-            <c:forEach items="${requestScope.userVisits}" var="visita">
-                <a data-toggle="modal" data-target=".bd-example-modal-lg">
-                    <div class="visita">
-                        <div class="visitaInfo">
-                            <span style="display: none">codice visita: <span class="codiceVisita"><c:out value="${visita.codice}"/></span><br/></span>
-                            <span class="dataVisita"><fmt:formatDate value='${visita.data}' type='date' pattern='dd-MM-yyyy'/></span><br/>
-                            Medico: <span class="medicoVisita"><c:out value="${visita.medicoDiBase.nome}"/> <c:out value="${visita.medicoDiBase.cognome}"/></span>
+        <!-- COLONNA DA FARE -->
+        <c:if test="${fn:length(requestScope.recipesNotTaken) + fn:length(requestScope.examListNotDone) == 0}">
+            <div class="col col-3 justify-content-center" id="colonnaPromemoria">
+                <h1 class="testoIncavato">Niente in programma</h1>
+            </div>
+        </c:if>
+        <c:if test="${fn:length(requestScope.recipesNotTaken) + fn:length(requestScope.examListNotDone) > 0}">
+            <div class="col col-3 justify-content-center" id="colonnaPromemoria" style="background-color: #f09022">
+                <c:forEach items="${requestScope.recipesNotTaken}" var="ricetta">
+                    <div class="scheda schedaRicetta">
+                        <div class="schedaHeader">
+                            <b>RICETTA</b><br/>
                         </div>
-                        <div class="visitaResoconto">
-                            <span class="resocontoVisita"><c:out value="${visita.resoconto}"/></span>
-                            <div class="sfumatura"></div>
+                        <div class="schedaBody">
+                            <div class="bodyRicetta">
+                                <c:out value="${ricetta.quantita}"/> x <c:out value="${ricetta.farmaco}"/>
+                            </div>
                         </div>
                         <span class="altro">Mostra tutto...</span>
+                        <div class="schedaIndex">
+                            #<span class="codiceRicetta"><c:out value="${ricetta.codice}"/></span>
+                        </div>
                     </div>
-                </a>
+                </c:forEach>
+                <c:forEach items="${requestScope.examListNotDone}" var="exam">
+                    <div class="scheda schedaEsame">
+                        <div class="schedaHeader">
+                            <b>ESAME</b><br/>
+                            <fmt:formatDate value='${exam.dataFissata}' type='date' pattern='dd-MM-yyyy'/><br/>
+                        </div>
+                        <div class="schedaBody">
+                            <div class="bodyEsame">
+                            </div>
+                        </div>
+                        <span class="altro">Mostra tutto...</span>
+                        <div class="schedaIndex">
+                            #<span class="codiceEsame"><c:out value="${exam.codice}"/></span>
+                        </div>
+                    </div>
+                </c:forEach>
+
+
+            </div>
+        </c:if>
+
+        <!-- COLONNA ESAMI/VISITE FATTE -->
+        <div class="col col-3 justify-content-center">
+            <c:set scope="page" value="0" var="counterVisits"/>
+            <c:set scope="page" value="0" var="counterExams"/>
+            <c:forEach begin="0" end="${fn:length(requestScope.userVisits) + fn:length(requestScope.examListDone)}">
+                <c:choose>
+                    <%--suppress ELValidationInJSP --%>
+                    <c:when test="${counterVisits < fn:length(requestScope.userVisits) and
+                                    counterExams < fn:length(requestScope.examListDone) and
+                                    requestScope.userVisits[counterVisits].dataOra < requestScope.examListDone[counterExams].dataOraFissata}">
+                        <!-- STAMPO L'ESAME -->
+                        <div class="scheda schedaEsame">
+                            <div class="schedaHeader">
+                                <b>ESAME</b><br/>
+                                    <%--suppress ELValidationInJSP --%>
+                                <span class="dataEsame"><fmt:formatDate
+                                        value='${requestScope.examListDone[counterExams].dataOraFissata}'
+                                        type='date' pattern='dd-MM-yyyy'/><br/></span>
+                            </div>
+                            <div class="schedaBody">
+                                    <%--suppress ELValidationInJSP --%>
+                                <c:out value="${requestScope.examListDone[counterExams].referto}"/>
+                                <div class="sfumatura"></div>
+                            </div>
+                            <span class="altro">Mostra tutto...</span>
+                            <div class="schedaIndex">
+                                    <%--suppress ELValidationInJSP --%>
+                                #<span class="codiceEsame"><c:out
+                                    value="${requestScope.examListDone[counterExams].codice}"/></span>
+                            </div>
+                        </div>
+                        <c:set var="counterExams" value="${counterExams + 1}" scope="page"/>
+                    </c:when>
+                    <%--suppress ELValidationInJSP --%>
+                    <c:when test="${counterVisits < fn:length(requestScope.userVisits) and
+                                    counterExams < fn:length(requestScope.examListDone) and
+                                    requestScope.userVisits[counterVisits].dataOra > requestScope.examListDone[counterExams].dataOraFissata}">
+                        <!-- STAMPO LA VISITA -->
+                        <div class="scheda schedaVisita">
+                            <div class="schedaHeader">
+                                <b>VISITA</b><br/>
+                                    <%--suppress ELValidationInJSP --%>
+                                <span class="dataVisita"><fmt:formatDate
+                                        value='${requestScope.userVisits[counterVisits].dataOra}' type='date'
+                                        pattern='dd-MM-yyyy'/></span><br/>
+                                <div>Medico:
+                                        <%--suppress ELValidationInJSP --%>
+                                    <c:out value="${requestScope.userVisits[counterVisits].medicoDiBase.nome}"/> <c:out
+                                            value="${requestScope.userVisits[counterVisits].medicoDiBase.cognome}"/><br/>
+                                </div>
+                            </div>
+                            <div class="schedaBody">
+                                    <%--suppress ELValidationInJSP --%>
+                                <c:out value="${requestScope.userVisits[counterVisits].resoconto}"/>
+                                <div class="sfumatura"></div>
+                            </div>
+                            <span class="altro">Mostra tutto...</span>
+                            <div class="schedaIndex">
+                                    <%--suppress ELValidationInJSP --%>
+                                #<span class="codiceVisita"><c:out
+                                    value="${requestScope.userVisits[counterVisits].codice}"/></span>
+                            </div>
+                        </div>
+                        <c:set var="counterVisits" value="${counterVisits + 1}" scope="page"/>
+                    </c:when>
+                    <c:when test="${counterVisits == fn:length(requestScope.userVisits) and
+                                    counterExams < fn:length(requestScope.examListDone)}">
+                        <!-- STAMPO L'ESAME -->
+                        <div class="scheda schedaEsame">
+                            <div class="schedaHeader">
+                                <b>ESAME</b><br/>
+                                    <%--suppress ELValidationInJSP --%>
+                                <span class="dataEsame"><fmt:formatDate
+                                        value='${requestScope.examListDone[counterExams].dataOraFissata}'
+                                        type='date' pattern='dd-MM-yyyy'/><br/></span>
+                            </div>
+                            <div class="schedaBody">
+                                    <%--suppress ELValidationInJSP --%>
+                                <c:out value="${requestScope.examListDone[counterExams].referto}"/>
+                                <div class="sfumatura"></div>
+                            </div>
+                            <span class="altro">Mostra tutto...</span>
+                            <div class="schedaIndex">
+                                #<span class="codiceEsame">
+                                <%--suppress ELValidationInJSP --%>
+                                <c:out value="${requestScope.examListDone[counterExams].codice}"/></span>
+                            </div>
+                        </div>
+                        <c:set var="counterExams" value="${counterExams + 1}" scope="page"/>
+                    </c:when>
+                    <c:when test="${counterVisits < fn:length(requestScope.userVisits) and
+                                    counterExams == fn:length(requestScope.examListDone)}">
+                        <!-- STAMPO LA VISITA -->
+                        <div class="scheda schedaVisita">
+                            <div class="schedaHeader">
+                                <b>VISITA</b><br/>
+                                    <%--suppress ELValidationInJSP --%>
+                                <span class="dataVisita"><fmt:formatDate
+                                        value='${requestScope.userVisits[counterVisits].dataOra}' type='date'
+                                        pattern='dd-MM-yyyy'/></span><br/>
+                                <div>Medico:
+                                        <%--suppress ELValidationInJSP --%>
+                                    <c:out value="${requestScope.userVisits[counterVisits].medicoDiBase.nome}"/> <c:out
+                                            value="${requestScope.userVisits[counterVisits].medicoDiBase.cognome}"/><br/>
+                                </div>
+                            </div>
+                            <div class="schedaBody">
+                                    <%--suppress ELValidationInJSP --%>
+                                <c:out value="${requestScope.userVisits[counterVisits].resoconto}"/>
+                                <div class="sfumatura"></div>
+                            </div>
+                            <span class="altro">Mostra tutto...</span>
+                            <div class="schedaIndex">
+                                    <%--suppress ELValidationInJSP --%>
+                                #<span class="codiceVisita"><c:out
+                                    value="${requestScope.userVisits[counterVisits].codice}"/></span>
+                            </div>
+                        </div>
+                        <c:set var="counterVisits" value="${counterVisits + 1}" scope="page"/>
+                    </c:when>
+                </c:choose>
             </c:forEach>
         </div>
-        <div class="col col-4 justify-content-center">
+
+
+        <!-- COLONNA RICETTE -->
+        <div class="col col-3 justify-content-center">
+            <c:forEach items="${requestScope.recipesTaken}" var="ricetta">
+                <div class="scheda schedaRicetta">
+                    <div class="schedaHeader">
+                        <b>RICETTA</b><br/>
+                        <fmt:formatDate value='${ricetta.data}' type='date' pattern='dd-MM-yyyy'/><br/>
+                    </div>
+                    <div class="schedaBody">
+                        <div class="bodyRicetta">
+                            <span class="quantitaRicetta"><c:out value="${ricetta.quantita}"/></span> x <span
+                                class="farmacoRicetta"><c:out value="${ricetta.farmaco}"/></span><br/>
+                            <span class="descrizioneFarmacoRicetta"><c:out
+                                    value="${ricetta.descrizioneFarmaco}"/></span>
+                        </div>
+                    </div>
+                    <span class="altro">Mostra tutto...</span>
+                    <div class="schedaIndex">#<span class="codiceRicetta"><c:out
+                            value="${ricetta.codice}"/></span></div>
+                </div>
+            </c:forEach>
         </div>
-        <div class="col col-4 justify-content-center">
+
+        <!-- COLONNA TICKET PAGATI -->
+        <div class="col col-3 justify-content-center">
+
         </div>
     </div>
 </div>
@@ -87,26 +269,11 @@
 <!--MAIN PAGE MOBILE -->
 
 
-<!--MODAL POPUP -->
-<div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog"
-     aria-labelledby="myLargeModalLabel"
-     aria-hidden="true">
+<!--MODAL -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <!-- <h5 class="modal-title" id="exampleModalLongTitle"></h5> -->
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 id="modalTitle1"></h5><br/>
-                <h5 id="modalTitle2"></h5><br/>
-                <h5 id="modalTitle3"></h5>
-
-            </div>
-            <div class="modal-body">
-                <p id="modalBody"></p>
-                <span id="modalFooter"></span>
-            </div>
         </div>
     </div>
 </div>
@@ -343,7 +510,6 @@
                 document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
                 document.getElementById("sidebar").style.marginTop = "0";
                 document.getElementById("sidebar").style.height = "100%";
-
             }
         }, false);
 
@@ -404,28 +570,86 @@
             var filePath = $(this).val();
             filePath = filePath.split("\\");
             var fileName = filePath[filePath.length - 1];
-            console.log(fileName);
             //replace the "Choose a file" label
             $(this).next('.custom-file-label').html(fileName);
         });
 
-
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DEI MODAL
-        $('#modal').on('show.bs.modal', function (event) {
-            var a = $(event.relatedTarget);
-            var codiceVisita = a.find('.codiceVisita').text();
-            var dataVisita = a.find('.dataVisita').text();
-            var medicoVisita = a.find('.medicoVisita').text();
-            var resocontoVisita = a.find('.resocontoVisita').text();
-
-            var modal = $(this);
-            modal.find('#modalTitle1').text(dataVisita);
-            modal.find('#modalTitle2').text("Medico: " + medicoVisita);
-            modal.find('#modalTitle3').hide();
-            modal.find('#modalBody').text(resocontoVisita);
-            modal.find('#modalFooter').text("#" + codiceVisita);
+        $('.schedaVisita').on('click', function (event) {
+            var schedaVisita = $(event.currentTarget);
+            var codiceVisita = schedaVisita.find('.codiceVisita').text();
+            // AJAX request
+            $.ajax({
+                url: "${pageContext.request.contextPath}/visitData?id=" + codiceVisita,
+                type: 'get',
+                success: function (response) {
+                    // Add response in Modal body
+                    $('.modal-content').html(response);
+                    // Display Modal
+                    $('.modal').modal('show');
+                }
+            });
         });
+
+        $('.schedaRicetta').on('click', function (event) {
+            var schedaRicetta = $(event.currentTarget);
+            var codiceRicetta = schedaRicetta.find('.codiceRicetta').text();
+            // AJAX request
+            $.ajax({
+                url: "${pageContext.request.contextPath}/recipeData?id=" + codiceRicetta,
+                type: 'get',
+                success: function (response) {
+                    // Add response in Modal body
+                    $('.modal-content').html(response);
+                    // Display Modal
+                    $('.modal').modal('show');
+                }
+            });
+        });
+
+        $('.schedaEsame').on('click', function (event) {
+            var schedaEsame = $(event.currentTarget);
+            var codiceEsame = schedaEsame.find('.codiceEsame').text();
+            // AJAX request
+            $.ajax({
+                url: "${pageContext.request.contextPath}/examData?id=" + codiceEsame,
+                type: 'get',
+                success: function (response) {
+                    // Add response in Modal body
+                    $('.modal-content').html(response);
+                    // Display Modal
+                    $('.modal').modal('show');
+                }
+            });
+        })
     });
+
+
+    //FUNZIONE PER LO SWITCH PER LA VISUALIZZAZIONE MOBILE E PC
+    var showDropdown = false;
+    if ($(window).width() <= 1400) {
+        showDropdown = true;
+    }
+    window.addEventListener("resize", function () {
+        if ($(window).width() <= 1400) {
+            if (!showDropdown) {
+                //passo dalla visualizzazione grande a quella piccola
+                //nascondo la titlebar
+                //imposto la dropdown su in programma
+                //mostro la dropdown
+                //nascondo tutte le colonne apparte quella in programma
+                showDropdown = true
+            }
+        } else {
+            if (showDropdown) {
+                //passo dalla visualizzazione piccola a quella grande
+                //nascondo il dropdown
+                //mostro la titlebar
+                //imposto tutte le colonne su visibile
+                showDropdown = false;
+            }
+        }
+    }, false);
 
 
 </script>

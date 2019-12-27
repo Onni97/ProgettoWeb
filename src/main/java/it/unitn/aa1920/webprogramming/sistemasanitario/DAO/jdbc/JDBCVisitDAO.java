@@ -1,6 +1,5 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.DAO.jdbc;
 
-import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.VisitBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.VisitDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
@@ -21,14 +20,15 @@ public class JDBCVisitDAO extends JDBCDAO<VisitBean, Integer> implements VisitDA
     public List<VisitBean> getVisitsOfUser(String codiceFiscale) throws DAOException {
         String query = "select * " +
                 "from visite " +
-                "where utente = '" + codiceFiscale + "'";
+                "where utente = '" + codiceFiscale + "' " +
+                "order by dataOra DESC ";
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<VisitBean> listaVisite = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
             while ( result.next() ) {
                 VisitBean visita = new VisitBean();
                 visita.setCodice(result.getInt("codice"));
-                visita.setData(result.getDate("data"));
+                visita.setDataOra(result.getTimestamp("dataOra"));
                 visita.setResoconto(result.getString("resoconto"));
 
                 JDBCUserDAO userDAO = new JDBCUserDAO(CON);
@@ -56,7 +56,7 @@ public class JDBCVisitDAO extends JDBCDAO<VisitBean, Integer> implements VisitDA
                 visita.setCodice(-1);
             } else {
                 visita.setCodice(result.getInt("codice"));
-                visita.setData(result.getDate("data"));
+                visita.setDataOra(result.getTimestamp("dataOra"));
                 visita.setResoconto(result.getString("resoconto"));
                 JDBCUserDAO userDAO = new JDBCUserDAO(CON);
                 visita.setUtente(userDAO.getByPrimaryKey(result.getString("utente")));

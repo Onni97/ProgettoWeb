@@ -18,21 +18,93 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
     public List<ExamBean> getExamsOfUser(String codiceFiscale) throws DAOException {
         String query = "select * " +
                 "from esami, visite " +
-                "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "'";
+                "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "' " +
+                "order by dataOraFissata DESC ";
         try (PreparedStatement statement = CON.prepareStatement(query)){
-            List<ExamBean> listaEsami = new LinkedList<>();
+            List<ExamBean> examList = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
             while ( result.next() ) {
                 ExamBean esame = new ExamBean();
                 esame.setCodice(result.getInt("codice"));
-                esame.setCodiceVisita(result.getInt("codiceVisita"));
-                esame.setData(result.getDate("data"));
+
+                JDBCVisitDAO visitDAO = new JDBCVisitDAO(CON);
+                esame.setVisita(visitDAO.getByPrimaryKey(result.getInt("codiceVisita")));
+
+                esame.setDataOraFissata(result.getTimestamp("dataOraFissata"));
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
-                listaEsami.add(esame);
+
+                JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
+                esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
+
+                examList.add(esame);
             }
-            return listaEsami;
+            return examList;
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
+    public List<ExamBean> getExamsNotDoneOfUser(String codiceFiscale) throws DAOException {
+        String query = "select * " +
+                "from esami, visite " +
+                "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "' and fatto = false " +
+                "order by dataOraFissata DESC ";
+        try (PreparedStatement statement = CON.prepareStatement(query)){
+            List<ExamBean> examListNotDone = new LinkedList<>();
+            ResultSet result = statement.executeQuery(query);
+            while ( result.next() ) {
+                ExamBean esame = new ExamBean();
+                esame.setCodice(result.getInt("codice"));
+
+                JDBCVisitDAO visitDAO = new JDBCVisitDAO(CON);
+                esame.setVisita(visitDAO.getByPrimaryKey(result.getInt("codiceVisita")));
+
+                esame.setDataOraFissata(result.getTimestamp("dataOraFissata"));
+                esame.setFatto(result.getBoolean("fatto"));
+                esame.setReferto(result.getString("referto"));
+                esame.setTicket(result.getDouble("ticket"));
+
+                JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
+                esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
+
+                examListNotDone.add(esame);
+            }
+            return examListNotDone;
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
+    public List<ExamBean> getExamsDoneOfUser(String codiceFiscale) throws DAOException {
+        String query = "select * " +
+                "from esami, visite " +
+                "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "' and fatto = true " +
+                "order by dataOraFissata DESC ";
+        try (PreparedStatement statement = CON.prepareStatement(query)){
+            List<ExamBean> examListDone = new LinkedList<>();
+            ResultSet result = statement.executeQuery(query);
+            while ( result.next() ) {
+                ExamBean esame = new ExamBean();
+                esame.setCodice(result.getInt("codice"));
+
+                JDBCVisitDAO visitDAO = new JDBCVisitDAO(CON);
+                esame.setVisita(visitDAO.getByPrimaryKey(result.getInt("codiceVisita")));
+
+                esame.setDataOraFissata(result.getTimestamp("dataOraFissata"));
+                esame.setFatto(result.getBoolean("fatto"));
+                esame.setReferto(result.getString("referto"));
+                esame.setTicket(result.getDouble("ticket"));
+
+                JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
+                esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
+
+                examListDone.add(esame);
+            }
+            return examListDone;
         } catch (SQLException ex) {
             throw new DAOException("Error", ex);
         }
@@ -42,7 +114,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
     public ExamBean getByPrimaryKey(Integer codiceEsame) throws DAOException {
         String query = "select * from " +
                 "esami " +
-                "where codice =" + codiceEsame;
+                "where codice = " + codiceEsame;
         try (PreparedStatement stmt = CON.prepareStatement(query)){
             ResultSet result = stmt.executeQuery();
             ExamBean esame = new ExamBean();
@@ -50,11 +122,17 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 esame.setCodice(-1);
             } else {
                 esame.setCodice(result.getInt("codice"));
-                esame.setCodiceVisita(result.getInt("codiceVisita"));
-                esame.setData(result.getDate("data"));
+
+                JDBCVisitDAO visitDAO = new JDBCVisitDAO(CON);
+                esame.setVisita(visitDAO.getByPrimaryKey(result.getInt("codiceVisita")));
+
+                esame.setDataOraFissata(result.getTimestamp("dataOraFissata"));
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
+
+                JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
+                esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
             }
             return esame;
         } catch (SQLException ex) {
