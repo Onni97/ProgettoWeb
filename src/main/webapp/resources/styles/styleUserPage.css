@@ -220,7 +220,7 @@ body {
 
 #mainPagePC {
     background-color: #f8f9fa;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     text-align: center;
 }
@@ -234,6 +234,17 @@ body {
     margin: 0;
     width: 100%;
     max-width: 100%;
+    height: min-content;
+}
+
+#mainDropdown {
+    width: 100%;
+    background-color: #d3d3d3;
+}
+
+#mainDropdown select {
+    width: max-content;
+    margin: 0 auto;
 }
 
 #mainContent {
@@ -243,6 +254,7 @@ body {
     margin: 0;
     width: 100%;
     max-width: 100%;
+    flex-grow: 1;
 }
 
 #mainContent .col {

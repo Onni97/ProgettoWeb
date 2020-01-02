@@ -49,7 +49,14 @@
 <div id="mainPagePC">
 
     <div id="mainDropdown">
-
+        <label>
+            <select class="form-control" id="mainDropdownSelect">
+                <option selected>In programma</option>
+                <option>Visite fatte</option>
+                <option>Ricette evase</option>
+                <option>Ticket Pagati</option>
+            </select>
+        </label>
     </div>
     <div id="mainHeader" class="row">
         <div class="col col-3">
@@ -94,7 +101,7 @@
                     <div class="scheda schedaEsame">
                         <div class="schedaHeader">
                             <b>ESAME</b><br/>
-                            <fmt:formatDate value='${exam.dataFissata}' type='date' pattern='dd-MM-yyyy'/><br/>
+                            <fmt:formatDate value='${exam.dataOraFissata}' type='date' pattern='dd-MM-yyyy'/><br/>
                         </div>
                         <div class="schedaBody">
                             <div class="bodyEsame">
@@ -112,7 +119,7 @@
         </c:if>
 
         <!-- COLONNA ESAMI/VISITE FATTE -->
-        <div class="col col-3 justify-content-center">
+        <div class="col col-3 justify-content-center" id="colonnaFatti">
             <c:set scope="page" value="0" var="counterVisits"/>
             <c:set scope="page" value="0" var="counterExams"/>
             <c:forEach begin="0" end="${fn:length(requestScope.userVisits) + fn:length(requestScope.examListDone)}">
@@ -237,7 +244,7 @@
 
 
         <!-- COLONNA RICETTE -->
-        <div class="col col-3 justify-content-center">
+        <div class="col col-3 justify-content-center" id="colonnaRicette">
             <c:forEach items="${requestScope.recipesTaken}" var="ricetta">
                 <div class="scheda schedaRicetta">
                     <div class="schedaHeader">
@@ -260,7 +267,7 @@
         </div>
 
         <!-- COLONNA TICKET PAGATI -->
-        <div class="col col-3 justify-content-center">
+        <div class="col col-3 justify-content-center" id="colonnaTicket">
 
         </div>
     </div>
@@ -484,12 +491,8 @@
         //IMPOSTO LE ALTEZZE DELLA PAGINA, CHE RISULTANO SBALLATE PER COLPA DELLA NAVBAR
         var $navBar = $('#navBar');
         var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
-        document.getElementById("mainPagePC").style.marginTop = navHeight;
-        document.getElementById("mainPagePC").style.height = String($(window).height() - navHeight);
-        document.body.style.height = String($(window).height() - navHeight);
-        var $mainHeader = $('#mainHeader');
-        var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
-        document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
+        document.getElementById("mainPagePC").style.paddingTop = navHeight;
+
 
         if ($(window).width() <= 575) {
             document.getElementById("sidebar").style.marginTop = navHeight;
@@ -497,17 +500,10 @@
         }
 
         window.addEventListener("resize", function () {
-            var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
             if ($(window).width() <= 575) {
                 document.getElementById("sidebar").style.marginTop = navHeight;
                 document.getElementById("sidebar").style.height = "" + ($(window).height() - navHeight);
             } else {
-                document.getElementById("mainPagePC").style.marginTop = navHeight;
-                document.getElementById("mainPagePC").style.height = String($(window).height() - navHeight);
-                document.body.style.height = String($(window).height() - navHeight);
-                var $mainHeader = $('#mainHeader');
-                var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
-                document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
                 document.getElementById("sidebar").style.marginTop = "0";
                 document.getElementById("sidebar").style.height = "100%";
             }
@@ -574,6 +570,7 @@
             $(this).next('.custom-file-label').html(fileName);
         });
 
+
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DEI MODAL
         $('.schedaVisita').on('click', function (event) {
             var schedaVisita = $(event.currentTarget);
@@ -621,35 +618,55 @@
                     $('.modal').modal('show');
                 }
             });
-        })
-    });
+        });
 
 
-    //FUNZIONE PER LO SWITCH PER LA VISUALIZZAZIONE MOBILE E PC
-    var showDropdown = false;
-    if ($(window).width() <= 1400) {
-        showDropdown = true;
-    }
-    window.addEventListener("resize", function () {
+        //FUNZIONE PER LO SWITCH TRA LA VISUALIZZAZIONE MOBILE E PC E REGOLAZIONI VARI
+        var showDropdown = false;
         if ($(window).width() <= 1400) {
-            if (!showDropdown) {
-                //passo dalla visualizzazione grande a quella piccola
-                //nascondo la titlebar
-                //imposto la dropdown su in programma
-                //mostro la dropdown
-                //nascondo tutte le colonne apparte quella in programma
-                showDropdown = true
-            }
+            showDropdown = true;
+            //regolo le altezze del dropdown (come con il mainHeader)
         } else {
-            if (showDropdown) {
-                //passo dalla visualizzazione piccola a quella grande
-                //nascondo il dropdown
-                //mostro la titlebar
-                //imposto tutte le colonne su visibile
-                showDropdown = false;
-            }
+            var $mainHeader = $('#mainHeader');
+            var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
+            document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
         }
-    }, false);
+        window.addEventListener("resize", function () {
+            var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
+            document.getElementById("mainPagePC").style.paddingTop = navHeight;
+            var $mainHeader = $('#mainHeader');
+            var $mainDropdown = $('#mainDropdown');
+            if ($(window).width() <= 1400) {
+                //regolo le altezze del dropdown (come con il mainHeader)
+                if (!showDropdown) {
+                    //passo dalla visualizzazione grande a quella piccola
+                    //nascondo la titlebar
+                    $mainHeader.style.display = "none";
+                    //imposto la dropdown su in programma e nascondo tutte le colonne apparte quella in programma
+                    var $mainDropdownSelect = $('#mainDropdownSelect');
+                    $mainDropdownSelect.val("In programma").change();
+                    //mostro la dropdown
+                    $mainDropdown.style.display = "block";
+                    showDropdown = true
+                }
+            } else {
+                var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
+                document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
+                if (showDropdown) {
+                    //passo dalla visualizzazione piccola a quella grande
+                    //nascondo il dropdown
+                    $mainDropdown.style.display = "none";
+                    //mostro la titlebar
+                    $mainHeader.style.display = "flex";
+                    //imposto tutte le colonne su visibile
+
+                    showDropdown = false;
+                }
+            }
+        }, false);
+
+        //aggiungo il listener del dropdown
+    });
 
 
 </script>
