@@ -37,7 +37,9 @@ public class fillExamData implements Filter {
             int id = Integer.parseInt(servletRequest.getParameter("id"));
             ExamBean exam = examDAO.getByPrimaryKey(id);
 
-            if (exam.getVisita().getUtente().getCodiceFiscale().equals(session.getAttribute("codiceFiscale"))) {
+            String utente = exam.getVisita().getUtente().getCodiceFiscale().toUpperCase();
+
+            if (utente.equals(session.getAttribute("codiceFiscale"))) {
                 servletRequest.setAttribute("exam", exam);
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {

@@ -29,6 +29,7 @@
     <h5 class="subtitle">Prescritto dopo la visita #<c:out value="${requestScope.exam.visita.codice}"/></h5>
     <h5 class="doctor">Medico: <c:out value="${requestScope.exam.medico.nome}"/> <c:out
             value="${requestScope.exam.medico.cognome}"/></h5>
+    <h5>Tipo: <c:out value="${requestScope.exam.tipo}"/></h5>
 </div>
 <div id="DetailContent">
     <c:if test="${requestScope.exam.fatto}">

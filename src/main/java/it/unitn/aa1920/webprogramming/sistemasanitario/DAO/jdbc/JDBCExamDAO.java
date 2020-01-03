@@ -34,6 +34,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
+                esame.setTipo(result.getString("tipo"));
 
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
                 esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
@@ -66,6 +67,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
+                esame.setTipo(result.getString("tipo"));
 
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
                 esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
@@ -98,6 +100,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
+                esame.setTipo(result.getString("tipo"));
 
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
                 esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));
@@ -130,6 +133,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 esame.setFatto(result.getBoolean("fatto"));
                 esame.setReferto(result.getString("referto"));
                 esame.setTicket(result.getDouble("ticket"));
+                esame.setTipo(result.getString("tipo"));
 
                 JDBCDoctorDAO doctorDAO = new JDBCDoctorDAO(CON);
                 esame.setMedico(doctorDAO.getByPrimaryKey(result.getInt("medico")));

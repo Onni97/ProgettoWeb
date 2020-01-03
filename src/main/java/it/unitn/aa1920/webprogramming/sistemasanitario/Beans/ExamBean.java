@@ -1,6 +1,5 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Beans;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class ExamBean {
@@ -11,6 +10,7 @@ public class ExamBean {
     private boolean fatto;
     private VisitBean visita;
     private UserBean medico;
+    private String tipo;
 
     public int getCodice() { return codice; }
 
@@ -39,4 +39,12 @@ public class ExamBean {
     public UserBean getMedico() { return medico; }
 
     public void setMedico(UserBean medico) { this.medico = medico; }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }

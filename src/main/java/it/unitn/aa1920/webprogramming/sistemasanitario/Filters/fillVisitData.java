@@ -37,7 +37,9 @@ public class fillVisitData implements Filter {
             int id = Integer.parseInt(servletRequest.getParameter("id"));
             VisitBean visit = visitDAO.getByPrimaryKey(id);
 
-            if (visit.getUtente().getCodiceFiscale().equals(session.getAttribute("codiceFiscale"))) {
+            String utente = visit.getUtente().getCodiceFiscale().toUpperCase();
+
+            if (utente.equals(session.getAttribute("codiceFiscale"))) {
                 servletRequest.setAttribute("visit", visit);
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {

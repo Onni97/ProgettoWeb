@@ -24,7 +24,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 "       left join (select esami.*, visite.utente\n" +
                 "                  from esami, visite\n" +
                 "                  where esami.codiceVisita = visite.codice) e on r.codiceEsame = e.codice\n" +
-                "       where e.utente = 'NRTLSN97S24L378A' or v.utente = 'NRTLSN97S24L378A'" +
+                "       where e.utente = '" + codiceFiscale + "' or v.utente = '" + codiceFiscale + "'" +
                 "       order by data DESC ";
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<RecipeBean> listaRicette = new LinkedList<>();
@@ -60,7 +60,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 "       left join (select esami.*, visite.utente\n" +
                 "                  from esami, visite\n" +
                 "                  where esami.codiceVisita = visite.codice) e on r.codiceEsame = e.codice\n" +
-                "       where (e.utente = 'NRTLSN97S24L378A' or v.utente = 'NRTLSN97S24L378A') and dataOraEvasa is null " +
+                "       where (e.utente = '" + codiceFiscale + "' or v.utente = '" + codiceFiscale + "') and dataOraEvasa is null " +
                 "       order by data DESC ";
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<RecipeBean> recipeListNotTaken = new LinkedList<>();
@@ -96,7 +96,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 "       left join (select esami.*, visite.utente\n" +
                 "                  from esami, visite\n" +
                 "                  where esami.codiceVisita = visite.codice) e on r.codiceEsame = e.codice\n" +
-                "       where (e.utente = 'NRTLSN97S24L378A' or v.utente = 'NRTLSN97S24L378A') and dataOraEvasa is not null" +
+                "       where (e.utente = '" + codiceFiscale + "' or v.utente = '" + codiceFiscale + "') and dataOraEvasa is not null" +
                 "       order by data DESC ";
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<RecipeBean> recipeListTaken = new LinkedList<>();

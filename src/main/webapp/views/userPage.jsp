@@ -24,7 +24,8 @@
 </head>
 
 
-<body>
+<!-- INIZIALMENTE NASCONDO L'INTERA PAGINA, LA MOSTRERO' ALLA FINE PER EVITARE PROBLEMI GRAFICI DURANTE IL CARICAMENTO -->
+<body id="body" style="visibility: hidden">
 
 
 <!-- NAVBAR -->
@@ -52,8 +53,8 @@
         <label>
             <select class="form-control" id="mainDropdownSelect">
                 <option selected>In programma</option>
-                <option>Visite fatte</option>
-                <option>Ricette evase</option>
+                <option>Visite Fatte</option>
+                <option>Ricette Evase</option>
                 <option>Ticket Pagati</option>
             </select>
         </label>
@@ -105,6 +106,7 @@
                         </div>
                         <div class="schedaBody">
                             <div class="bodyEsame">
+                                Tipo: ${exam.tipo}
                             </div>
                         </div>
                         <span class="altro">Mostra tutto...</span>
@@ -138,6 +140,8 @@
                                         type='date' pattern='dd-MM-yyyy'/><br/></span>
                             </div>
                             <div class="schedaBody">
+                                    <%--suppress ELValidationInJSP --%>
+                                Tipo: <c:out value="${requestScope.examListDone[counterExams].tipo}"/><br/>
                                     <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.examListDone[counterExams].referto}"/>
                                 <div class="sfumatura"></div>
@@ -195,6 +199,8 @@
                                         type='date' pattern='dd-MM-yyyy'/><br/></span>
                             </div>
                             <div class="schedaBody">
+                                    <%--suppress ELValidationInJSP --%>
+                                <c:out value="${requestScope.examListDone[counterExams].tipo}"/><br/>
                                     <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.examListDone[counterExams].referto}"/>
                                 <div class="sfumatura"></div>
@@ -494,20 +500,19 @@
         document.getElementById("mainPagePC").style.paddingTop = navHeight;
 
 
-        if ($(window).width() <= 575) {
-            document.getElementById("sidebar").style.marginTop = navHeight;
-            document.getElementById("sidebar").style.height = "" + ($(window).height() - navHeight);
-        }
-
-        window.addEventListener("resize", function () {
+        //REGOLAZIONE SIDEBAR
+        var correctSidebar = function () {
             if ($(window).width() <= 575) {
-                document.getElementById("sidebar").style.marginTop = navHeight;
-                document.getElementById("sidebar").style.height = "" + ($(window).height() - navHeight);
+                var newNavHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
+                document.getElementById("sidebar").style.marginTop = newNavHeight;
+                document.getElementById("sidebar").style.height = "" + ($(window).height() - newNavHeight);
             } else {
                 document.getElementById("sidebar").style.marginTop = "0";
                 document.getElementById("sidebar").style.height = "100%";
             }
-        }, false);
+        };
+        correctSidebar();
+        window.addEventListener("resize", correctSidebar, false);
 
 
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DELLA SIDEBAR
@@ -544,6 +549,7 @@
                 document.getElementById("openSidebarButtonText").innerHTML = "Chiudi";
                 opened = true;
             }
+            correctSidebar();
         });
 
         $('#changeMedicoDiBase').on('click', function () {
@@ -570,7 +576,7 @@
             $(this).next('.custom-file-label').html(fileName);
         });
 
-
+        <%--suppress JSUnresolvedFunction, JSJQueryEfficiency --%>
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DEI MODAL
         $('.schedaVisita').on('click', function (event) {
             var schedaVisita = $(event.currentTarget);
@@ -623,52 +629,107 @@
 
         //FUNZIONE PER LO SWITCH TRA LA VISUALIZZAZIONE MOBILE E PC E REGOLAZIONI VARI
         var showDropdown = false;
-        if ($(window).width() <= 1400) {
-            showDropdown = true;
-            //regolo le altezze del dropdown (come con il mainHeader)
-        } else {
-            var $mainHeader = $('#mainHeader');
-            var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
-            document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
-        }
-        window.addEventListener("resize", function () {
-            var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
-            document.getElementById("mainPagePC").style.paddingTop = navHeight;
+        var correctMainPage = function () {
+            document.getElementById("mainPagePC").style.paddingTop = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
             var $mainHeader = $('#mainHeader');
             var $mainDropdown = $('#mainDropdown');
             if ($(window).width() <= 1400) {
-                //regolo le altezze del dropdown (come con il mainHeader)
+                //regolo le altezze del dropdown
+                var mainDropdownHeight = $mainDropdown.height() + parseInt($mainDropdown.css("padding-top").replace("px", "")) + parseInt($mainDropdown.css("padding-bottom").replace("px", ""));
+                document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainDropdownHeight);
+                //regolo la larghezza delle colonne
+                document.getElementById("colonnaPromemoria").style.flex = "0 0 100%";
+                document.getElementById("colonnaFatti").style.flex = "0 0 100%";
+                document.getElementById("colonnaRicette").style.flex = "0 0 100%";
+                document.getElementById("colonnaTicket").style.flex = "0 0 100%";
+                document.getElementById("colonnaPromemoria").style.maxWidth = "100%";
+                document.getElementById("colonnaFatti").style.maxWidth = "100%";
+                document.getElementById("colonnaRicette").style.maxWidth = "100%";
+                document.getElementById("colonnaTicket").style.maxWidth = "100%";
+                document.getElementById("mainContent").style.padding = "0";
                 if (!showDropdown) {
                     //passo dalla visualizzazione grande a quella piccola
                     //nascondo la titlebar
-                    $mainHeader.style.display = "none";
+                    document.getElementById("mainHeader").style.display = "none";
                     //imposto la dropdown su in programma e nascondo tutte le colonne apparte quella in programma
                     var $mainDropdownSelect = $('#mainDropdownSelect');
                     $mainDropdownSelect.val("In programma").change();
                     //mostro la dropdown
-                    $mainDropdown.style.display = "block";
+                    document.getElementById("mainDropdown").style.display = "block";
                     showDropdown = true
+                } else {
+                    //sono già nella visualizzazione piccola
+                    document.getElementById("mainHeader").style.display = "none";
                 }
             } else {
+                //sono nella visualizzazione grande
+                //regolo le altezze dell' header
                 var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
                 document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
-                if (showDropdown) {
-                    //passo dalla visualizzazione piccola a quella grande
-                    //nascondo il dropdown
-                    $mainDropdown.style.display = "none";
-                    //mostro la titlebar
-                    $mainHeader.style.display = "flex";
-                    //imposto tutte le colonne su visibile
-
-                    showDropdown = false;
-                }
+                //regolo la larghezza delle colonne
+                document.getElementById("colonnaPromemoria").style.flex = "0 0 25%";
+                document.getElementById("colonnaFatti").style.flex = "0 0 25%";
+                document.getElementById("colonnaRicette").style.flex = "0 0 25%";
+                document.getElementById("colonnaTicket").style.flex = "0 0 25%";
+                document.getElementById("colonnaPromemoria").style.maxWidth = "25%";
+                document.getElementById("colonnaFatti").style.maxWidth = "25%";
+                document.getElementById("colonnaRicette").style.maxWidth = "25%";
+                document.getElementById("colonnaTicket").style.maxWidth = "25%";
+                document.getElementById("mainContent").style.paddingRight = "2em";
+                document.getElementById("mainContent").style.paddingLeft = "2em";
+                //nascondo il dropdown
+                document.getElementById("mainDropdown").style.display = "none";
+                //mostro la titlebar
+                document.getElementById("mainHeader").style.display = "flex";
+                //imposto tutte le colonne su visibile
+                document.getElementById("colonnaPromemoria").style.display = "block";
+                document.getElementById("colonnaFatti").style.display = "block";
+                document.getElementById("colonnaRicette").style.display = "block";
+                document.getElementById("colonnaTicket").style.display = "block";
+                showDropdown = false;
             }
-        }, false);
+        };
+        correctMainPage();
+        window.addEventListener("resize", correctMainPage, false);
+        if ($(window).width() <= 1400) {
+            $('#mainDropdownSelect').val("In programma").change();
+        }
 
         //aggiungo il listener del dropdown
+        $('#mainDropdownSelect').change(function () {
+            var colonnaScelta = this.value;
+            console.log(colonnaScelta);
+            switch (colonnaScelta) {
+                case "In programma":
+                    document.getElementById("colonnaPromemoria").style.display = "block";
+                    document.getElementById("colonnaFatti").style.display = "none";
+                    document.getElementById("colonnaRicette").style.display = "none";
+                    document.getElementById("colonnaTicket").style.display = "none";
+                    break;
+                case "Visite Fatte":
+                    document.getElementById("colonnaPromemoria").style.display = "none";
+                    document.getElementById("colonnaFatti").style.display = "block";
+                    document.getElementById("colonnaRicette").style.display = "none";
+                    document.getElementById("colonnaTicket").style.display = "none";
+                    break;
+                case "Ricette Evase":
+                    document.getElementById("colonnaPromemoria").style.display = "none";
+                    document.getElementById("colonnaFatti").style.display = "none";
+                    document.getElementById("colonnaRicette").style.display = "block";
+                    document.getElementById("colonnaTicket").style.display = "none";
+                    break;
+                case "Ticket Pagati":
+                    document.getElementById("colonnaPromemoria").style.display = "none";
+                    document.getElementById("colonnaFatti").style.display = "none";
+                    document.getElementById("colonnaRicette").style.display = "none";
+                    document.getElementById("colonnaTicket").style.display = "block";
+                    break;
+            }
+        });
+
+        //RENDO L'INTERA PAGINA VISIBILE
+        document.getElementById("body").style.visibility = "visible";
     });
-
-
 </script>
 
 </body>

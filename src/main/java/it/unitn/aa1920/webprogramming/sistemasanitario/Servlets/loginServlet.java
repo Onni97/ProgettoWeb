@@ -89,7 +89,7 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
             } else if (loginOk == LoginStatus.LOGIN_OK_AS_USER) {
                 //login ok come utente
                 System.out.println("LOGIN OK COME UTENTE");
-                session.setAttribute("codiceFiscale", codiceFiscale);
+                session.setAttribute("codiceFiscale", codiceFiscale.toUpperCase());
 
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
 
