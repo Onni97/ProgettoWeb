@@ -1,6 +1,8 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.UserDAO;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,20 +16,27 @@ public class checkIfDoctor implements Filter {
     public void destroy() {
     }
 
+    private UserDAO userDAO;
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpSession session = ((HttpServletRequest)req).getSession();
-        UserBean user = (UserBean)session.getAttribute("user");
+        String codiceFiscale = (String) session.getAttribute("codiceFiscale");
 
-        if(user.getIsDoctor()) {
-            chain.doFilter(req, resp);
-        } else {
-            System.out.println("FILTERED: not doctor");
-            ServletContext sc = req.getServletContext();
-            String contextPath = sc.getContextPath();
-            if (!contextPath.endsWith("/")) {
-                contextPath += "/";
+        try {
+            System.out.println(userDAO.getByPrimaryKey(codiceFiscale));
+            if(userDAO.getByPrimaryKey(codiceFiscale).getIsDoctor()) {
+                System.out.println("LOGIN COME DOTTORE");
+                chain.doFilter(req, resp);
+            } else {
+                System.out.println("FILTERED: not doctor");
+                ServletContext sc = req.getServletContext();
+                String contextPath = sc.getContextPath();
+                if (!contextPath.endsWith("/")) {
+                    contextPath += "/";
+                }
+                ((HttpServletResponse)resp).sendRedirect(((HttpServletResponse)resp).encodeRedirectURL(contextPath));
             }
-            ((HttpServletResponse)resp).sendRedirect(((HttpServletResponse)resp).encodeRedirectURL(contextPath));
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
 
 
