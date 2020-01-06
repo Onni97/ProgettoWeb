@@ -96,10 +96,6 @@ body {
     color: #138496;
 }
 
-#openSidebarButtonText {
-    transition: all 0.3s;
-}
-
 #profileImage {
     z-index: 1001;
     width: 150px;

@@ -49,7 +49,7 @@
             </table>
             <p>Accedi come:</p>
             <button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="user" value="utente" style="margin-right: 1em">UTENTE</button>
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="doctor" value="medico">MEDICO</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="doctor" value="medico">MEDICO</button>
         </form>
     </div>
 </div>

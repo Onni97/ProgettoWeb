@@ -83,7 +83,9 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
 
             } else if (loginOk == LoginStatus.LOGIN_OK_AS_DOCTOR) {
                 //login ok come medico
-                //TODO
+                System.out.println("LOGIN OK COME MEDICO");
+                session.setAttribute("codiceFiscale", codiceFiscale.toUpperCase());
+
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "doctorPage"));
 
             } else if (loginOk == LoginStatus.LOGIN_OK_AS_USER) {

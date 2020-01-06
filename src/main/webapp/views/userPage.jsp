@@ -33,9 +33,15 @@
 
     <button type="button" id="openSidebar" class="btn btn-info my-auto">
         <i class="fas fa-align-left" aria-hidden="true" style="margin-right: 0.5em"></i>
-        <span id="openSidebarButtonText"><jsp:getProperty name="user" property="nome"/> <jsp:getProperty name="user"
-                                                                                                         property="cognome"/></span>
+        <span><jsp:getProperty name="user" property="nome"/> <jsp:getProperty name="user" property="cognome"/></span>
     </button>
+
+    <c:if test="${requestScope.user.isDoctor}">
+        <button class="btn btn-success" style="margin-right: 1em"
+                onclick="window.open('${pageContext.request.contextPath}/doctorPage', '_self')">
+            <i class="fas fa-user-md" aria-hidden="true" style="margin-right: 0.5em"></i>Passa a Medico
+        </button>
+    </c:if>
 
     <form class="form-inline my-2 my-lg-0 float-right justify-content-right my-auto" action="logoutServlet"
           method="post">
@@ -278,8 +284,6 @@
         </div>
     </div>
 </div>
-
-<!--MAIN PAGE MOBILE -->
 
 
 <!--MODAL -->
