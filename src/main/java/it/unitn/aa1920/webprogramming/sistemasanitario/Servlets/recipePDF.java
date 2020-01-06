@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
 
 public class recipePDF extends javax.servlet.http.HttpServlet {
     @Override
@@ -21,14 +22,15 @@ public class recipePDF extends javax.servlet.http.HttpServlet {
             doc.addPage(page);
 
             try (PDPageContentStream cont = new PDPageContentStream(doc, page)) {
-                //RecipeBean recipe = (RecipeBean)req.getParameter("recipe");
+                RecipeBean recipe = (RecipeBean) req.getAttribute("recipe");
                 cont.beginText();
 
                 //per centrare il titolo
-                String title = "Ricetta";
+                String title = "Ricetta Farmaceutica";
+
                 PDFont font = PDType1Font.HELVETICA_BOLD;
                 int marginTop = 30;
-                int fontSize = 16;
+                int fontSize = 24;
 
                 float titleWidth = font.getStringWidth(title) / 1000 * fontSize;
                 float titleHeight = font.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * fontSize;
@@ -41,8 +43,41 @@ public class recipePDF extends javax.servlet.http.HttpServlet {
                 cont.newLineAtOffset(startX, startY);
                 cont.showText(title);
 
-                //stampo la
-                cont.newLine();
+                //stampo i dati della ricetta
+                int space = 20;
+                cont.setFont(font, 14);
+                cont.newLineAtOffset(-startX + 30, -3*space);
+                if (recipe.getVisita().getCodice() == -1) {
+                    cont.showText("Codice medico: " + recipe.getEsame().getVisita().getMedicoDiBase().getCodiceMedico());
+                    cont.newLineAtOffset(0, -space);
+                    cont.showText("Codice Fiscale Paziente: " + recipe.getEsame().getVisita().getUtente().getCodiceFiscale());
+                    cont.newLineAtOffset(0, -space);
+                } else {
+                    cont.showText("Codice Medico: " + recipe.getVisita().getMedicoDiBase().getCodiceMedico());
+                    cont.newLineAtOffset(0, -space);
+                    cont.showText("Codice Fiscale Paziente: " + recipe.getVisita().getUtente().getCodiceFiscale());
+                    cont.newLineAtOffset(0, -space);
+                }
+                cont.showText("Data e Ora: " + DateFormat.getInstance().format(recipe.getData()));
+                cont.newLineAtOffset(0, -space);
+                cont.newLineAtOffset(0, -space);
+                cont.showText("Farmaco: " + recipe.getFarmaco());
+                cont.newLineAtOffset(0, -space);
+                cont.showText("Quantità: " + recipe.getQuantita());
+                cont.newLineAtOffset(0, -space);
+                cont.showText("Descrizione: " + recipe.getDescrizioneFarmaco());
+                cont.newLineAtOffset(0, -space);
+                cont.newLineAtOffset(0, -space);
+
+                cont.showText("Codice Prescrizione: " + recipe.getCodice());
+                cont.newLineAtOffset(0, -space);
+                if (recipe.getDataOraEvasa() == null) {
+                    cont.showText("NON EVASA");
+                } else {
+                    cont.showText("EVASA IN DATA: " + DateFormat.getInstance().format(recipe.getDataOraEvasa()));
+                }
+
+
 
                 cont.endText();
 

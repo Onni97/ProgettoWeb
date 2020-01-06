@@ -76,7 +76,8 @@
     <div id="mainContent" class="row">
         <!-- COLONNA DA FARE -->
         <c:if test="${fn:length(requestScope.recipesNotTaken) + fn:length(requestScope.examListNotDone) == 0}">
-            <div class="col col-3 justify-content-center" id="colonnaPromemoria">
+            <div class="col col-3 justify-content-center" id="colonnaPromemoria"
+                 style="display: flex !important; align-items: center;">
                 <h1 class="testoIncavato">Niente in programma</h1>
             </div>
         </c:if>
@@ -274,11 +275,27 @@
 
         <!-- COLONNA TICKET PAGATI -->
         <div class="col col-3 justify-content-center" id="colonnaTicket">
-
+            <c:forEach items="${requestScope.examListDone}" var="exam">
+                <div class="scheda schedaEsame">
+                    <div class="schedaHeader">
+                        <b>TICKET</b><br/>
+                        <fmt:formatDate value='${exam.dataOraFissata}' type='date' pattern='dd-MM-yyyy'/><br/>
+                    </div>
+                    <div class="schedaBody">
+                        <div class="bodyEsame" style="text-align: center">
+                            Prezzo: ${exam.ticket}€
+                        </div>
+                    </div>
+                    <span class="altro">Mostra tutto...</span>
+                    <div class="schedaIndex" style="visibility: hidden">
+                        #<span class="codiceEsame"><c:out value="${exam.codice}"/></span>
+                    </div>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </div>
-
+</div>
 <!--MAIN PAGE MOBILE -->
 
 
@@ -663,6 +680,10 @@
                 }
             } else {
                 //sono nella visualizzazione grande
+                //nascondo il dropdown
+                document.getElementById("mainDropdown").style.display = "none";
+                //mostro la titlebar
+                document.getElementById("mainHeader").style.display = "flex";
                 //regolo le altezze dell' header
                 var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
                 document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
@@ -677,12 +698,8 @@
                 document.getElementById("colonnaTicket").style.maxWidth = "25%";
                 document.getElementById("mainContent").style.paddingRight = "2em";
                 document.getElementById("mainContent").style.paddingLeft = "2em";
-                //nascondo il dropdown
-                document.getElementById("mainDropdown").style.display = "none";
-                //mostro la titlebar
-                document.getElementById("mainHeader").style.display = "flex";
                 //imposto tutte le colonne su visibile
-                document.getElementById("colonnaPromemoria").style.display = "block";
+                document.getElementById("colonnaPromemoria").style.display = "flex";
                 document.getElementById("colonnaFatti").style.display = "block";
                 document.getElementById("colonnaRicette").style.display = "block";
                 document.getElementById("colonnaTicket").style.display = "block";
@@ -701,7 +718,7 @@
             console.log(colonnaScelta);
             switch (colonnaScelta) {
                 case "In programma":
-                    document.getElementById("colonnaPromemoria").style.display = "block";
+                    document.getElementById("colonnaPromemoria").style.display = "flex";
                     document.getElementById("colonnaFatti").style.display = "none";
                     document.getElementById("colonnaRicette").style.display = "none";
                     document.getElementById("colonnaTicket").style.display = "none";

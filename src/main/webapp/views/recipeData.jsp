@@ -30,10 +30,18 @@
                 value='${requestScope.recipe.dataOraEvasa}' type='date' pattern='H:m'/></h5>
     </c:if>
 </div>
-<div id="DetailContent">
+<div id="DetailContent" style="text-align: center;">
     <p class="mainText"><c:out value="${requestScope.recipe.quantita}"/> x <c:out
             value="${requestScope.recipe.farmaco}"/></p>
     <p class="mainText">Descrizione farmaco: <c:out value="${requestScope.recipe.descrizioneFarmaco}"/></p>
+    <button class="btn btn-info" style="margin-right: 2em"
+            onclick="window.open('${pageContext.request.contextPath}/recipePDF?id=${requestScope.recipe.codice}','_blank')">
+        Stampa Ricetta
+    </button>
+    <button class="btn btn-info"
+            onclick="window.open('${pageContext.request.contextPath}/recipeQR?id=${requestScope.recipe.codice}','_blank')">
+        Stampa QR Ricetta
+    </button>
 
     <span class="index">#<c:out value="${requestScope.recipe.codice}"/></span>
 </div>

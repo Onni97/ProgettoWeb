@@ -166,6 +166,15 @@
         <url-pattern>/recipePDF</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/recipeQR</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillRecipeData</filter-name>
+        <url-pattern>/recipeQR</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -234,6 +243,11 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.recipePDF</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>recipeQR</servlet-name>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.recipeQR</servlet-class>
+    </servlet>
+
 
 
 
@@ -298,6 +312,11 @@
     <servlet-mapping>
         <servlet-name>recipePDF</servlet-name>
         <url-pattern>/recipePDF</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>recipeQR</servlet-name>
+        <url-pattern>/recipeQR</url-pattern>
     </servlet-mapping>
 
 
