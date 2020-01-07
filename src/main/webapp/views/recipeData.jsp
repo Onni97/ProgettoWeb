@@ -36,11 +36,11 @@
     <p class="mainText">Descrizione farmaco: <c:out value="${requestScope.recipe.descrizioneFarmaco}"/></p>
     <button class="btn btn-info" style="margin-right: 2em"
             onclick="window.open('${pageContext.request.contextPath}/recipePDF?id=${requestScope.recipe.codice}','_blank')">
-        Stampa Ricetta
+        Stampa
     </button>
     <button class="btn btn-info"
             onclick="window.open('${pageContext.request.contextPath}/recipeQR?id=${requestScope.recipe.codice}','_blank')">
-        Stampa QR Ricetta
+        Vedi QR
     </button>
 
     <span class="index">#<c:out value="${requestScope.recipe.codice}"/></span>
