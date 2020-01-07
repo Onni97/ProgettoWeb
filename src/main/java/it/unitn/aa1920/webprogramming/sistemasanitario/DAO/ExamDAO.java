@@ -9,4 +9,5 @@ public interface ExamDAO extends DAO<ExamBean, Integer> {
     List<ExamBean> getExamsOfUser(String codiceFiscale) throws DAOException;
     List<ExamBean> getExamsNotDoneOfUser(String codiceFiscale) throws DAOException;
     List<ExamBean> getExamsDoneOfUser(String codiceFiscale) throws DAOException;
+    List<ExamBean> getExamsNotDoneOfDoctor(int codiceMedico) throws DAOException;
 }

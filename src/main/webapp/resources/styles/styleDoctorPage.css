@@ -1,0 +1,23 @@
+#sidebar {
+    background: #218838;
+}
+
+.sidebarButton {
+    background: #28a745;
+}
+
+.sidebarButton:hover {
+    color: #218838;
+}
+
+.InfoTableRow:nth-child(odd) {
+    background-color: #28a745;
+}
+
+#buttonAppointments {
+    margin-bottom: 2em;
+}
+
+#buttonPatients {
+    margin-bottom: 2em;
+}

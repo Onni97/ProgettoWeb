@@ -76,6 +76,21 @@
         <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillExamData</filter-class>
     </filter>
 
+    <filter>
+        <filter-name>fillDoctorData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillDoctorData</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>fillDoctorAppointmentsData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillDoctorAppointmentsData</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>fillDoctorPatientsData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillDoctorPatientsData</filter-class>
+    </filter>
+
 
 
 
@@ -112,6 +127,10 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/doctorPage</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillDoctorData</filter-name>
         <url-pattern>/doctorPage</url-pattern>
     </filter-mapping>
 
@@ -173,6 +192,18 @@
     <filter-mapping>
         <filter-name>fillRecipeData</filter-name>
         <url-pattern>/recipeQR</url-pattern>
+    </filter-mapping>
+
+    <!-- TODO: quando finisco i test aggiungo i filtri checkIFNotLogged e checkIfDoctor -->
+    <filter-mapping>
+        <filter-name>fillDoctorAppointmentsData</filter-name>
+        <url-pattern>/doctorPageAppointments</url-pattern>
+    </filter-mapping>
+
+    <!-- TODO: quando finisco i test aggiungo i filtri checkIFNotLogged e checkIfDoctor -->
+    <filter-mapping>
+        <filter-name>fillDoctorPatientsData</filter-name>
+        <url-pattern>/doctorPagePatients</url-pattern>
     </filter-mapping>
 
 
@@ -248,6 +279,16 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.recipeQR</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>doctorPageAppointments</servlet-name>
+        <jsp-file>/views/doctorPageAppointments.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>doctorPagePatients</servlet-name>
+        <jsp-file>/views/doctorPagePatients.jsp</jsp-file>
+    </servlet>
+
 
 
 
@@ -319,6 +360,16 @@
         <url-pattern>/recipeQR</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>doctorPageAppointments</servlet-name>
+        <url-pattern>/doctorPageAppointments</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>doctorPagePatients</servlet-name>
+        <url-pattern>/doctorPagePatients</url-pattern>
+    </servlet-mapping>
+
 
 
 
@@ -349,6 +400,10 @@
         <location>/errors/unauthorizedError.jsp</location>
     </error-page>
 
+
+    <welcome-file-list>
+        <welcome-file>/views/index.jsp</welcome-file>
+    </welcome-file-list>
 
 
 </web-app>

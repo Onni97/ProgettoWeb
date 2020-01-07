@@ -9,5 +9,5 @@ public interface DoctorDAO extends DAO<UserBean, Integer> {
 
     int getDoctorCode(String codiceFiscale) throws DAOException;
     List<UserBean> getListaMediciPerProfincia(String provincia) throws DAOException;
-
+    List<UserBean> getPatientsOfDoctor(int codiceMedico) throws  DAOException;
 }

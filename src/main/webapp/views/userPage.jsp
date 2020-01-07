@@ -33,7 +33,7 @@
 
     <button type="button" id="openSidebar" class="btn btn-info my-auto">
         <i class="fas fa-align-left" aria-hidden="true" style="margin-right: 0.5em"></i>
-        <span><jsp:getProperty name="user" property="nome"/> <jsp:getProperty name="user" property="cognome"/></span>
+        <span id="openSidebarButtonText">Profilo</span>
     </button>
 
     <c:if test="${requestScope.user.isDoctor}">
@@ -83,7 +83,7 @@
         <!-- COLONNA DA FARE -->
         <c:if test="${fn:length(requestScope.recipesNotTaken) + fn:length(requestScope.examListNotDone) == 0}">
             <div class="col col-3 justify-content-center" id="colonnaPromemoria"
-                 style="display: flex !important; align-items: center;">
+                 style="align-items: center;">
                 <h1 class="testoIncavato">Niente in programma</h1>
             </div>
         </c:if>
@@ -281,6 +281,7 @@
 
         <!-- COLONNA TICKET PAGATI -->
         <div class="col col-3 justify-content-center" id="colonnaTicket">
+            <!-- TODO: inserire il bottone per stampare tutti i ticket pagati -->
             <c:forEach items="${requestScope.examListDone}" var="exam">
                 <div class="scheda schedaEsame">
                     <div class="schedaHeader">
@@ -318,6 +319,7 @@
     <button type="button" id="dismiss" class="btn btn-info sidebarButton">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
     </button>
+
     <div class="row rowImg">
         <div class="col colImg">
             <img id="profileImage" class="mx-auto d-block"
@@ -354,14 +356,14 @@
 
     <div class="row text-center">
         <div class="col sidebarTitle">
-            <h1>IL TUO PROFILO</h1>
+            <h1>${requestScope.user.nome} ${requestScope.user.cognome}</h1>
         </div>
     </div>
 
     <div id="userInfoTable">
         <div class="row InfoTableRow">
             <div class="col-5 InfoTableCol my-auto">
-                CodiceFiscale
+                Codice Fiscale
             </div>
             <div class="col-7 InfoTableCol my-auto">
                 <jsp:getProperty name="user" property="codiceFiscale"/>
@@ -487,7 +489,8 @@
                     <label class="my-auto">
                         <select name="newDoctor" class="form-control">
                             <c:forEach items="${requestScope.DoctorForProvinceList}" var="medico">
-                                <c:if test="${requestScope.user.medicoDiBase != medico.codiceMedico}">
+                                <c:if test="${requestScope.user.medicoDiBase != medico.codiceMedico
+                                                and requestScope.user.codiceMedico != medico.codiceMedico}">
                                     <option>
                                         <c:out value="${medico.codiceMedico}"/> - <c:out value="${medico.nome}"/> <c:out
                                             value="${medico.cognome}"/>
@@ -541,8 +544,7 @@
         $('#dismiss, #overlay').on('click', function () {
             $('#sidebar').removeClass('active');
             $('#overlay').removeClass('active');
-            document.getElementById("openSidebarButtonText").innerHTML = "<c:out value="${requestScope.user.nome}"/>" + " "
-                + "<c:out value="${requestScope.user.cognome}"/>";
+            document.getElementById("openSidebarButtonText").innerHTML = "Profilo";
             opened = false;
             setTimeout(function () {
                 $('#rowChangeMedicoDiBase').removeClass('active');
@@ -555,8 +557,7 @@
             if (opened) {
                 $('#sidebar').removeClass('active');
                 $('#overlay').removeClass('active');
-                document.getElementById("openSidebarButtonText").innerHTML = "<c:out value="${requestScope.user.nome}"/>" + " "
-                    + "<c:out value="${requestScope.user.cognome}"/>";
+                document.getElementById("openSidebarButtonText").innerHTML = "Profilo";
                 opened = false;
                 setTimeout(function () {
                     $('#rowChangeMedicoDiBase').removeClass('active');
@@ -703,7 +704,7 @@
                 document.getElementById("mainContent").style.paddingRight = "2em";
                 document.getElementById("mainContent").style.paddingLeft = "2em";
                 //imposto tutte le colonne su visibile
-                document.getElementById("colonnaPromemoria").style.display = "flex";
+                document.getElementById("colonnaPromemoria").style.display = "block";
                 document.getElementById("colonnaFatti").style.display = "block";
                 document.getElementById("colonnaRicette").style.display = "block";
                 document.getElementById("colonnaTicket").style.display = "block";
@@ -719,10 +720,9 @@
         //aggiungo il listener del dropdown
         $('#mainDropdownSelect').change(function () {
             var colonnaScelta = this.value;
-            console.log(colonnaScelta);
             switch (colonnaScelta) {
                 case "In programma":
-                    document.getElementById("colonnaPromemoria").style.display = "flex";
+                    document.getElementById("colonnaPromemoria").style.display = "block";
                     document.getElementById("colonnaFatti").style.display = "none";
                     document.getElementById("colonnaRicette").style.display = "none";
                     document.getElementById("colonnaTicket").style.display = "none";
