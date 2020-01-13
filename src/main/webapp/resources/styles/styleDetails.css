@@ -34,3 +34,7 @@
     float: right;
     padding-right: 1em;
 }
+
+.subtitle {
+    text-align: left;
+}

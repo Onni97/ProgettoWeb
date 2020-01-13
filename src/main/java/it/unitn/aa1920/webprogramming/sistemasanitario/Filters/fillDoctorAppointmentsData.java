@@ -41,7 +41,7 @@ public class fillDoctorAppointmentsData implements Filter {
             String codiceFiscale = (String) session.getAttribute("codiceFiscale");
             UserBean user = userDAO.getByPrimaryKey(codiceFiscale);
 
-            List<ExamBean> examList = examDAO.getExamsNotDoneOfDoctor(user.getCodiceMedico());
+            List<ExamBean> examList = examDAO.getExamsOfDoctor(user.getCodiceMedico());
             servletRequest.setAttribute("examList", examList);
 
             filterChain.doFilter(servletRequest, servletResponse);

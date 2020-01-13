@@ -220,7 +220,7 @@ body {
 
 /* MAIN PAGE */
 
-#mainPagePC {
+#mainPage {
     background-color: #f8f9fa;
     height: 100%;
     width: 100%;
@@ -236,7 +236,8 @@ body {
     width: 100%;
     max-width: 100%;
     height: min-content;
-    margin: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 #mainDropdown {
@@ -246,7 +247,8 @@ body {
     max-width: 100%;
     background-color: lightgray;
     box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.14), 0 2px 15px 0 rgba(0, 0, 0, 0.12);
-    margin: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 #mainDropdown label {

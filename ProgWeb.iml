@@ -69,5 +69,7 @@
     <orderEntry type="library" name="Maven: org.apache.pdfbox:pdfbox:2.0.18" level="project" />
     <orderEntry type="library" name="Maven: org.apache.pdfbox:fontbox:2.0.18" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="bootstrap-datetimepicker" level="application" />
+    <orderEntry type="library" name="moment" level="application" />
   </component>
 </module>

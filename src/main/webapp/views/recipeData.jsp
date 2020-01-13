@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>Sistema Sanitario</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleDetails.css">
 </head>
@@ -26,7 +25,7 @@
     </c:if>
     <c:if test="${not empty requestScope.recipe.dataOraEvasa}">
         <h5 class="subtitle">Evasa in data: <fmt:formatDate value='${requestScope.recipe.dataOraEvasa}' type='date'
-                                                            pattern='dd-MM-yyyy'/> alle <fmt:formatDate
+                                                            pattern='dd/MM/yyyy'/> alle <fmt:formatDate
                 value='${requestScope.recipe.dataOraEvasa}' type='date' pattern='H:m'/></h5>
     </c:if>
 </div>
@@ -36,11 +35,11 @@
     <p class="mainText">Descrizione farmaco: <c:out value="${requestScope.recipe.descrizioneFarmaco}"/></p>
     <button class="btn btn-info" style="margin-right: 2em"
             onclick="window.open('${pageContext.request.contextPath}/recipePDF?id=${requestScope.recipe.codice}','_blank')">
-        Stampa
+        <i class="fas fa-print" style="margin-right: 0.5em"></i>Stampa
     </button>
     <button class="btn btn-info"
             onclick="window.open('${pageContext.request.contextPath}/recipeQR?id=${requestScope.recipe.codice}','_blank')">
-        Vedi QR
+        <i class="fas fa-qrcode" style="margin-right: 0.5em"></i>Vedi QR
     </button>
 
     <span class="index">#<c:out value="${requestScope.recipe.codice}"/></span>

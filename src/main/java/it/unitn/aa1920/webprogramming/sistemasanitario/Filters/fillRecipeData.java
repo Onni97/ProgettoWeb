@@ -1,7 +1,9 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.RecipeBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.RecipeDAO;
+import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.UserDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOFactoryException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Factory.DAOFactory;
@@ -16,6 +18,7 @@ import java.util.List;
 
 public class fillRecipeData implements Filter {
     private RecipeDAO recipeDAO;
+    private UserDAO userDAO;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,6 +29,7 @@ public class fillRecipeData implements Filter {
 
         try {
             recipeDAO = daoFactory.getDAO(RecipeDAO.class);
+            userDAO = daoFactory.getDAO(UserDAO.class);
         } catch (DAOFactoryException e) {
             e.printStackTrace();
         }
@@ -38,6 +42,8 @@ public class fillRecipeData implements Filter {
             int id = Integer.parseInt(servletRequest.getParameter("id"));
             RecipeBean recipe = recipeDAO.getByPrimaryKey(id);
 
+            UserBean utente = userDAO.getByPrimaryKey((String) session.getAttribute("codiceFiscale"));
+
             //controllo se la ricetta cercata è dell'utente in questione
             List<RecipeBean> recipeOfUser = recipeDAO.getRecipesOfUser((String)session.getAttribute("codiceFiscale"));
             boolean isRecipeOfUser = false;
@@ -46,6 +52,10 @@ public class fillRecipeData implements Filter {
                     isRecipeOfUser = true;
                     break;
                 }
+            }
+
+            if (utente.getIsDoctor()) {
+                isRecipeOfUser = true;
             }
             
             if (isRecipeOfUser) {

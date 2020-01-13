@@ -8,11 +8,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
-    public JDBCExamDAO(Connection con) { super(con); }
+    public JDBCExamDAO(Connection con) {
+        super(con);
+    }
 
     @Override
     public List<ExamBean> getExamsOfUser(String codiceFiscale) throws DAOException {
@@ -20,10 +25,10 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 "from esami, visite " +
                 "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "' " +
                 "order by dataOraFissata DESC ";
-        try (PreparedStatement statement = CON.prepareStatement(query)){
+        try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<ExamBean> examList = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
-            while ( result.next() ) {
+            while (result.next()) {
                 ExamBean esame = new ExamBean();
                 esame.setCodice(result.getInt("codice"));
 
@@ -53,10 +58,10 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 "from esami, visite " +
                 "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "' and fatto = false " +
                 "order by dataOraFissata";
-        try (PreparedStatement statement = CON.prepareStatement(query)){
+        try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<ExamBean> examListNotDone = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
-            while ( result.next() ) {
+            while (result.next()) {
                 ExamBean esame = new ExamBean();
                 esame.setCodice(result.getInt("codice"));
 
@@ -86,10 +91,10 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
                 "from esami, visite " +
                 "where esami.codiceVisita = visite.codice and utente = '" + codiceFiscale + "' and fatto = true " +
                 "order by dataOraFissata DESC ";
-        try (PreparedStatement statement = CON.prepareStatement(query)){
+        try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<ExamBean> examListDone = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
-            while ( result.next() ) {
+            while (result.next()) {
                 ExamBean esame = new ExamBean();
                 esame.setCodice(result.getInt("codice"));
 
@@ -114,15 +119,15 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
     }
 
     @Override
-    public List<ExamBean> getExamsNotDoneOfDoctor(int codiceMedico) throws DAOException {
+    public List<ExamBean> getExamsOfDoctor(int codiceMedico) throws DAOException {
         String query = "select * " +
                 "from esami " +
-                "where fatto = false and esami.medico = " + codiceMedico + " " +
+                "where esami.medico = " + codiceMedico + " " +
                 "order by dataOraFissata";
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             List<ExamBean> examList = new LinkedList<>();
             ResultSet result = statement.executeQuery(query);
-            while ( result.next() ) {
+            while (result.next()) {
                 ExamBean esame = new ExamBean();
                 esame.setCodice(result.getInt("codice"));
 
@@ -147,14 +152,29 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
     }
 
     @Override
+    public void updateExam(int codice, Date dataOraFissata, String referto, float ticket, boolean chiudi) throws DAOException {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String stringDataOraFissata = formatter.format(dataOraFissata);
+        String query = "update esami " +
+                "set dataOraFissata = '" + stringDataOraFissata + "', referto = '" + referto + "', ticket = " + ticket + ", fatto = " + chiudi + " " +
+                "where codice = " + codice;
+        System.out.println(query);
+        try (PreparedStatement statement = CON.prepareStatement(query)) {
+            statement.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
     public ExamBean getByPrimaryKey(Integer codiceEsame) throws DAOException {
         String query = "select * from " +
                 "esami " +
                 "where codice = " + codiceEsame;
-        try (PreparedStatement stmt = CON.prepareStatement(query)){
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
             ResultSet result = stmt.executeQuery();
             ExamBean esame = new ExamBean();
-            if (!result.next()){
+            if (!result.next()) {
                 esame.setCodice(-1);
             } else {
                 esame.setCodice(result.getInt("codice"));

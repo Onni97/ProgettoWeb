@@ -8,10 +8,9 @@
 <html>
 <head>
     <title>Sistema Sanitario</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css">
+    <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.4.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleUserPage.css">
     <!-- Font Awesome JS -->
@@ -53,7 +52,7 @@
 
 
 <!--MAIN PAGE PC -->
-<div id="mainPagePC">
+<div id="mainPage">
 
     <div id="mainDropdown">
         <label>
@@ -520,8 +519,6 @@
 
         //IMPOSTO LE ALTEZZE DELLA PAGINA, CHE RISULTANO SBALLATE PER COLPA DELLA NAVBAR
         var $navBar = $('#navBar');
-        var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
-        document.getElementById("mainPagePC").style.paddingTop = navHeight;
 
 
         //REGOLAZIONE SIDEBAR
@@ -649,16 +646,16 @@
         });
 
 
-        //FUNZIONE PER LO SWITCH TRA LA VISUALIZZAZIONE MOBILE E PC E REGOLAZIONI VARI
+        //FUNZIONE PER LO SWITCH TRA LA VISUALIZZAZIONE MOBILE E PC E REGOLAZIONI VARIE
         var showDropdown = false;
         var correctMainPage = function () {
-            document.getElementById("mainPagePC").style.paddingTop = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
+            document.getElementById("mainPage").style.paddingTop = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
             var $mainHeader = $('#mainHeader');
             var $mainDropdown = $('#mainDropdown');
             if ($(window).width() <= 1400) {
                 //regolo le altezze del dropdown
                 var mainDropdownHeight = $mainDropdown.height() + parseInt($mainDropdown.css("padding-top").replace("px", "")) + parseInt($mainDropdown.css("padding-bottom").replace("px", ""));
-                document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainDropdownHeight);
+                document.getElementById("mainContent").style.height = String($('#mainPage').height() - mainDropdownHeight);
                 //regolo la larghezza delle colonne
                 document.getElementById("colonnaPromemoria").style.flex = "0 0 100%";
                 document.getElementById("colonnaFatti").style.flex = "0 0 100%";
@@ -691,7 +688,7 @@
                 document.getElementById("mainHeader").style.display = "flex";
                 //regolo le altezze dell' header
                 var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
-                document.getElementById("mainContent").style.height = String($('#mainPagePC').height() - mainHeaderHeight);
+                document.getElementById("mainContent").style.height = String($('#mainPage').height() - mainHeaderHeight);
                 //regolo la larghezza delle colonne
                 document.getElementById("colonnaPromemoria").style.flex = "0 0 25%";
                 document.getElementById("colonnaFatti").style.flex = "0 0 25%";
@@ -750,6 +747,7 @@
 
         //RENDO L'INTERA PAGINA VISIBILE
         document.getElementById("body").style.visibility = "visible";
+        correctMainPage();
     });
 </script>
 

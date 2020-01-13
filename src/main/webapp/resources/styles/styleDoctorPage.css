@@ -1,3 +1,12 @@
+body {
+    overflow-y: hidden;
+}
+
+.row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
 #sidebar {
     background: #218838;
 }
@@ -14,10 +23,72 @@
     background-color: #28a745;
 }
 
+#mainContentAppointments {
+    overflow-y: auto;
+}
+
+
+/* APPOINTMENT PAGE*/
 #buttonAppointments {
     margin-bottom: 2em;
 }
 
 #buttonPatients {
     margin-bottom: 2em;
+}
+
+.appointmentSection {
+    text-align: center;
+    width: 100%;
+    margin-top: 2em;
+}
+
+.appointmentSection .col {
+    width: max-content;
+    max-width: max-content;
+    min-width: max-content;
+    display: inline-block;
+}
+
+.appointmentSection .scheda {
+    width: max-content;
+    max-width: 100%;
+    min-width: min-content;
+    text-align: center;
+}
+
+.appointmentSection .scheda .schedaBody {
+    text-align: left;
+    max-height: max-content;
+}
+
+#todayAppointments {
+    border-bottom: 1px solid lightgray;
+}
+
+#inSospeso {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 2em;
+}
+
+#fatti {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 2em;
+}
+
+#oggi {
+    margin-top: 2em;
+}
+
+#prossimamente {
+    margin-top: 2em;
+}
+
+.alert {
+    z-index: 48;
+    width: max-content;
+    position: fixed;
+    bottom: 3em;
+    left: 50%;
+    transform: translateX(-50%);
 }

@@ -1,13 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Sistema Sanitario</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css">
+    <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.4.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleUserPage.css">
     <link type="text/css" rel="stylesheet"
@@ -22,7 +21,7 @@
 </head>
 
 
-<body id="body" style="visibility: hidden; overflow-y: auto">
+<body id="body" style="visibility: hidden;">
 
 
 <!-- NAVBAR -->
@@ -48,7 +47,7 @@
 
 
 <!-- MAIN PAGE -->
-<div id="mainPage" style="overflow-y: visible">
+<div id="mainPage">
 </div>
 
 
@@ -174,6 +173,17 @@
 <div id="overlay"></div>
 
 
+<!-- ERROR POPUP -->
+<c:if test="${not empty param.error}">
+    <c:if test="${param.error == -1}">
+        <div class="alert alert-danger alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> C'è stato un problema nel compilare l'esame #${param.id}
+        </div>
+    </c:if>
+</c:if>
+
+
 </body>
 
 <script type="text/javascript">
@@ -195,13 +205,13 @@
         window.addEventListener("resize", correctSidebar, false);
 
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DELLA SIDEBAR
-        var closeSidebar = function() {
+        var closeSidebar = function () {
             $('#sidebar').removeClass('active');
             $('#overlay').removeClass('active');
             document.getElementById("openSidebarButtonText").innerHTML = "Menù";
             opened = false;
         };
-        var openSidebar = function() {
+        var openSidebar = function () {
             $('#sidebar').addClass('active');
             $('#overlay').addClass('active');
             document.getElementById("openSidebarButtonText").innerHTML = "Chiudi";
@@ -221,19 +231,6 @@
         });
 
 
-        //FUNZIONI PER REGOLARE LA MAINPAGE
-        var correctMainPage = function () {
-            var $navBar = $('#navBar');
-            var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
-            document.getElementById("mainPage").style.marginTop = navHeight;
-            document.getElementById("mainPage").style.height = window.innerHeight - navHeight + "px";
-            document.getElementById("mainPage").style.maxHeight = window.innerHeight - navHeight + "px";
-            document.getElementById("mainPage").style.minHeight = window.innerHeight - navHeight + "px";
-        };
-        correctMainPage();
-        window.addEventListener("resize", correctMainPage, false);
-
-
         //FUNZIONI PER RICHIAMARE LE VARIE SOTTOPAGINE
         var showAppointments = function () {
             // AJAX request
@@ -243,7 +240,8 @@
                 success: function (response) {
                     // Add response in mainPage
                     $('#mainPage').html(response);
-                }
+                },
+                async: true
             });
             closeSidebar();
         };
@@ -255,13 +253,28 @@
                 success: function (response) {
                     // Add response in mainPage
                     $('#mainPage').html(response);
-                }
+                },
+                async: true
             });
             closeSidebar();
         };
         $('#buttonAppointments').on('click', showAppointments);
         $('#buttonPatients').on('click', showPatients);
         showAppointments();
+
+
+        //FUNZIONI PER REGOLARE LA MAINPAGE
+        var correctMainPage = function () {
+            var $navBar = $('#navBar');
+            var navHeight = $navBar.height() + parseInt($navBar.css("padding-top").replace("px", "")) + parseInt($navBar.css("padding-bottom").replace("px", ""));
+            document.getElementById("mainPage").style.height = window.innerHeight + "px";
+            document.getElementById("mainPage").style.maxHeight = window.innerHeight + "px";
+            document.getElementById("mainPage").style.minHeight = window.innerHeight + "px";
+            //document.getElementById("mainPage").style.paddingTop = navHeight + "px";
+            document.getElementById("mainPage").style.setProperty("padding-top", navHeight + "px", "important");
+        };
+        correctMainPage();
+        window.addEventListener("resize", correctMainPage, false);
 
 
         //RENDO L'INTERA PAGINA VISIBILE

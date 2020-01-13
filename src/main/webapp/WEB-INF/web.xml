@@ -194,7 +194,14 @@
         <url-pattern>/recipeQR</url-pattern>
     </filter-mapping>
 
-    <!-- TODO: quando finisco i test aggiungo i filtri checkIFNotLogged e checkIfDoctor -->
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/doctorPageAppointments</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/doctorPageAppointments</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>fillDoctorAppointmentsData</filter-name>
         <url-pattern>/doctorPageAppointments</url-pattern>
@@ -204,6 +211,28 @@
     <filter-mapping>
         <filter-name>fillDoctorPatientsData</filter-name>
         <url-pattern>/doctorPagePatients</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/enterExamData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/enterExamData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillExamData</filter-name>
+        <url-pattern>/enterExamData</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/modifyExam</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/updateExamServlet</url-pattern>
     </filter-mapping>
 
 
@@ -289,6 +318,16 @@
         <jsp-file>/views/doctorPagePatients.jsp</jsp-file>
     </servlet>
 
+    <servlet>
+        <servlet-name>enterExamData</servlet-name>
+        <jsp-file>/views/enterExamData.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>updateExamServlet</servlet-name>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.updateExamServlet</servlet-class>
+    </servlet>
+
 
 
 
@@ -370,6 +409,16 @@
         <url-pattern>/doctorPagePatients</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>enterExamData</servlet-name>
+        <url-pattern>/enterExamData</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>updateExamServlet</servlet-name>
+        <url-pattern>/updateExamServlet</url-pattern>
+    </servlet-mapping>
+
 
 
 
@@ -399,6 +448,10 @@
         <error-code>401</error-code>
         <location>/errors/unauthorizedError.jsp</location>
     </error-page>
+
+
+
+
 
 
     <welcome-file-list>

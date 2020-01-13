@@ -1,7 +1,9 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.ExamBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.ExamDAO;
+import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.UserDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOFactoryException;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Factory.DAOFactory;
@@ -15,6 +17,7 @@ import java.io.IOException;
 public class fillExamData implements Filter {
 
     private ExamDAO examDAO;
+    private UserDAO userDAO;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -25,6 +28,7 @@ public class fillExamData implements Filter {
 
         try {
             examDAO = daoFactory.getDAO(ExamDAO.class);
+            userDAO = daoFactory.getDAO(UserDAO.class);
         } catch (DAOFactoryException e) {
             e.printStackTrace();
         }
@@ -37,13 +41,14 @@ public class fillExamData implements Filter {
             int id = Integer.parseInt(servletRequest.getParameter("id"));
             ExamBean exam = examDAO.getByPrimaryKey(id);
 
-            String utente = exam.getVisita().getUtente().getCodiceFiscale().toUpperCase();
+            UserBean utente = userDAO.getByPrimaryKey((String) session.getAttribute("codiceFiscale"));
 
-            if (utente.equals(session.getAttribute("codiceFiscale"))) {
+
+            if (utente.getCodiceFiscale().toUpperCase().equals(exam.getVisita().getUtente().getCodiceFiscale()) || utente.getIsDoctor()) {
                 servletRequest.setAttribute("exam", exam);
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                ((HttpServletResponse)servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         } catch (DAOException e) {
             e.printStackTrace();

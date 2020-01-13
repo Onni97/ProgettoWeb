@@ -39,7 +39,6 @@ public class checkIfDoctor implements Filter {
         String codiceFiscale = (String) session.getAttribute("codiceFiscale");
 
         try {
-            System.out.println(userDAO.getByPrimaryKey(codiceFiscale));
             if(userDAO.getByPrimaryKey(codiceFiscale).getIsDoctor()) {
                 chain.doFilter(req, resp);
             } else {
