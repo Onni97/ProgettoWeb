@@ -218,6 +218,8 @@
         };
         setSpaceBottom();
         window.addEventListener("resize", setSpaceBottom, false);
+        //VADO ALLA SEZIONE OGGI
+        location.href = "#oggi";
 
 
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DEI MODAL
@@ -237,10 +239,6 @@
                 }
             });
         });
-
-
-        //VADO ALLA SEZIONE OGGI
-        location.href = "#oggi";
 
 
         //RENDO L'INTERA PAGINA VISIBILE

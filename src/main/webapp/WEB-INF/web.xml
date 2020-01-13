@@ -207,9 +207,12 @@
         <url-pattern>/doctorPageAppointments</url-pattern>
     </filter-mapping>
 
-    <!-- TODO: quando finisco i test aggiungo i filtri checkIFNotLogged e checkIfDoctor -->
     <filter-mapping>
-        <filter-name>fillDoctorPatientsData</filter-name>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/doctorPagePatients</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
         <url-pattern>/doctorPagePatients</url-pattern>
     </filter-mapping>
 
@@ -234,6 +237,20 @@
         <filter-name>checkIfDoctor</filter-name>
         <url-pattern>/updateExamServlet</url-pattern>
     </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/doctorPagePatientsList</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/doctorPagePatientsList</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillDoctorPatientsData</filter-name>
+        <url-pattern>/doctorPagePatientsList</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -328,6 +345,11 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.updateExamServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>doctorPagePatientsList</servlet-name>
+        <jsp-file>/views/doctorPagePatientsList.jsp</jsp-file>
+    </servlet>
+
 
 
 
@@ -417,6 +439,11 @@
     <servlet-mapping>
         <servlet-name>updateExamServlet</servlet-name>
         <url-pattern>/updateExamServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>doctorPagePatientsList</servlet-name>
+        <url-pattern>/doctorPagePatientsList</url-pattern>
     </servlet-mapping>
 
 

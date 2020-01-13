@@ -87,8 +87,50 @@ body {
 .alert {
     z-index: 48;
     width: max-content;
+    max-width: 90%;
+    min-width: min-content;
     position: fixed;
-    bottom: 3em;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
+}
+
+
+/* PATIENT LIST */
+
+#doctorPagePatientsList {
+    width: 400px;
+    overflow-y: auto;
+    padding-top: 2em;
+}
+
+.schedaPatient {
+    width: 100%;
+    max-width: 100%;
+    min-width: min-content;
+}
+
+.schedaImg {
+    padding: 1em 0.5em 0.5em;
+    margin: 0 auto;
+    width: max-content;
+}
+
+.profileImage {
+    z-index: 1001;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 3px solid white;
+    user-select: none;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.schedaPatientBody {
+    margin: auto;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
 }
