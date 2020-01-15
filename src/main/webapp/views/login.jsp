@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
@@ -12,10 +12,13 @@
             name='viewport'
             content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
     />
+
+    <c:if test="${cookie['user'].value != null }">
+        <meta http-equiv="refresh" content="0; url = ${pageContext.request.contextPath}/userPage"/>
+    </c:if>
 </head>
 
-
-
+<c:if test="${cookie['user'].value == null }">
 <body>
 
 <div class="row justify-content-center sopra">
@@ -34,7 +37,7 @@
                         Codice Fiscale
                     </td>
                     <td>
-                        <label><input type="text" name="codiceFiscale" /></label>
+                        <label><input type="text" name="codiceFiscale"/></label>
                     </td>
                 </tr>
                 <tr>
@@ -47,15 +50,22 @@
                 </tr>
             </table>
             <p>Accedi come:</p>
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="user" value="utente" style="margin-right: 1em">UTENTE</button>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="doctor" value="medico">MEDICO</button>
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="user" value="utente"
+                    style="margin-right: 1em">UTENTE
+            </button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="doctor" value="medico">MEDICO
+            </button>
+            <br/><br/>
+            <label>
+                <input name="rememberMe" type="checkbox"> Ricordami
+            </label>
         </form>
     </div>
 </div>
 
 <div class="row justify-content-center">
     <div class="colonna">
-        <c:if test="${not empty param.error}" >
+        <c:if test="${not empty param.error}">
             <c:if test="${param.error == -2}">
                 <div class="alert alert-danger alert-dismissible text-left">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -77,6 +87,6 @@
         </c:if>
     </div>
 </div>
-
+</c:if>
 </body>
 </html>

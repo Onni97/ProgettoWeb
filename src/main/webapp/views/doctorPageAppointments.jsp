@@ -185,7 +185,9 @@
         var correctMainPage = function () {
             var $mainHeader = $('#mainHeader');
             var mainHeaderHeight = $mainHeader.height() + parseInt($mainHeader.css("padding-top").replace("px", "")) + parseInt($mainHeader.css("padding-bottom").replace("px", ""));
-            document.getElementById("mainContentAppointments").style.height = String($('#mainPage').height() - mainHeaderHeight);
+            if (document.getElementById("mainContentAppointments") != null) {
+                document.getElementById("mainContentAppointments").style.height = String($('#mainPage').height() - mainHeaderHeight);
+            }
         };
         window.addEventListener("resize", correctMainPage, false);
         correctMainPage();
@@ -194,27 +196,29 @@
         //FUNZIONI PER VISUALIZZARE INIZIALMENTE LA SEZIONE OGGI
         var setSpaceBottom = function () {
             var $oggi = $('#oggi');
-            var oggiHeight = $oggi.height() +
-                parseInt($oggi.css("padding-top").replace("px", "")) + parseInt($oggi.css("padding-bottom").replace("px", "")) +
-                parseInt($oggi.css("margin-top").replace("px", "")) + parseInt($oggi.css("margin-bottom").replace("px", ""));
+            if ($oggi.css("padding-top") !== undefined) {
+                var oggiHeight = $oggi.height() +
+                    parseInt($oggi.css("padding-top").replace("px", "")) + parseInt($oggi.css("padding-bottom").replace("px", "")) +
+                    parseInt($oggi.css("margin-top").replace("px", "")) + parseInt($oggi.css("margin-bottom").replace("px", ""));
 
-            var $todayAppointments = $('#todayAppointments');
-            var todayAppointmentsHeight = $todayAppointments.height() +
-                parseInt($todayAppointments.css("padding-top").replace("px", "")) + parseInt($todayAppointments.css("padding-bottom").replace("px", "")) +
-                parseInt($todayAppointments.css("margin-top").replace("px", "")) + parseInt($todayAppointments.css("margin-bottom").replace("px", ""));
+                var $todayAppointments = $('#todayAppointments');
+                var todayAppointmentsHeight = $todayAppointments.height() +
+                    parseInt($todayAppointments.css("padding-top").replace("px", "")) + parseInt($todayAppointments.css("padding-bottom").replace("px", "")) +
+                    parseInt($todayAppointments.css("margin-top").replace("px", "")) + parseInt($todayAppointments.css("margin-bottom").replace("px", ""));
 
-            var $prossimamente = $('#prossimamente');
-            var prossimamenteHeight = $prossimamente.height() +
-                parseInt($prossimamente.css("padding-top").replace("px", "")) + parseInt($prossimamente.css("padding-bottom").replace("px", "")) +
-                parseInt($prossimamente.css("margin-top").replace("px", "")) + parseInt($prossimamente.css("margin-bottom").replace("px", ""));
+                var $prossimamente = $('#prossimamente');
+                var prossimamenteHeight = $prossimamente.height() +
+                    parseInt($prossimamente.css("padding-top").replace("px", "")) + parseInt($prossimamente.css("padding-bottom").replace("px", "")) +
+                    parseInt($prossimamente.css("margin-top").replace("px", "")) + parseInt($prossimamente.css("margin-bottom").replace("px", ""));
 
-            var $nextAppointments = $('#nextAppointments');
-            var nextAppointmentsHeight = $nextAppointments.height() +
-                parseInt($nextAppointments.css("padding-top").replace("px", "")) + parseInt($nextAppointments.css("padding-bottom").replace("px", "")) +
-                parseInt($nextAppointments.css("margin-top").replace("px", ""));
+                var $nextAppointments = $('#nextAppointments');
+                var nextAppointmentsHeight = $nextAppointments.height() +
+                    parseInt($nextAppointments.css("padding-top").replace("px", "")) + parseInt($nextAppointments.css("padding-bottom").replace("px", "")) +
+                    parseInt($nextAppointments.css("margin-top").replace("px", ""));
 
-            document.getElementById("nextAppointments").style.marginBottom = (($('#mainContentAppointments').height() - (oggiHeight + todayAppointmentsHeight +
-                prossimamenteHeight + nextAppointmentsHeight)) - 2) + "px";
+                document.getElementById("nextAppointments").style.marginBottom = (($('#mainContentAppointments').height() - (oggiHeight + todayAppointmentsHeight +
+                    prossimamenteHeight + nextAppointmentsHeight)) - 2) + "px";
+            }
         };
         setSpaceBottom();
         window.addEventListener("resize", setSpaceBottom, false);

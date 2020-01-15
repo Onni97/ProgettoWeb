@@ -2,6 +2,7 @@ package it.unitn.aa1920.webprogramming.sistemasanitario.Filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,17 @@ public class checkIfNotLogged implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpSession session = ((HttpServletRequest)req).getSession();
         if(session.getAttribute("codiceFiscale") == null ) {
+            Cookie[] cookies = ((HttpServletRequest) req).getCookies();
+            for (Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+
+                if(name.equals("user")) {
+                    session.setAttribute("codiceFiscale", value);
+                }
+                chain.doFilter(req, resp);
+            }
+
             System.out.println("FILTERED: not logged");
             ServletContext sc = req.getServletContext();
             String contextPath = sc.getContextPath();

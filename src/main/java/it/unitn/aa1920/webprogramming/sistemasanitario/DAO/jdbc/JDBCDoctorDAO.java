@@ -57,7 +57,8 @@ public class JDBCDoctorDAO extends JDBCDAO<UserBean, Integer> implements DoctorD
     public List<UserBean> getPatientsOfDoctor(int codiceMedico) throws DAOException {
         String query = "select codiceFiscale " +
                 "from utenti " +
-                "where codiceMedicoDiBase = " + codiceMedico;
+                "where codiceMedicoDiBase = " + codiceMedico + " " +
+                "order by nome";
         List<UserBean> listaPazienti = new LinkedList<>();
         UserDAO userDAO = new JDBCUserDAO(CON);
 

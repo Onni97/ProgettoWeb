@@ -7,6 +7,7 @@ import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOFactoryExce
 import it.unitn.aa1920.webprogramming.sistemasanitario.Factory.DAOFactory;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,6 +45,8 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         String codiceFiscale = req.getParameter("codiceFiscale");
         String password = req.getParameter("password");
         String userLogin = req.getParameter("user");
+        String rememberMe = req.getParameter("rememberMe");
+        System.out.println(rememberMe);
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
@@ -86,12 +89,24 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
                 System.out.println("LOGIN OK COME MEDICO");
                 session.setAttribute("codiceFiscale", codiceFiscale.toUpperCase());
 
+                if (rememberMe != null) {
+                    Cookie codiceFiscaleCoockie = new Cookie("user", codiceFiscale);
+                    codiceFiscaleCoockie.setMaxAge(60 * 24 * 3600);
+                    resp.addCookie(codiceFiscaleCoockie);
+                }
+
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "doctorPage"));
 
             } else if (loginOk == LoginStatus.LOGIN_OK_AS_USER) {
                 //login ok come utente
                 System.out.println("LOGIN OK COME UTENTE");
                 session.setAttribute("codiceFiscale", codiceFiscale.toUpperCase());
+
+                if (rememberMe != null) {
+                    Cookie codiceFiscaleCoockie = new Cookie("user", codiceFiscale);
+                    codiceFiscaleCoockie.setMaxAge(60 * 24 * 3600);
+                    resp.addCookie(codiceFiscaleCoockie);
+                }
 
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
 

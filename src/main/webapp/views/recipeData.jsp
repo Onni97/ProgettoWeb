@@ -41,7 +41,7 @@
             onclick="window.open('${pageContext.request.contextPath}/recipeQR?id=${requestScope.recipe.codice}','_blank')">
         <i class="fas fa-qrcode" style="margin-right: 0.5em"></i>Vedi QR
     </button>
-
+    <br/>
     <span class="index">#<c:out value="${requestScope.recipe.codice}"/></span>
 </div>
 

@@ -1,5 +1,6 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.Servlets;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,10 @@ public class logoutServlet extends javax.servlet.http.HttpServlet {
         System.out.println("LOGOUT");
         HttpSession session = req.getSession(true);
         session.invalidate();
+
+        Cookie codiceFiscaleCoockie = new Cookie("user", null);
+        codiceFiscaleCoockie.setMaxAge(0);
+        resp.addCookie(codiceFiscaleCoockie);
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {

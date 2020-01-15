@@ -9,4 +9,5 @@ public interface RecipeDAO extends DAO<RecipeBean, Integer> {
     List<RecipeBean> getRecipesOfUser(String codiceFiscale) throws DAOException;
     List<RecipeBean> getRecipesNotTakenOfUser(String codiceFiscale) throws DAOException;
     List<RecipeBean> getRecipesTakenOfUser(String codiceFiscale) throws DAOException;
+    RecipeBean getLastRecipeOfUser(String codiceFiscale) throws DAOException;
 }

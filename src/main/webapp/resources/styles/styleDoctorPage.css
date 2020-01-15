@@ -99,15 +99,30 @@ body {
 /* PATIENT LIST */
 
 #doctorPagePatientsList {
+    z-index: 8;
     width: 400px;
     overflow-y: auto;
     padding-top: 2em;
 }
 
-.schedaPatient {
+#search {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+#search::placeholder {
+    text-align: center;
+}
+
+.schedaPaziente {
+    z-index: 9;
     width: 100%;
     max-width: 100%;
     min-width: min-content;
+}
+
+.schedaPaziente.hidden {
+    display: none;
 }
 
 .schedaImg {
@@ -129,8 +144,51 @@ body {
     margin: 0 auto;
 }
 
-.schedaPatientBody {
+.schedaPazienteBody {
     margin: auto;
     padding-right: 0.5em;
     padding-left: 0.5em;
+}
+
+#doctorPagePatientInfo {
+    z-index: 10;
+    transition: all 0.3s;
+    position: relative;
+    background-color: #f8f9fa;
+}
+
+#doctorPagePatientInfo.active {
+    position: relative;
+}
+
+#closePatient {
+    visibility: hidden;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+@media screen and (max-width: 1060px) {
+
+    #doctorPagePatientInfo {
+        position: absolute;
+        right: -100%;
+    }
+
+    #doctorPagePatientInfo.active {
+        position: absolute;
+        right: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    #doctorPagePatientsList {
+        position: absolute;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    #closePatient {
+        visibility: visible;
+    }
 }

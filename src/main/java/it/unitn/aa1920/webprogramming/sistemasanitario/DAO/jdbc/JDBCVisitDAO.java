@@ -45,6 +45,16 @@ public class JDBCVisitDAO extends JDBCDAO<VisitBean, Integer> implements VisitDA
     }
 
     @Override
+    public VisitBean getLastVisitOfUser(String codiceFiscale) throws DAOException {
+        List<VisitBean> visitsOfUser = getVisitsOfUser(codiceFiscale);
+        if (visitsOfUser.size() == 0 ) {
+            return null;
+        } else {
+            return visitsOfUser.get(0);
+        }
+    }
+
+    @Override
     public VisitBean getByPrimaryKey(Integer codiceVisita) throws DAOException {
         String query = "select * from " +
                 "visite " +

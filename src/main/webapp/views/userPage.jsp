@@ -58,7 +58,7 @@
         <label>
             <select class="form-control" id="mainDropdownSelect">
                 <option selected>In programma</option>
-                <option>Visite Fatte</option>
+                <option>Visite/Esami Fatti</option>
                 <option>Ricette Evase</option>
                 <option>Ticket Pagati</option>
             </select>
@@ -69,7 +69,7 @@
             <h2>In programma</h2>
         </div>
         <div class="col col-3">
-            <h2>Visite fatte</h2>
+            <h2>Visite/Esami fatti</h2>
         </div>
         <div class="col col-3">
             <h2>Ricette evase</h2>
@@ -508,6 +508,8 @@
             </div>
         </div>
     </div>
+
+    <!-- TODO: tasto per cambiare la password -->
 </nav>
 <!-- ombra scura per sidebar -->
 <div id="overlay"></div>
@@ -724,7 +726,7 @@
                     document.getElementById("colonnaRicette").style.display = "none";
                     document.getElementById("colonnaTicket").style.display = "none";
                     break;
-                case "Visite Fatte":
+                case "Visite/Esami Fatti":
                     document.getElementById("colonnaPromemoria").style.display = "none";
                     document.getElementById("colonnaFatti").style.display = "block";
                     document.getElementById("colonnaRicette").style.display = "none";

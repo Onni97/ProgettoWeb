@@ -125,6 +125,16 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
     }
 
     @Override
+    public RecipeBean getLastRecipeOfUser(String codiceFiscale) throws DAOException {
+        List<RecipeBean> recipesOfUser = getRecipesOfUser(codiceFiscale);
+        if(recipesOfUser.size() == 0) {
+            return null;
+        } else {
+            return recipesOfUser.get(0);
+        }
+    }
+
+    @Override
     public RecipeBean getByPrimaryKey(Integer codiceRicetta) throws DAOException {
         String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +

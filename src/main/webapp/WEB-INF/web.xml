@@ -350,6 +350,11 @@
         <jsp-file>/views/doctorPagePatientsList.jsp</jsp-file>
     </servlet>
 
+    <servlet>
+        <servlet-name>doctorPagePatientInfo</servlet-name>
+        <jsp-file>/views/doctorPagePatientInfo.jsp</jsp-file>
+    </servlet>
+
 
 
 
@@ -445,6 +450,14 @@
         <servlet-name>doctorPagePatientsList</servlet-name>
         <url-pattern>/doctorPagePatientsList</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>doctorPagePatientInfo</servlet-name>
+        <url-pattern>/doctorPagePatientInfo</url-pattern>
+    </servlet-mapping>
+
+
+
 
 
 

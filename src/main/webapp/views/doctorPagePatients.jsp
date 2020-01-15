@@ -9,11 +9,8 @@
 
     <!-- MAIN HEADER -->
     <div id="mainHeader" class="row">
-        <div class="col col-3">
+        <div class="col col-12">
             <h2>PAZIENTI</h2>
-        </div>
-        <div class="col col-9">
-            <h2>DETTAGLI</h2>
         </div>
     </div>
 
@@ -21,7 +18,6 @@
         <div class="col-3" id="doctorPagePatientsList"></div>
         <div class="col-9" id="doctorPagePatientInfo"></div>
     </div>
-
 
 
 </div>
@@ -42,6 +38,7 @@
         correctMainPage();
 
 
+        //CARICO LA LISTA PAZIENTI
         $.ajax({
             url: "${pageContext.request.contextPath}/doctorPagePatientsList",
             type: 'get',
