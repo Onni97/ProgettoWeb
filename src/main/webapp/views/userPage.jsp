@@ -435,6 +435,7 @@
                 <jsp:getProperty name="user" property="provincia"/>
             </div>
         </div>
+        <button id="changePassword" class="btn btn-info mx-auto d-block sidebarButton">CAMBIA PASSWORD</button>
     </div>
 
 
@@ -511,18 +512,37 @@
             </div>
         </div>
     </div>
-
-    <!-- TODO: tasto per cambiare la password -->
 </nav>
 <!-- ombra scura per sidebar -->
 <div id="overlay"></div>
 
 
+<!-- ERROR POPUP -->
+<c:if test="${not empty param.error}">
+    <c:if test="${param.error == -1}">
+        <div class="alert alert-danger alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> C'è stato un problema nel cambiare la password
+        </div>
+    </c:if>
+    <c:if test="${param.error == -2}">
+        <div class="alert alert-danger alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> La vecchia password è errata
+        </div>
+    </c:if>
+    <c:if test="${param.error == -3}">
+        <div class="alert alert-danger alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> La password di conferma è diversa
+        </div>
+    </c:if>
+</c:if>
+
+
 <!-- Script -->
 <script type="text/javascript">
     $(document).ready(function () {
-
-        //IMPOSTO LE ALTEZZE DELLA PAGINA, CHE RISULTANO SBALLATE PER COLPA DELLA NAVBAR
         var $navBar = $('#navBar');
 
 
@@ -748,6 +768,34 @@
                     document.getElementById("colonnaTicket").style.display = "block";
                     break;
             }
+        });
+
+
+        //FUNZIONI PER IL CAMBIO PASSWORD
+        $('#changePassword').on("click", function () {
+            $('.modal-content').html(
+                "<button id='dismissChangePassword' type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n" +
+                "        <span aria-hidden=\"true\">&times;</span>\n" +
+                "    </button>" +
+                "<h3 style='margin-top: 2em; text-align: center'>Modifica Password</h3>" +
+                "<form style='width: 100%; text-align: center' action='changePasswordServlet' method='post'><br/>" +
+                "<table style='width: 100%;'>" +
+                "   <tr>" +
+                "       <td style='text-align: right; width: 50%'>Vecchia password: </td>" +
+                "       <td style='width: 50%;'><input type='password' name='oldPassword' />" +
+                "   </tr>" +
+                "   <tr>" +
+                "       <td style='text-align: right; width: 50%'>Nuova password: </td>" +
+                "       <td style='width: 50%;'><input type='password' name='newPassword' /></td>" +
+                "   </tr>" +
+                "   <tr>" +
+                "       <td style='text-align: right; width: 50%'>Ripeti nuova password: </td>" +
+                "       <td style='width: 50%;'><input type='password' name='repeatPassword' /></td>" +
+                "   </tr>" +
+                "</table>" +
+                "<input style='margin-top: 0.7em' class='btn btn-success' type='submit' value='Cambia Password'>" +
+                "</form>");
+            $('.modal').modal('show');
         });
 
         //RENDO L'INTERA PAGINA VISIBILE

@@ -256,6 +256,11 @@
         <url-pattern>/ticketsPDF</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/changePasswordServlet</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -365,6 +370,11 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.ticketsPDF</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>changePasswordServlet</servlet-name>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.changePasswordServlet</servlet-class>
+    </servlet>
+
 
 
 
@@ -469,6 +479,11 @@
     <servlet-mapping>
         <servlet-name>ticketsPDF</servlet-name>
         <url-pattern>/ticketsPDF</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>changePasswordServlet</servlet-name>
+        <url-pattern>/changePasswordServlet</url-pattern>
     </servlet-mapping>
 
 

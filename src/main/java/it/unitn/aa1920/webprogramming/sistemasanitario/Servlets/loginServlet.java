@@ -46,7 +46,6 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         String password = req.getParameter("password");
         String userLogin = req.getParameter("user");
         String rememberMe = req.getParameter("rememberMe");
-        System.out.println(rememberMe);
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {

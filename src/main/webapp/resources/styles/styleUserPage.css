@@ -134,6 +134,27 @@ body {
     margin-bottom: 3em;
 }
 
+#changePassword {
+    margin-top: 0.5em;
+}
+
+.alert {
+    z-index: 48;
+    width: max-content;
+    max-width: 90%;
+    min-width: min-content;
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#dismissChangePassword {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+}
+
 #doctorInfoTable {
     margin-bottom: 0.5em;
 }

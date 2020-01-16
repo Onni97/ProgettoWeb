@@ -29,22 +29,39 @@ public class changePasswordServlet extends javax.servlet.http.HttpServlet {
         }
     }
 
-    protected void  doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
 
+        String oldPassword = req.getParameter("oldPassword");
         String newPassword = req.getParameter("newPassword");
+        String repeatPassword = req.getParameter("repeatPassword");
         String codiceFiscaleUtente = (String) session.getAttribute("codiceFiscale");
 
-        try {
-            userDAO.changeUserPassword(codiceFiscaleUtente, newPassword);
-
-            String contextPath = getServletContext().getContextPath();
-            if (!contextPath.endsWith("/")) {
-                contextPath += "/";
-            }
-            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
-        } catch (DAOException e) {
-            e.printStackTrace();
+        String contextPath = getServletContext().getContextPath();
+        if (!contextPath.endsWith("/")) {
+            contextPath += "/";
         }
+
+        if (oldPassword.equals("") || newPassword.equals("") || repeatPassword.equals("")) {
+            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=-1"));
+        } else {
+            try {
+                if (userDAO.checkUserPassword(codiceFiscaleUtente, oldPassword)) {
+                    if (newPassword.equals(repeatPassword)) {
+                        userDAO.changeUserPassword(codiceFiscaleUtente, newPassword);
+
+                        resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
+                    } else {
+                        resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=-3"));
+                    }
+                } else {
+                    resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=-2"));
+                }
+
+            } catch (DAOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
