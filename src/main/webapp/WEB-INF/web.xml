@@ -251,6 +251,11 @@
         <url-pattern>/doctorPagePatientsList</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/ticketsPDF</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -355,6 +360,11 @@
         <jsp-file>/views/doctorPagePatientInfo.jsp</jsp-file>
     </servlet>
 
+    <servlet>
+        <servlet-name>ticketsPDF</servlet-name>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.ticketsPDF</servlet-class>
+    </servlet>
+
 
 
 
@@ -454,6 +464,11 @@
     <servlet-mapping>
         <servlet-name>doctorPagePatientInfo</servlet-name>
         <url-pattern>/doctorPagePatientInfo</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ticketsPDF</servlet-name>
+        <url-pattern>/ticketsPDF</url-pattern>
     </servlet-mapping>
 
 

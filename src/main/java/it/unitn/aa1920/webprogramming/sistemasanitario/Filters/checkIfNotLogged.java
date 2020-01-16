@@ -17,23 +17,27 @@ public class checkIfNotLogged implements Filter {
         HttpSession session = ((HttpServletRequest)req).getSession();
         if(session.getAttribute("codiceFiscale") == null ) {
             Cookie[] cookies = ((HttpServletRequest) req).getCookies();
+            boolean trovato = false;
             for (Cookie cookie : cookies) {
                 String name = cookie.getName();
                 String value = cookie.getValue();
 
                 if(name.equals("user")) {
                     session.setAttribute("codiceFiscale", value);
+                    chain.doFilter(req, resp);
+                    trovato = true;
                 }
-                chain.doFilter(req, resp);
             }
 
-            System.out.println("FILTERED: not logged");
-            ServletContext sc = req.getServletContext();
-            String contextPath = sc.getContextPath();
-            if (!contextPath.endsWith("/")) {
-                contextPath += "/";
+            if (! trovato) {
+                System.out.println("FILTERED: not logged");
+                ServletContext sc = req.getServletContext();
+                String contextPath = sc.getContextPath();
+                if (!contextPath.endsWith("/")) {
+                    contextPath += "/";
+                }
+                ((HttpServletResponse)resp).sendRedirect(((HttpServletResponse)resp).encodeRedirectURL(contextPath + "login"));
             }
-            ((HttpServletResponse)resp).sendRedirect(((HttpServletResponse)resp).encodeRedirectURL(contextPath + "login"));
         } else {
             chain.doFilter(req, resp);
         }

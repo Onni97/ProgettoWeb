@@ -51,7 +51,7 @@
 </nav>
 
 
-<!--MAIN PAGE PC -->
+<!--MAIN PAGE -->
 <div id="mainPage">
 
     <div id="mainDropdown">
@@ -280,7 +280,10 @@
 
         <!-- COLONNA TICKET PAGATI -->
         <div class="col col-3 justify-content-center" id="colonnaTicket">
-            <!-- TODO: inserire il bottone per stampare tutti i ticket pagati -->
+            <button style="margin-bottom: 2em;" class="btn btn-info"
+                    onclick="window.open('${pageContext.request.contextPath}/ticketsPDF','_blank')">
+                Stampa Ricevute
+            </button>
             <c:forEach items="${requestScope.examListDone}" var="exam">
                 <div class="scheda schedaEsame">
                     <div class="schedaHeader">
