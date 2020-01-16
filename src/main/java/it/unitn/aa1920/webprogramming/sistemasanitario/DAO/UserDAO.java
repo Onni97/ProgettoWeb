@@ -10,4 +10,5 @@ public interface UserDAO extends DAO<UserBean, String> {
     boolean checkUserPassword(String codiceFiscale, String password) throws DAOException;
     void setMedicoDiBase(String codiceFiscale, int codiceMedico) throws DAOException;
     String setNewPhoto(String codiceFiscale, String nuovaFoto) throws DAOException;
+    void changeUserPassword(String codiceFiscale, String newPassword) throws DAOException;
 }

@@ -101,4 +101,16 @@ public class JDBCUserDAO extends JDBCDAO<UserBean, String> implements UserDAO {
         }
         return toRtn;
     }
+
+    @Override
+    public void changeUserPassword(String codiceFiscale, String newPassword) throws DAOException {
+        String query = "update utenti " +
+                "set password = '" + newPassword + "'" +
+                "where codiceFiscale = '" + codiceFiscale + "'";
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
 }
