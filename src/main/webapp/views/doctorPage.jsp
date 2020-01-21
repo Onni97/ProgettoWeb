@@ -181,6 +181,18 @@
             <strong>Errore!</strong> C'è stato un problema nel compilare l'esame #${param.id}
         </div>
     </c:if>
+    <c:if test="${param.error == 1}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> L'esame è stato chiuso con sucesso
+        </div>
+    </c:if>
+    <c:if test="${param.error == 2}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> L'esame è stato lasciato in sospeso
+        </div>
+    </c:if>
 </c:if>
 
 

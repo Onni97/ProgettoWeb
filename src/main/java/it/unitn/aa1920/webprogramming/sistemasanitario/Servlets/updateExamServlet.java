@@ -54,12 +54,12 @@ public class updateExamServlet extends HttpServlet {
             if (chiudi == null) {
                 //lascio l'esame in sospeso
                 examDAO.updateExam(codice, dataOra, referto, ticket, false);
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "doctorPage?error=2"));
             } else {
                 //chiudo l'esame
                 examDAO.updateExam(codice, dataOra, referto, ticket, true);
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "doctorPage?error=1"));
             }
-
-            response.sendRedirect(response.encodeRedirectURL(contextPath + "doctorPage"));
         } catch (ParseException | DAOException e) {
             //e.printStackTrace();
             response.sendRedirect(response.encodeRedirectURL(contextPath + "doctorPage?error=-1&id=" + codice));

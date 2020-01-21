@@ -44,6 +44,10 @@ public class fillVisitData implements Filter {
             UserBean utente = userDAO.getByPrimaryKey((String) session.getAttribute("codiceFiscale"));
 
             if (utente.getCodiceFiscale().toUpperCase().equals(visit.getUtente().getCodiceFiscale()) || utente.getIsDoctor()) {
+                if (utente.getCodiceFiscale().toUpperCase().equals(visit.getUtente().getCodiceFiscale()))
+                    servletRequest.setAttribute("isThePatient", true);
+                else
+                    servletRequest.setAttribute("isThePatient", false);
                 servletRequest.setAttribute("visit", visit);
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {

@@ -91,6 +91,16 @@
         <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillDoctorPatientsData</filter-class>
     </filter>
 
+    <filter>
+        <filter-name>fillPatientData</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillPatientData</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>fillPatientForVisit</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillPatientForVisit</filter-class>
+    </filter>
+
 
 
 
@@ -261,6 +271,32 @@
         <url-pattern>/changePasswordServlet</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/doctorPagePatientInfo</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/doctorPagePatientInfo</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillPatientData</filter-name>
+        <url-pattern>/doctorPagePatientInfo</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/enterVisitData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/enterVisitData</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>fillPatientForVisit</filter-name>
+        <url-pattern>/enterVisitData</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -375,6 +411,11 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.changePasswordServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>enterVisitData</servlet-name>
+        <jsp-file>/views/enterVisitData.jsp</jsp-file>
+    </servlet>
+
 
 
 
@@ -484,6 +525,11 @@
     <servlet-mapping>
         <servlet-name>changePasswordServlet</servlet-name>
         <url-pattern>/changePasswordServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>enterVisitData</servlet-name>
+        <url-pattern>/enterVisitData</url-pattern>
     </servlet-mapping>
 
 

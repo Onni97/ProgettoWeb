@@ -50,7 +50,7 @@ public class changePasswordServlet extends javax.servlet.http.HttpServlet {
                     if (newPassword.equals(repeatPassword)) {
                         userDAO.changeUserPassword(codiceFiscaleUtente, newPassword);
 
-                        resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
+                        resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=1"));
                     } else {
                         resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=-3"));
                     }

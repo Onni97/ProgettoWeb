@@ -45,6 +45,10 @@ public class fillExamData implements Filter {
 
 
             if (utente.getCodiceFiscale().toUpperCase().equals(exam.getVisita().getUtente().getCodiceFiscale()) || utente.getIsDoctor()) {
+                if (utente.getCodiceFiscale().toUpperCase().equals(exam.getVisita().getUtente().getCodiceFiscale()))
+                    servletRequest.setAttribute("isThePatient", true);
+                else
+                    servletRequest.setAttribute("isThePatient", false);
                 servletRequest.setAttribute("exam", exam);
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {

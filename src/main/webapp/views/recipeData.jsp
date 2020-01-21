@@ -33,15 +33,17 @@
     <p class="mainText"><c:out value="${requestScope.recipe.quantita}"/> x <c:out
             value="${requestScope.recipe.farmaco}"/></p>
     <p class="mainText">Descrizione farmaco: <c:out value="${requestScope.recipe.descrizioneFarmaco}"/></p>
-    <button class="btn btn-info" style="margin-right: 2em"
-            onclick="window.open('${pageContext.request.contextPath}/recipePDF?id=${requestScope.recipe.codice}','_blank')">
-        <i class="fas fa-print" style="margin-right: 0.5em"></i>Stampa
-    </button>
-    <button class="btn btn-info"
-            onclick="window.open('${pageContext.request.contextPath}/recipeQR?id=${requestScope.recipe.codice}','_blank')">
-        <i class="fas fa-qrcode" style="margin-right: 0.5em"></i>Vedi QR
-    </button>
-    <br/>
+    <c:if test="${requestScope.isThePatient}">
+        <button class="btn btn-info" style="margin-right: 2em"
+                onclick="window.open('${pageContext.request.contextPath}/recipePDF?id=${requestScope.recipe.codice}','_blank')">
+            <i class="fas fa-print" style="margin-right: 0.5em"></i>Stampa
+        </button>
+        <button class="btn btn-info"
+                onclick="window.open('${pageContext.request.contextPath}/recipeQR?id=${requestScope.recipe.codice}','_blank')">
+            <i class="fas fa-qrcode" style="margin-right: 0.5em"></i>Vedi QR
+        </button>
+        <br/>
+    </c:if>
     <span class="index">#<c:out value="${requestScope.recipe.codice}"/></span>
 </div>
 

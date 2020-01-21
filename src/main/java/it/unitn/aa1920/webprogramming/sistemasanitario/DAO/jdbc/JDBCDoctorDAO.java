@@ -58,7 +58,7 @@ public class JDBCDoctorDAO extends JDBCDAO<UserBean, Integer> implements DoctorD
         String query = "select codiceFiscale " +
                 "from utenti " +
                 "where codiceMedicoDiBase = " + codiceMedico + " " +
-                "order by nome";
+                "order by nome, cognome";
         List<UserBean> listaPazienti = new LinkedList<>();
         UserDAO userDAO = new JDBCUserDAO(CON);
 

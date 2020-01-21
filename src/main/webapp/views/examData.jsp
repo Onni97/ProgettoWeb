@@ -26,6 +26,9 @@
                                                pattern='dd/MM/yyyy H:m'/></h5><br/>
     </c:if>
     <h5 class="subtitle">Prescritto dopo la visita #<c:out value="${requestScope.exam.visita.codice}"/></h5>
+    <c:if test="${not requestScope.isThePatient}">
+        <h5 class="subtitle">Paziente: ${requestScope.exam.visita.utente.nome} ${requestScope.exam.visita.utente.cognome}</h5>
+    </c:if>
     <h5 class="subtitle">Medico: <c:out value="${requestScope.exam.medico.nome}"/> <c:out
             value="${requestScope.exam.medico.cognome}"/></h5>
     <h5 class="subtitle">Tipo: <c:out value="${requestScope.exam.tipo}"/></h5>

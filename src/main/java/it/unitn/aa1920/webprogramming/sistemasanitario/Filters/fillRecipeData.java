@@ -46,23 +46,26 @@ public class fillRecipeData implements Filter {
 
             //controllo se la ricetta cercata è dell'utente in questione
             List<RecipeBean> recipeOfUser = recipeDAO.getRecipesOfUser((String)session.getAttribute("codiceFiscale"));
-            boolean isRecipeOfUser = false;
+            boolean allow = false;
+            boolean isThePatient = false;
             for (RecipeBean currRecipe: recipeOfUser) {
                 if(currRecipe.getCodice() == recipe.getCodice()) {
-                    isRecipeOfUser = true;
+                    allow = true;
+                    isThePatient = true;
                     break;
                 }
             }
 
             if (utente.getIsDoctor()) {
-                isRecipeOfUser = true;
+                allow = true;
             }
             
-            if (isRecipeOfUser) {
+            if (allow) {
                 servletRequest.setAttribute("recipe", recipe);
+                servletRequest.setAttribute("isThePatient", isThePatient);
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                ((HttpServletResponse)servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         } catch (DAOException e) {
             e.printStackTrace();

@@ -20,6 +20,10 @@
     <h5 class="subtitle">
         Data: <fmt:formatDate value='${requestScope.visit.dataOra}' type='date' pattern='dd/MM/yyyy H:m'/>
     </h5><br/>
+
+    <c:if test="${not requestScope.isThePatient}">
+        <h5 class="subtitle">Paziente: ${requestScope.visit.utente.nome} ${requestScope.visit.utente.cognome}</h5>
+    </c:if>
     <h5 class="subtitle">Medico: <c:out value="${requestScope.visit.medicoDiBase.nome}"/> <c:out
             value="${requestScope.visit.medicoDiBase.cognome}"/></h5>
 </div>

@@ -85,7 +85,7 @@ body {
 }
 
 .alert {
-    z-index: 48;
+    z-index: 49;
     width: max-content;
     max-width: 90%;
     min-width: min-content;
@@ -103,6 +103,7 @@ body {
     width: 400px;
     overflow-y: auto;
     padding-top: 2em;
+    border-right: 1px solid darkgray;
 }
 
 #search {
@@ -150,11 +151,16 @@ body {
     padding-left: 0.5em;
 }
 
+
+/* PATIENT INFO */
 #doctorPagePatientInfo {
+    background-color: white;
     z-index: 10;
     transition: all 0.3s;
     position: relative;
-    background-color: #f8f9fa;
+    overflow-y: auto;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 #doctorPagePatientInfo.active {
@@ -166,6 +172,44 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
+    z-index: 48;
+}
+
+#patientHistory {
+    height: 100%;
+    padding-top: 2em;
+    background-color: white;
+    overflow-y: auto;
+}
+
+#patientGeneralInfo {
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 2em;
+    padding-right: 0;
+    padding-left: 0;
+    background-color: white;
+}
+
+#patientInfoTable .InfoTableRow:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+#patientInfoTable .InfoTableCol:nth-child(2) {
+    text-align: left;
+}
+
+#patientInfoTable {
+    width: 95%;
+    border: 1px solid #f8f9fa;
+    border-radius: 0.3rem;
+    margin-bottom: 2em;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#buttonCompilaVisita {
+    margin-bottom: 3em;
 }
 
 @media screen and (max-width: 1060px) {
@@ -190,5 +234,29 @@ body {
 
     #closePatient {
         visibility: visible;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    #patientInfoTable {
+        border-top: 1px solid #f8f9fa;
+        border-bottom: 1px solid #f8f9fa;
+        border-radius: 0;
+        width: 100%;
+    }
+    .schedaImg {
+        width: 100%;
+    }
+    .schedaBody {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #patientHistory {
+        height: max-content;
+    }
+    #patientGeneralInfo {
+        height: max-content;
     }
 }

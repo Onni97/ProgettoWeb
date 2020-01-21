@@ -2,9 +2,11 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Sistema Sanitario</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.4.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
@@ -28,7 +30,7 @@
         <div class="row appointmentSection" id="doneAppointments">
             <c:forEach items="${requestScope.examList}" var="exam">
                 <fmt:formatDate value="${exam.dataOraFissata}" pattern="yyyy/MM/d" var="examDate"/>
-                <fmt:formatDate value="${now}" pattern="yyyy/MM/d" var="today"/>
+                <fmt:formatDate value="${now}" pattern="yyyy/MM/" var="today"/>
                 <c:if test="${exam.fatto}">
                     <div class="col-sm">
                         <div class="scheda">

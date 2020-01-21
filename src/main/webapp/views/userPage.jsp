@@ -1,3 +1,4 @@
+<%--suppress ELValidationInJSP --%>
 <jsp:useBean id="user" scope="request" class="it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean"/>
 <jsp:useBean id="usersDoctor" scope="request" class="it.unitn.aa1920.webprogramming.sistemasanitario.Beans.UserBean"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -132,7 +133,6 @@
             <c:set scope="page" value="0" var="counterExams"/>
             <c:forEach begin="0" end="${fn:length(requestScope.userVisits) + fn:length(requestScope.examListDone)}">
                 <c:choose>
-                    <%--suppress ELValidationInJSP --%>
                     <c:when test="${counterVisits < fn:length(requestScope.userVisits) and
                                     counterExams < fn:length(requestScope.examListDone) and
                                     requestScope.userVisits[counterVisits].dataOra < requestScope.examListDone[counterExams].dataOraFissata}">
@@ -140,28 +140,23 @@
                         <div class="scheda schedaEsame">
                             <div class="schedaHeader">
                                 <b>ESAME</b><br/>
-                                    <%--suppress ELValidationInJSP --%>
                                 <span class="dataEsame"><fmt:formatDate
                                         value='${requestScope.examListDone[counterExams].dataOraFissata}'
                                         type='date' pattern='dd-MM-yyyy'/><br/></span>
                             </div>
                             <div class="schedaBody">
-                                    <%--suppress ELValidationInJSP --%>
                                 Tipo: <c:out value="${requestScope.examListDone[counterExams].tipo}"/><br/>
-                                    <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.examListDone[counterExams].referto}"/>
                                 <div class="sfumatura"></div>
                             </div>
                             <span class="altro">Mostra tutto...</span>
                             <div class="schedaIndex">
-                                    <%--suppress ELValidationInJSP --%>
                                 #<span class="codiceEsame"><c:out
                                     value="${requestScope.examListDone[counterExams].codice}"/></span>
                             </div>
                         </div>
                         <c:set var="counterExams" value="${counterExams + 1}" scope="page"/>
                     </c:when>
-                    <%--suppress ELValidationInJSP --%>
                     <c:when test="${counterVisits < fn:length(requestScope.userVisits) and
                                     counterExams < fn:length(requestScope.examListDone) and
                                     requestScope.userVisits[counterVisits].dataOra > requestScope.examListDone[counterExams].dataOraFissata}">
@@ -169,24 +164,20 @@
                         <div class="scheda schedaVisita">
                             <div class="schedaHeader">
                                 <b>VISITA</b><br/>
-                                    <%--suppress ELValidationInJSP --%>
                                 <span class="dataVisita"><fmt:formatDate
                                         value='${requestScope.userVisits[counterVisits].dataOra}' type='date'
                                         pattern='dd-MM-yyyy'/></span><br/>
                                 <div>Medico:
-                                        <%--suppress ELValidationInJSP --%>
                                     <c:out value="${requestScope.userVisits[counterVisits].medicoDiBase.nome}"/> <c:out
                                             value="${requestScope.userVisits[counterVisits].medicoDiBase.cognome}"/><br/>
                                 </div>
                             </div>
                             <div class="schedaBody">
-                                    <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.userVisits[counterVisits].resoconto}"/>
                                 <div class="sfumatura"></div>
                             </div>
                             <span class="altro">Mostra tutto...</span>
                             <div class="schedaIndex">
-                                    <%--suppress ELValidationInJSP --%>
                                 #<span class="codiceVisita"><c:out
                                     value="${requestScope.userVisits[counterVisits].codice}"/></span>
                             </div>
@@ -199,22 +190,18 @@
                         <div class="scheda schedaEsame">
                             <div class="schedaHeader">
                                 <b>ESAME</b><br/>
-                                    <%--suppress ELValidationInJSP --%>
                                 <span class="dataEsame"><fmt:formatDate
                                         value='${requestScope.examListDone[counterExams].dataOraFissata}'
                                         type='date' pattern='dd-MM-yyyy'/><br/></span>
                             </div>
                             <div class="schedaBody">
-                                    <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.examListDone[counterExams].tipo}"/><br/>
-                                    <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.examListDone[counterExams].referto}"/>
                                 <div class="sfumatura"></div>
                             </div>
                             <span class="altro">Mostra tutto...</span>
                             <div class="schedaIndex">
                                 #<span class="codiceEsame">
-                                <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.examListDone[counterExams].codice}"/></span>
                             </div>
                         </div>
@@ -226,24 +213,20 @@
                         <div class="scheda schedaVisita">
                             <div class="schedaHeader">
                                 <b>VISITA</b><br/>
-                                    <%--suppress ELValidationInJSP --%>
                                 <span class="dataVisita"><fmt:formatDate
                                         value='${requestScope.userVisits[counterVisits].dataOra}' type='date'
                                         pattern='dd-MM-yyyy'/></span><br/>
                                 <div>Medico:
-                                        <%--suppress ELValidationInJSP --%>
                                     <c:out value="${requestScope.userVisits[counterVisits].medicoDiBase.nome}"/> <c:out
                                             value="${requestScope.userVisits[counterVisits].medicoDiBase.cognome}"/><br/>
                                 </div>
                             </div>
                             <div class="schedaBody">
-                                    <%--suppress ELValidationInJSP --%>
                                 <c:out value="${requestScope.userVisits[counterVisits].resoconto}"/>
                                 <div class="sfumatura"></div>
                             </div>
                             <span class="altro">Mostra tutto...</span>
                             <div class="schedaIndex">
-                                    <%--suppress ELValidationInJSP --%>
                                 #<span class="codiceVisita"><c:out
                                     value="${requestScope.userVisits[counterVisits].codice}"/></span>
                             </div>
@@ -537,7 +520,15 @@
             <strong>Errore!</strong> La password di conferma è diversa
         </div>
     </c:if>
+    <c:if test="${param.error == 1}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> La password è stata cambiata con successo
+        </div>
+    </c:if>
 </c:if>
+
+<!-- TODO: avviso verde quando va a buon fine, anche nella doctor page quando chiudi un esame -->
 
 
 <!-- Script -->
@@ -620,7 +611,7 @@
             $(this).next('.custom-file-label').html(fileName);
         });
 
-        <%--suppress JSUnresolvedFunction, JSJQueryEfficiency --%>
+        <%--suppress JSUnresolvedFunction, JSJQueryEfficiency, HtmlUnknownTarget --%>
         //FUNZIONI PER IL CORRETTO FUNZIONAMENTO DEI MODAL
         $('.schedaVisita').on('click', function (event) {
             var schedaVisita = $(event.currentTarget);
@@ -781,16 +772,16 @@
                 "<form style='width: 100%; text-align: center' action='changePasswordServlet' method='post'><br/>" +
                 "<table style='width: 100%;'>" +
                 "   <tr>" +
-                "       <td style='text-align: right; width: 50%'>Vecchia password: </td>" +
-                "       <td style='width: 50%;'><input type='password' name='oldPassword' />" +
+                "       <td style='text-align: right; width: 50%; padding-bottom: 10px'>Vecchia password: </td>" +
+                "       <td style='width: 50%; padding-bottom: 10px; padding-left: 5px'><input type='password' name='oldPassword' />" +
                 "   </tr>" +
                 "   <tr>" +
-                "       <td style='text-align: right; width: 50%'>Nuova password: </td>" +
-                "       <td style='width: 50%;'><input type='password' name='newPassword' /></td>" +
+                "       <td style='text-align: right; width: 50%; padding-bottom: 10px'>Nuova password: </td>" +
+                "       <td style='width: 50%; padding-bottom: 10px; padding-left: 5px'><input type='password' name='newPassword' /></td>" +
                 "   </tr>" +
                 "   <tr>" +
-                "       <td style='text-align: right; width: 50%'>Ripeti nuova password: </td>" +
-                "       <td style='width: 50%;'><input type='password' name='repeatPassword' /></td>" +
+                "       <td style='text-align: right; width: 50%; padding-bottom: 10px'>Ripeti nuova password: </td>" +
+                "       <td style='width: 50%; padding-bottom: 10px; padding-left: 5px'><input type='password' name='repeatPassword' /></td>" +
                 "   </tr>" +
                 "</table>" +
                 "<input style='margin-top: 0.7em' class='btn btn-success' type='submit' value='Cambia Password'>" +
