@@ -89,7 +89,7 @@ body {
     width: max-content;
     max-width: 90%;
     min-width: min-content;
-    position: fixed;
+    position: fixed !important;
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);

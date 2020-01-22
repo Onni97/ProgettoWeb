@@ -4,10 +4,7 @@ import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.VisitBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.VisitDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +49,27 @@ public class JDBCVisitDAO extends JDBCDAO<VisitBean, Integer> implements VisitDA
         } else {
             return visitsOfUser.get(0);
         }
+    }
+
+    @Override
+    public int addVisit(String dataOra, String resoconto, String utente, int codiceMedico) throws DAOException {
+        String query = "insert into visite (dataOra, resoconto, utente, codiceMedicoDiBase) " +
+                "values ('" + dataOra + "', '" + resoconto + "', '" + utente + "', " + codiceMedico + ");";
+        int toRtn = 0;
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    toRtn = generatedKeys.getInt(1);
+                }
+                else {
+                    throw new DAOException();
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+        return toRtn;
     }
 
     @Override

@@ -37,16 +37,16 @@ public class changeDoctorServlet extends javax.servlet.http.HttpServlet {
         int newCodiceMedico = Integer.parseInt(req.getParameter("newDoctor").split(" ")[0]);
         String codiceFiscaleUtente = (String) session.getAttribute("codiceFiscale");
 
+        String contextPath = getServletContext().getContextPath();
+        if (!contextPath.endsWith("/")) {
+            contextPath += "/";
+        }
         try {
             userDAO.setMedicoDiBase(codiceFiscaleUtente, newCodiceMedico);
 
-            String contextPath = getServletContext().getContextPath();
-            if (!contextPath.endsWith("/")) {
-                contextPath += "/";
-            }
-            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
+            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=2"));
         } catch (DAOException e) {
-            e.printStackTrace();
+            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=-4"));
         }
     }
 }

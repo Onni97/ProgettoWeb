@@ -135,6 +135,23 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
     }
 
     @Override
+    public void addRecipe(String farmaco, int quantita, String descrizioneFarmaco, Integer codiceVisita, Integer codiceEsame) throws DAOException {
+        String query = "";
+        if (codiceEsame == null)
+            query = "insert into ricette (farmaco, quantita, descrizioneFarmaco, codiceVisita) " +
+                    "values ('" + farmaco + "', " + quantita + ", '" + descrizioneFarmaco + "', " + codiceVisita + ");";
+        else if (codiceVisita == null)
+            query = "insert into ricette (farmaco, quantita, descrizioneFarmaco, codiceEsame) " +
+                    "values ('" + farmaco + "', " + quantita + ", '" + descrizioneFarmaco + "', " + codiceEsame + ");";
+        System.out.println(query);
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
     public RecipeBean getByPrimaryKey(Integer codiceRicetta) throws DAOException {
         String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +

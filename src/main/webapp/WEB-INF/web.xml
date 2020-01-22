@@ -297,6 +297,15 @@
         <url-pattern>/enterVisitData</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfNotLogged</filter-name>
+        <url-pattern>/enterVisitDataServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>checkIfDoctor</filter-name>
+        <url-pattern>/enterVisitDataServlet</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -416,6 +425,11 @@
         <jsp-file>/views/enterVisitData.jsp</jsp-file>
     </servlet>
 
+    <servlet>
+        <servlet-name>enterVisitDataServlet</servlet-name>
+        <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.enterVisitDataServlet</servlet-class>
+    </servlet>
+
 
 
 
@@ -530,6 +544,11 @@
     <servlet-mapping>
         <servlet-name>enterVisitData</servlet-name>
         <url-pattern>/enterVisitData</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>enterVisitDataServlet</servlet-name>
+        <url-pattern>/enterVisitDataServlet</url-pattern>
     </servlet-mapping>
 
 

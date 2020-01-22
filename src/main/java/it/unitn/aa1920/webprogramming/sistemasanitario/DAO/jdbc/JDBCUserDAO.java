@@ -52,7 +52,7 @@ public class JDBCUserDAO extends JDBCDAO<UserBean, String> implements UserDAO {
 
     @Override
     public boolean checkUserPassword(String codiceFiscale, String password) throws DAOException {
-        String query = "select * from utenti where codiceFiscale = '" + codiceFiscale + "' and password = '" + password + "'";
+        String query = "select * from utenti where codiceFiscale = '" + codiceFiscale + "' and BINARY password = '" + password + "'";
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
                 ResultSet result = stmt.executeQuery();
             return result.next();

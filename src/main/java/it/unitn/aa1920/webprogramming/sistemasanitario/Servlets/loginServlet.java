@@ -52,7 +52,7 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
             contextPath += "/";
         }
         try {
-            boolean status = userDAO.checkUserPassword(codiceFiscale, password);
+            boolean status = userDAO.checkUserPassword(codiceFiscale.toUpperCase(), password);
             LoginStatus loginOk;
 
             if (status) {

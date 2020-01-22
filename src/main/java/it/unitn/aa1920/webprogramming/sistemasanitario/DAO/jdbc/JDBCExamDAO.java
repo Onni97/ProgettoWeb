@@ -1,9 +1,11 @@
 package it.unitn.aa1920.webprogramming.sistemasanitario.DAO.jdbc;
 
 import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.ExamBean;
+import it.unitn.aa1920.webprogramming.sistemasanitario.Beans.ExamTypeBean;
 import it.unitn.aa1920.webprogramming.sistemasanitario.DAO.ExamDAO;
 import it.unitn.aa1920.webprogramming.sistemasanitario.Exceptions.DAOException;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -158,9 +160,40 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
         String query = "update esami " +
                 "set dataOraFissata = '" + stringDataOraFissata + "', referto = '" + referto + "', ticket = " + ticket + ", fatto = " + chiudi + " " +
                 "where codice = " + codice;
-        System.out.println(query);
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             statement.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
+    public void addExam(String dataOraFissata, int codiceVisita, int medico, String tipo) throws DAOException {
+        String query = "insert into esami (dataOraFissata, codiceVisita, medico, tipo) " +
+                "values ('" + dataOraFissata + "', " + codiceVisita + ", " + medico + ", '" + tipo + "');";
+        System.out.println(query);
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
+    public List<ExamTypeBean> getExamTypes() throws DAOException {
+        String query = "select * from tipiesame order by categoria";
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
+            ResultSet result = stmt.executeQuery();
+            List<ExamTypeBean> listaTipiEsame = new LinkedList<>();
+
+            while (result.next()) {
+                ExamTypeBean tipo = new ExamTypeBean();
+                tipo.setTipo(result.getString("tipo"));
+                tipo.setCategoria(result.getString("categoria"));
+                listaTipiEsame.add(tipo);
+            }
+
+            return listaTipiEsame;
         } catch (SQLException ex) {
             throw new DAOException("Error", ex);
         }

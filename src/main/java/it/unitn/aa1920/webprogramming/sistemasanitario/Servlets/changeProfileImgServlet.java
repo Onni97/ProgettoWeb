@@ -34,9 +34,9 @@ public class changeProfileImgServlet extends javax.servlet.http.HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String contextPath = getServletContext().getContextPath();
         try {
             Part filePart = req.getPart("newImg");
-            String contextPath = getServletContext().getContextPath();
 
             //prendo il formato del file
             String fileName = getFileName(filePart);
@@ -75,9 +75,9 @@ public class changeProfileImgServlet extends javax.servlet.http.HttpServlet {
             if (!contextPath.endsWith("/")) {
                 contextPath += "/";
             }
-            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
+            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=3"));
         } catch (DAOException e) {
-            e.printStackTrace();
+            resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage?error=-5"));
         }
     }
 

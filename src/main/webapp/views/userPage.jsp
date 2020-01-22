@@ -526,9 +526,32 @@
             <strong>Ok!</strong> La password è stata cambiata con successo
         </div>
     </c:if>
+    <c:if test="${param.error == 2}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> Il medico è stato cambiato con successo
+        </div>
+    </c:if>
+    <c:if test="${param.error == -4}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> C'è stato un problema nel cambio del medico
+        </div>
+    </c:if>
+    <c:if test="${param.error == 3}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> La foto è stata cambiata con successo
+        </div>
+    </c:if>
+    <c:if test="${param.error == -5}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> C'è stato un problema nell'aggiornamento della foto
+        </div>
+    </c:if>
 </c:if>
 
-<!-- TODO: avviso verde quando va a buon fine, anche nella doctor page quando chiudi un esame -->
 
 
 <!-- Script -->

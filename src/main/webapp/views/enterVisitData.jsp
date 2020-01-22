@@ -7,6 +7,8 @@
 <head>
     <title>Sistema Sanitario</title>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleDetails.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/select2/select2.min.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
 </head>
 <body>
 
@@ -19,32 +21,150 @@
     <fmt:formatDate value="${now}" pattern="yyyy-MM-d" var="nowDay"/>
     <fmt:formatDate value="${now}" pattern="H:m" var="nowTime"/>
     <h5 class="subtitle">
-        <label>
-            Data: <input type="date" name="data" value="${nowDay}" disabled/> alle
-            <input type="time" name="ora" value="${nowTime}" disabled/>
-        </label>
+        Data: <fmt:formatDate value="${now}" pattern="d/MM/yyyy"/> alle ${nowTime}
     </h5><br/>
 
-    <h5 class="subtitle"><label>
-        Paziente: <input type="text" value="${requestScope.patient.nome} ${requestScope.patient.cognome}" disabled><br/>
-        Medico: <input type="text" value="${requestScope.doctor.nome} ${requestScope.doctor.cognome}" disabled>
-    </label></h5>
+    <h5 class="subtitle">
+        Paziente: ${requestScope.patient.nome} ${requestScope.patient.cognome}
+    </h5>
+    <h5 class="subtitle">
+        Medico: ${requestScope.doctor.nome} ${requestScope.doctor.cognome}
+    </h5>
 
 </div>
 
 <div id="DetailContent" style="text-align: center;">
-    <label>
-        Descrizione: <input type="text" name="descrizione"/>
-    </label>
+    <form id="formCompileVisit" method="post" action="enterVisitDataServlet">
+        <input type="hidden" name="cfPatient" value="${requestScope.patient.codiceFiscale}"/>
+        <input type="hidden" name="cfDoctor" value="${requestScope.doctor.codiceFiscale}"/>
+        <input type="hidden" name="dateTime" value="${nowDay} ${nowTime}"/>
+        <label>
+            Descrizione: <br/>
+            <textarea name="description" form="formCompileVisit"></textarea>
+        </label><br/>
 
-    <button class="btn btn-info" style="margin-right: 2em">
-        <i class="fas fa-plus" style="margin-right: 0.5em"></i>Prescrivi Esame
-    </button>
-    <button class="btn btn-info">
-        <i class="fas fa-plus" style="margin-right: 0.5em"></i>Prescrivi Ricetta
-    </button>
+
+        <div class="row">
+            <div class="col-sm">
+                <button type="button" id="buttonAddExam" class="btn btn-info" style="margin-bottom: 1em">
+                    <i class="fas fa-plus" style="margin-right: 0.5em"></i>Prescrivi Esame
+                </button>
+            </div>
+            <div class="col-sm">
+                <button type="button" id="buttonAddRecipe" class="btn btn-info" style="margin-bottom: 1em">
+                    <i class="fas fa-plus" style="margin-right: 0.5em"></i>Prescrivi Ricetta
+                </button>
+            </div>
+        </div>
+
+
+        <br/>
+        <input class="btn btn-success" type="submit" value="Compila Visita"/>
+
+
+    </form>
 </div>
 
 
 </body>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var counterExam = 0;
+        var counterRecipe = 0;
+        var inputExam = function (exam) {
+            var toRtn = "<div class='divAddOther'>\n" +
+                "            Data e ora:<br/>\n" +
+                "            <label>\n" +
+                "                <input class='form-control-sm' type=\"date\" name=\"esameData" + exam + "\"/> <input class='form-control-sm' type=\"time\" name=\"esameOra" + exam + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            Medico:<br/>\n" +
+                "            <label>\n" +
+                "                <select class='form-control-sm' name='esameMedico'>";
+
+            <c:forEach items="${requestScope.doctorsOfProvince}" var="doctor">
+            toRtn += "<option>" +
+                "${doctor.codiceMedico} - ${doctor.nome} ${doctor.cognome}" +
+                "</option>";
+
+            </c:forEach>
+
+            toRtn += "                </select>" +
+                "            </label><br/>\n" +
+                "            Tipo Esame:<br/>\n" +
+                "            <label>\n" +
+                "                <select class='form-control-sm select2' name=\"esameTipo" + exam + "\">\n";
+
+            <c:set var="prevCategory" scope="page" value=""/>
+            <c:forEach items="${requestScope.examTypes}" var="examType">
+                <c:if test="${prevCategory == ''}">
+                    <c:set var="prevCategory" value="${examType.categoria}"/>
+                    toRtn += " <optgroup label='${examType.categoria}'>";
+                </c:if>
+                <c:if test="${examType.categoria == prevCategory}">
+                    toRtn += "<option>${examType.tipo}</option>";
+                </c:if>
+
+                <c:if test="${examType.categoria != prevCategory}">
+                    <c:set var="prevCategory" value="${examType.categoria}"/>
+                    toRtn += "</optgroup>" +
+                        "<optgroup label='${examType.categoria}'>'" +
+                        "<option>${examType.tipo}</option>";
+                </c:if>
+
+            </c:forEach>
+
+            toRtn +=
+                "            </optgroup></select></label><br/>\n" +
+                "            <button type=\"button\" class=\"btn btn-danger my-auto dismiss\">\n" +
+                "                <i class=\"fas fa-minus\" aria-hidden=\"true\"></i>\n" +
+                "            </button>\n" +
+                "        </div>";
+
+            return toRtn;
+        };
+        var inputRecipe = function (recipe) {
+            return "<div class='divAddOther'>\n" +
+                "            Farmaco:<br/>\n" +
+                "            <label>\n" +
+                "                <input class='form-control-sm' type=\"text\" name=\"ricettaFarmaco" + recipe + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            Quantità:<br/>\n" +
+                "            <label>\n" +
+                "                <input class='form-control-sm' type=\"number\" name=\"ricettaQuantita" + recipe + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            Descrizione Farmaco:<br/>\n" +
+                "            <label>\n" +
+                "                <input class='form-control-sm' type=\"text\" name=\"ricettaDescrizione" + recipe + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            <button type=\"button\" class=\"btn btn-danger my-auto dismiss\">\n" +
+                "                <i class=\"fas fa-minus\" aria-hidden=\"true\"></i>\n" +
+                "            </button>\n" +
+                "        </div>";
+        };
+
+        //FUNZIONI PER AGGIUNGERE ESAMI/RICETTE
+        $('#buttonAddExam').on("click", function (event) {
+            var button = $(event.currentTarget);
+            button.after(inputExam(counterExam));
+            counterExam++;
+        });
+        $('#buttonAddRecipe').on("click", function (event) {
+            var button = $(event.currentTarget);
+            button.after(inputRecipe(counterRecipe));
+            counterRecipe++;
+        });
+
+        $(document).on("click", ".dismiss", function (event) {
+            $(event.currentTarget).parent().remove();
+        });
+
+
+        $('.select2').select2();
+
+
+    });
+</script>
 </html>
