@@ -11,6 +11,7 @@ public class RecipeBean {
     private Date dataOraEvasa;
     private String descrizioneFarmaco;
     private Date data;
+    private String provinciaPrescrizione;
 
     public int getCodice() { return codice; }
 
@@ -43,4 +44,12 @@ public class RecipeBean {
     public Date getData() { return data; }
 
     public void setData(Date data) { this.data = data; }
+
+    public String getProvinciaPrescrizione() {
+        return provinciaPrescrizione;
+    }
+
+    public void setProvinciaPrescrizione(String provinciaPrescrizione) {
+        this.provinciaPrescrizione = provinciaPrescrizione;
+    }
 }

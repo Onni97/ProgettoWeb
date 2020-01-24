@@ -30,25 +30,25 @@
 
 <!-- NAVBAR -->
 <nav id="navBar" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-
-    <button type="button" id="openSidebar" class="btn btn-info my-auto">
-        <i class="fas fa-align-left" aria-hidden="true" style="margin-right: 0.5em"></i>
-        <span id="openSidebarButtonText">Profilo</span>
-    </button>
-
-    <c:if test="${requestScope.user.isDoctor}">
-        <button class="btn btn-success" style="margin-right: 1em"
-                onclick="window.open('${pageContext.request.contextPath}/doctorPage', '_self')">
-            <i class="fas fa-user-md" aria-hidden="true" style="margin-right: 0.5em"></i>Passa a Medico
+    <div class="container-fluid">
+        <button type="button" id="openSidebar" class="btn btn-info my-auto">
+            <i class="fas fa-align-left" aria-hidden="true" style="margin-right: 0.5em"></i>
+            <span id="openSidebarButtonText">Profilo</span>
         </button>
-    </c:if>
 
-    <form class="form-inline my-2 my-lg-0 float-right justify-content-right my-auto" action="logoutServlet"
-          method="post">
-        <button class="btn btn-danger my-2 my-sm-0 navbar-btn my-auto" type="submit" value="logout">
-            <i class="fas fa-lock" aria-hidden="true" style="margin-right: 0.5em"></i>logout
-        </button>
-    </form>
+        <c:if test="${requestScope.user.isDoctor}">
+            <button class="btn btn-success" style="margin-right: 1em"
+                    onclick="window.open('${pageContext.request.contextPath}/doctorPage', '_self')">
+                <i class="fas fa-user-md" aria-hidden="true" style="margin-right: 0.5em"></i>Passa a Medico
+            </button>
+        </c:if>
+        <form class="form-inline my-2 my-lg-0 float-right justify-content-right my-auto" action="logoutServlet"
+              method="post">
+            <button class="btn btn-danger my-2 my-sm-0 navbar-btn my-auto" type="submit" value="logout">
+                <i class="fas fa-lock" aria-hidden="true" style="margin-right: 0.5em"></i>logout
+            </button>
+        </form>
+    </div>
 </nav>
 
 
@@ -551,7 +551,6 @@
         </div>
     </c:if>
 </c:if>
-
 
 
 <!-- Script -->

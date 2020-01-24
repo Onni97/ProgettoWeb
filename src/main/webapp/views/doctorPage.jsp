@@ -26,23 +26,24 @@
 
 <!-- NAVBAR -->
 <nav id="navBar" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-
-    <button type="button" id="openSidebar" class="btn btn-success my-auto">
-        <i class="fas fa-align-left" aria-hidden="true" style="margin-right: 0.5em"></i>
-        <span id="openSidebarButtonText">Menù</span>
-    </button>
-
-    <button class="btn btn-info" style="margin-right: 1em"
-            onclick="window.open('${pageContext.request.contextPath}/userPage', '_self')">
-        <i class="fas fa-user" aria-hidden="true" style="margin-right: 0.5em"></i>Passa a Utente
-    </button>
-
-    <form class="form-inline my-2 my-lg-0 float-right justify-content-right my-auto" action="logoutServlet"
-          method="post">
-        <button class="btn btn-danger my-2 my-sm-0 navbar-btn my-auto" type="submit" value="logout">
-            <i class="fas fa-lock" aria-hidden="true" style="margin-right: 0.5em"></i>logout
+    <div class="container-fluid">
+        <button type="button" id="openSidebar" class="btn btn-success my-auto">
+            <i class="fas fa-align-left" aria-hidden="true" style="margin-right: 0.5em"></i>
+            <span id="openSidebarButtonText">Menù</span>
         </button>
-    </form>
+
+        <button class="btn btn-info" style="margin-right: 1em"
+                onclick="window.open('${pageContext.request.contextPath}/userPage', '_self')">
+            <i class="fas fa-user" aria-hidden="true" style="margin-right: 0.5em"></i>Passa a Utente
+        </button>
+
+        <form class="form-inline my-2 my-lg-0 float-right justify-content-right my-auto" action="logoutServlet"
+              method="post">
+            <button class="btn btn-danger my-2 my-sm-0 navbar-btn my-auto" type="submit" value="logout">
+                <i class="fas fa-lock" aria-hidden="true" style="margin-right: 0.5em"></i>logout
+            </button>
+        </form>
+    </div>
 </nav>
 
 
@@ -191,6 +192,18 @@
         <div class="alert alert-success alert-dismissible text-left">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Ok!</strong> L'esame è stato lasciato in sospeso
+        </div>
+    </c:if>
+    <c:if test="${param.error == 3}">
+        <div class="alert alert-success alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> La visita è stata compilata con successo
+        </div>
+    </c:if>
+    <c:if test="${param.error == -2}">
+        <div class="alert alert-danger alert-dismissible text-left">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Errore!</strong> C'è stato un problema nel compilare la visita
         </div>
     </c:if>
 </c:if>

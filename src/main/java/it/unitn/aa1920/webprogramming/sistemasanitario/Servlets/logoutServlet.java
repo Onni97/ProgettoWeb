@@ -17,6 +17,10 @@ public class logoutServlet extends javax.servlet.http.HttpServlet {
         codiceFiscaleCoockie.setMaxAge(0);
         resp.addCookie(codiceFiscaleCoockie);
 
+        Cookie sspCookie = new Cookie("ssp", null);
+        sspCookie.setMaxAge(0);
+        resp.addCookie(sspCookie);
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";

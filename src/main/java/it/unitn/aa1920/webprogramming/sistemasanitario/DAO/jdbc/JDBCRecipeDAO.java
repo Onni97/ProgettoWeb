@@ -18,7 +18,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
 
     @Override
     public List<RecipeBean> getRecipesOfUser(String codiceFiscale) throws DAOException {
-        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
+        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.provinciaPrescrizione, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +
                 "       left join visite v on r.codiceVisita = v.codice\n" +
                 "       left join (select esami.*, visite.utente\n" +
@@ -44,6 +44,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 ricetta.setQuantita(result.getInt("quantita"));
                 ricetta.setDescrizioneFarmaco(result.getString("descrizioneFarmaco"));
                 ricetta.setData(result.getTimestamp("data"));
+                ricetta.setProvinciaPrescrizione(result.getString("provinciaPrescrizione"));
                 listaRicette.add(ricetta);
             }
             return listaRicette;
@@ -54,7 +55,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
 
     @Override
     public List<RecipeBean> getRecipesNotTakenOfUser(String codiceFiscale) throws DAOException {
-        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
+        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.provinciaPrescrizione, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +
                 "       left join visite v on r.codiceVisita = v.codice\n" +
                 "       left join (select esami.*, visite.utente\n" +
@@ -80,6 +81,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 ricetta.setQuantita(result.getInt("quantita"));
                 ricetta.setDescrizioneFarmaco(result.getString("descrizioneFarmaco"));
                 ricetta.setData(result.getTimestamp("data"));
+                ricetta.setProvinciaPrescrizione(result.getString("provinciaPrescrizione"));
                 recipeListNotTaken.add(ricetta);
             }
             return recipeListNotTaken;
@@ -90,7 +92,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
 
     @Override
     public List<RecipeBean> getRecipesTakenOfUser(String codiceFiscale) throws DAOException {
-        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
+        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.provinciaPrescrizione, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +
                 "       left join visite v on r.codiceVisita = v.codice\n" +
                 "       left join (select esami.*, visite.utente\n" +
@@ -116,6 +118,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 ricetta.setQuantita(result.getInt("quantita"));
                 ricetta.setDescrizioneFarmaco(result.getString("descrizioneFarmaco"));
                 ricetta.setData(result.getTimestamp("data"));
+                ricetta.setProvinciaPrescrizione(result.getString("provinciaPrescrizione"));
                 recipeListTaken.add(ricetta);
             }
             return recipeListTaken;
@@ -135,15 +138,14 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
     }
 
     @Override
-    public void addRecipe(String farmaco, int quantita, String descrizioneFarmaco, Integer codiceVisita, Integer codiceEsame) throws DAOException {
+    public void addRecipe(String farmaco, int quantita, String descrizioneFarmaco, String provinciaPrescrizione, Integer codiceVisita, Integer codiceEsame) throws DAOException {
         String query = "";
         if (codiceEsame == null)
-            query = "insert into ricette (farmaco, quantita, descrizioneFarmaco, codiceVisita) " +
-                    "values ('" + farmaco + "', " + quantita + ", '" + descrizioneFarmaco + "', " + codiceVisita + ");";
+            query = "insert into ricette (farmaco, quantita, descrizioneFarmaco, provinciaPrescrizione, codiceVisita) " +
+                    "values ('" + farmaco + "', " + quantita + ", '" + descrizioneFarmaco + "', '" + provinciaPrescrizione + "', " + codiceVisita + ");";
         else if (codiceVisita == null)
-            query = "insert into ricette (farmaco, quantita, descrizioneFarmaco, codiceEsame) " +
-                    "values ('" + farmaco + "', " + quantita + ", '" + descrizioneFarmaco + "', " + codiceEsame + ");";
-        System.out.println(query);
+            query = "insert into ricette (farmaco, quantita, descrizioneFarmaco, provinciaPrescrizione, codiceEsame) " +
+                    "values ('" + farmaco + "', " + quantita + ", '" + descrizioneFarmaco + "', '" + provinciaPrescrizione + "', " + codiceEsame + ");";
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
             stmt.executeUpdate(query);
         } catch (SQLException ex) {
@@ -152,8 +154,42 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
     }
 
     @Override
+    public List<RecipeBean> getRecipesPerProvince(String province) throws DAOException {
+        String query = "select * " +
+                "       from ricette " +
+                "       where provinciaPrescrizione = '" + province + "';";
+        List<RecipeBean> listRecipes = new LinkedList<>();
+        try (PreparedStatement stmt = CON.prepareStatement(query)) {
+            ResultSet result = stmt.executeQuery();
+            while(result.next()) {
+                RecipeBean recipe = new RecipeBean();
+
+                recipe.setCodice(result.getInt("codice"));
+                recipe.setFarmaco(result.getString("farmaco"));
+
+                JDBCExamDAO examDAO = new JDBCExamDAO(CON);
+                recipe.setEsame(examDAO.getByPrimaryKey(result.getInt("codiceEsame")));
+
+                JDBCVisitDAO visitDAO = new JDBCVisitDAO(CON);
+                recipe.setVisita(visitDAO.getByPrimaryKey(result.getInt("codiceVisita")));
+
+                recipe.setDataOraEvasa(result.getTimestamp("dataOraEvasa"));
+                recipe.setQuantita(result.getInt("quantita"));
+                recipe.setDescrizioneFarmaco(result.getString("descrizioneFarmaco"));
+                recipe.setData(result.getTimestamp("data"));
+                recipe.setProvinciaPrescrizione(result.getString("provinciaPrescrizione"));
+
+                listRecipes.add(recipe);
+            }
+            return listRecipes;
+        } catch (SQLException ex) {
+            throw new DAOException("Error", ex);
+        }
+    }
+
+    @Override
     public RecipeBean getByPrimaryKey(Integer codiceRicetta) throws DAOException {
-        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
+        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.provinciaPrescrizione r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +
                 "       left join visite v on r.codiceVisita = v.codice\n" +
                 "       left join (select esami.*, visite.utente\n" +
@@ -179,6 +215,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
                 ricetta.setQuantita(result.getInt("quantita"));
                 ricetta.setData(result.getTimestamp("data"));
                 ricetta.setDescrizioneFarmaco(result.getString("descrizioneFarmaco"));
+                ricetta.setProvinciaPrescrizione(result.getString("provinciaPrescrizione"));
             }
             return ricetta;
         } catch (SQLException ex) {

@@ -70,15 +70,24 @@
         </div>
         <div id="DetailContent">
             <p class="mainText">Referto: <label>
-                <input type="text" name="referto" value="${requestScope.exam.referto}" placeholder="referto"/></label>
+                <input required type="text" name="referto" value="${requestScope.exam.referto}" placeholder="referto"/></label>
             </p>
             <p class="mainText">Ticket: <label>
-                <input type="number" step='0.01' name="ticket" value="${requestScope.exam.ticket}"
+                <input required type="number" step='0.01' name="ticket" value="${requestScope.exam.ticket}"
                        placeholder="ticket"/></label>€</p>
             <input type="hidden" name="codice" value="<c:out value="${requestScope.exam.codice}"/>"/>
             <div style="width: 100%">
-                <input class="btn btn-success" type="submit" name="chiudi" value="Chiudi Esame">
-                <input class="btn btn-success" type="submit" name="lasciaInSospeso" value="Lascia in Sospeso">
+
+                <div class="row">
+                    <div class="col">
+                        <button type="button" id="buttonAddRecipe" class="btn btn-info" style="margin-bottom: 1em">
+                            <i class="fas fa-plus" style="margin-right: 0.5em"></i>Prescrivi Ricetta
+                        </button>
+                    </div>
+                </div>
+
+                <input style="margin-bottom: 0.3em;" class="btn btn-success" type="submit" name="chiudi" value="Chiudi Esame">
+                <input style="margin-bottom: 0.3em;" class="btn btn-success" type="submit" name="lasciaInSospeso" value="Lascia in Sospeso">
             </div>
             <span class="index">#<c:out value="${requestScope.exam.codice}"/></span>
         </div>
@@ -87,4 +96,46 @@
 
 
 </body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        //FUNZIONI PER AGGIUNGERE ESAMI/RICETTE
+        var counterRecipe = 0;
+        var inputRecipe = function (recipe) {
+            return "<div class='divAddOther'>\n" +
+                "            Farmaco:<br/>\n" +
+                "            <label>\n" +
+                "                <input required class='form-control-sm' type=\"text\" name=\"ricettaFarmaco" + recipe + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            Quantità:<br/>\n" +
+                "            <label>\n" +
+                "                <input required class='form-control-sm' type=\"number\" name=\"ricettaQuantita" + recipe + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            Descrizione Farmaco:<br/>\n" +
+                "            <label>\n" +
+                "                <input class='form-control-sm' type=\"text\" name=\"ricettaDescrizione" + recipe + "\"/>\n" +
+                "            </label><br/>\n" +
+                "            <button type=\"button\" class=\"btn btn-danger my-auto dismiss\">\n" +
+                "                <i class=\"fas fa-minus\" aria-hidden=\"true\"></i>\n" +
+                "            </button>\n" +
+                "        </div>";
+        };
+        $('#buttonAddRecipe').on("click", function (event) {
+            var button = $(event.currentTarget);
+            button.after(inputRecipe(counterRecipe));
+            counterRecipe++;
+        });
+
+        $(document).on("click", ".dismiss", function (event) {
+            $(event.currentTarget).parent().remove();
+        });
+
+
+        $('.select2').select2();
+
+
+    });
+</script>
 </html>

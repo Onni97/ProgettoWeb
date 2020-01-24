@@ -302,6 +302,13 @@ body {
     padding-left: 1em;
 }
 
+#colonnaFatti {
+    background-color: white;
+}
+
+#colonnaTicket {
+    background-color: white;
+}
 .rowVisita {
     width: 100%;
 }

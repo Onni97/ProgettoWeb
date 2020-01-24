@@ -183,7 +183,7 @@
                                 value="${requestScope.visitsList[counterVisits].codice}"/></span>
                         </div>
                     </div>
-                    <c:set scope="page" var="counterVisit" value="${counterVisits+1}"/>
+                    <c:set scope="page" var="counterVisits" value="${counterVisits+1}"/>
                 </c:when>
                 <c:when test="${toStamp == 2}">
                     <!-- stampo l'esame -->

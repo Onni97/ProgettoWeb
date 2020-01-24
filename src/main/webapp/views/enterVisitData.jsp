@@ -40,7 +40,7 @@
         <input type="hidden" name="dateTime" value="${nowDay} ${nowTime}"/>
         <label>
             Descrizione: <br/>
-            <textarea name="description" form="formCompileVisit"></textarea>
+            <textarea name="description" form="formCompileVisit" required></textarea>
         </label><br/>
 
 
@@ -72,17 +72,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+
+        //FUNZIONI PER AGGIUNGERE ESAMI/RICETTE
         var counterExam = 0;
         var counterRecipe = 0;
         var inputExam = function (exam) {
             var toRtn = "<div class='divAddOther'>\n" +
                 "            Data e ora:<br/>\n" +
                 "            <label>\n" +
-                "                <input class='form-control-sm' type=\"date\" name=\"esameData" + exam + "\"/> <input class='form-control-sm' type=\"time\" name=\"esameOra" + exam + "\"/>\n" +
+                "                <input required class='form-control-sm' type=\"date\" name=\"esameData" + exam + "\"/> <input required class='form-control-sm' type=\"time\" name=\"esameOra" + exam + "\"/>\n" +
                 "            </label><br/>\n" +
                 "            Medico:<br/>\n" +
                 "            <label>\n" +
-                "                <select class='form-control-sm' name='esameMedico'>";
+                "                <select required class='form-control-sm' name='esameMedico" + counterExam + "'>";
 
             <c:forEach items="${requestScope.doctorsOfProvince}" var="doctor">
             toRtn += "<option>" +
@@ -95,7 +97,7 @@
                 "            </label><br/>\n" +
                 "            Tipo Esame:<br/>\n" +
                 "            <label>\n" +
-                "                <select class='form-control-sm select2' name=\"esameTipo" + exam + "\">\n";
+                "                <select required class='form-control-sm select2' name=\"esameTipo" + exam + "\">\n";
 
             <c:set var="prevCategory" scope="page" value=""/>
             <c:forEach items="${requestScope.examTypes}" var="examType">
@@ -129,11 +131,11 @@
             return "<div class='divAddOther'>\n" +
                 "            Farmaco:<br/>\n" +
                 "            <label>\n" +
-                "                <input class='form-control-sm' type=\"text\" name=\"ricettaFarmaco" + recipe + "\"/>\n" +
+                "                <input required class='form-control-sm' type=\"text\" name=\"ricettaFarmaco" + recipe + "\"/>\n" +
                 "            </label><br/>\n" +
                 "            Quantità:<br/>\n" +
                 "            <label>\n" +
-                "                <input class='form-control-sm' type=\"number\" name=\"ricettaQuantita" + recipe + "\"/>\n" +
+                "                <input required class='form-control-sm' type=\"number\" name=\"ricettaQuantita" + recipe + "\"/>\n" +
                 "            </label><br/>\n" +
                 "            Descrizione Farmaco:<br/>\n" +
                 "            <label>\n" +
@@ -145,7 +147,6 @@
                 "        </div>";
         };
 
-        //FUNZIONI PER AGGIUNGERE ESAMI/RICETTE
         $('#buttonAddExam').on("click", function (event) {
             var button = $(event.currentTarget);
             button.after(inputExam(counterExam));

@@ -101,6 +101,12 @@
         <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.fillPatientForVisit</filter-class>
     </filter>
 
+    <filter>
+        <filter-name>checkIfSspLogged</filter-name>
+        <filter-class>it.unitn.aa1920.webprogramming.sistemasanitario.Filters.checkIfSspLogged</filter-class>
+    </filter>
+
+
 
 
 
@@ -119,11 +125,6 @@
     <filter-mapping>
         <filter-name>fillUserData</filter-name>
         <url-pattern>/userPage</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>checkIfNotLogged</filter-name>
-        <url-pattern>/logoutServlet</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
@@ -306,6 +307,11 @@
         <url-pattern>/enterVisitDataServlet</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>checkIfSspLogged</filter-name>
+        <url-pattern>/sspPage</url-pattern>
+    </filter-mapping>
+
 
 
 
@@ -430,6 +436,11 @@
         <servlet-class>it.unitn.aa1920.webprogramming.sistemasanitario.Servlets.enterVisitDataServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>sspPage</servlet-name>
+        <jsp-file>/views/sspPage.jsp</jsp-file>
+    </servlet>
+
 
 
 
@@ -549,6 +560,11 @@
     <servlet-mapping>
         <servlet-name>enterVisitDataServlet</servlet-name>
         <url-pattern>/enterVisitDataServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>sspPage</servlet-name>
+        <url-pattern>/sspPage</url-pattern>
     </servlet-mapping>
 
 

@@ -171,7 +171,6 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
     public void addExam(String dataOraFissata, int codiceVisita, int medico, String tipo) throws DAOException {
         String query = "insert into esami (dataOraFissata, codiceVisita, medico, tipo) " +
                 "values ('" + dataOraFissata + "', " + codiceVisita + ", " + medico + ", '" + tipo + "');";
-        System.out.println(query);
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
             stmt.executeUpdate(query);
         } catch (SQLException ex) {

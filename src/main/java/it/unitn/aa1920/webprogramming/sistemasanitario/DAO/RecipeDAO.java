@@ -14,5 +14,7 @@ public interface RecipeDAO extends DAO<RecipeBean, Integer> {
 
     RecipeBean getLastRecipeOfUser(String codiceFiscale) throws DAOException;
 
-    void addRecipe(String farmaco, int quantita, String descrizioneFarmaco, Integer codiceVisita, Integer codiceEsame) throws DAOException;
+    void addRecipe(String farmaco, int quantita, String descrizioneFarmaco, String provinciaPrescrizione, Integer codiceVisita, Integer codiceEsame) throws DAOException;
+
+    List<RecipeBean> getRecipesPerProvince(String province) throws DAOException;
 }
