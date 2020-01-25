@@ -7,7 +7,6 @@
     <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleUserPage.css">
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleSsp.css">
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
             integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
@@ -30,8 +29,11 @@
 
 <div class="row" id="mainPage">
     <div class="col my-auto">
-        <h1 style="margin-bottom: 1em">Servizio Sanitario Provinciale</h1>
-        <button class="btn btn-success">Stampa</button>
+        <h1 style="margin-bottom: 1em">Servizio Sanitario Provinciale - ${sessionScope.ssp}</h1>
+        <button class="btn btn-success"
+                onclick="window.open('${pageContext.request.contextPath}/recipesPerProvinceXML','_parent')">
+            Download XML
+        </button>
     </div>
 </div>
 

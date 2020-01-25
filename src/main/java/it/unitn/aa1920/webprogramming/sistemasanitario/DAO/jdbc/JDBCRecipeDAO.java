@@ -155,9 +155,14 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
 
     @Override
     public List<RecipeBean> getRecipesPerProvince(String province) throws DAOException {
-        String query = "select * " +
-                "       from ricette " +
-                "       where provinciaPrescrizione = '" + province + "';";
+        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.codiceEsame, r.provinciaPrescrizione, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
+                "       from ricette r\n" +
+                "       left join visite v on r.codiceVisita = v.codice\n" +
+                "       left join (select esami.*, visite.utente\n" +
+                "                  from esami, visite\n" +
+                "                  where esami.codiceVisita = visite.codice) e on r.codiceEsame = e.codice\n" +
+                "       where r.provinciaPrescrizione = '" + province + "' " +
+                "       order by data DESC ";
         List<RecipeBean> listRecipes = new LinkedList<>();
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
             ResultSet result = stmt.executeQuery();

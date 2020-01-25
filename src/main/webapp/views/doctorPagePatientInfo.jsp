@@ -306,7 +306,6 @@
 
         $('#buttonCompilaVisita').on("click", function (event) {
             var cfPatient = $(event.currentTarget).find('.cfPatient').text();
-            console.log("${pageContext.request.contextPath}/enterVisitData?cfPatient=" + cfPatient);
             $.ajax({
                 url: "${pageContext.request.contextPath}/enterVisitData?cfPatient=" + cfPatient,
                 type: 'get',
