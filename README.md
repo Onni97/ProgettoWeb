@@ -12,7 +12,7 @@ Progetto per il corso di Introduzione alla programmazione per il web
  
  
 
-####Gruppo LATEOTT:
+#### Gruppo LATEOTT:
 [Alessandro Oniarti](https://github.com/Onni97) - 185585
 
 [Gianluca Mazzucchi](https://github.com/gmazzu97) - 186379
