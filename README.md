@@ -9,8 +9,8 @@ Progetto per il corso di Introduzione alla programmazione per il web
 * Tutti i file relativi al progetto sono nella cartella `src` e nelle varie
  sottocartelle
  * Il file pom.xml è nella main directory 
-
-<br/>
+ 
+ 
 
 ####Gruppo LATEOTT:
 [Alessandro Oniarti](https://github.com/Onni97) - 185585
