@@ -160,6 +160,7 @@ public class JDBCExamDAO extends JDBCDAO<ExamBean, Integer> implements ExamDAO {
         String query = "update esami " +
                 "set dataOraFissata = '" + stringDataOraFissata + "', referto = '" + referto + "', ticket = " + ticket + ", fatto = " + chiudi + " " +
                 "where codice = " + codice;
+        System.out.println(query);
         try (PreparedStatement statement = CON.prepareStatement(query)) {
             statement.executeUpdate(query);
         } catch (SQLException ex) {

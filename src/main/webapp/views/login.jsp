@@ -3,19 +3,17 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
+    <c:if test="${cookie['user'].value != null }">
+        <meta http-equiv="refresh" content="0; url = ${pageContext.request.contextPath}/userPage"/>
+    </c:if>
+
     <title>Sistema sanitario</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.4.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/styleLogin.css">
-    <meta
-            name='viewport'
-            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-    />
-
-    <c:if test="${cookie['user'].value != null }">
-        <meta http-equiv="refresh" content="0; url = ${pageContext.request.contextPath}/userPage"/>
-    </c:if>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/icon/logo.ico" />
 </head>
 
 <c:if test="${cookie['user'].value == null }">
@@ -88,6 +86,18 @@
                 <div class="alert alert-danger alert-dismissible text-left">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Errore!</strong> Non riesco a connettermi al db
+                </div>
+            </c:if>
+            <c:if test="${param.error == -4}">
+                <div class="alert alert-danger alert-dismissible text-left">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Errore!</strong> Non sei un Ssp
+                </div>
+            </c:if>
+            <c:if test="${param.error == -5}">
+                <div class="alert alert-danger alert-dismissible text-left">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Errore!</strong> Non sei un utente
                 </div>
             </c:if>
         </c:if>

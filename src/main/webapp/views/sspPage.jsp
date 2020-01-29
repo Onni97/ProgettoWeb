@@ -14,8 +14,10 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/icon/logo.ico" />
 </head>
-<body>
+
+<body id="body" style="visibility: hidden">
 <nav id="navBar" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
     <div class="container-fluid" style="justify-content: right">
         <form class="form-inline my-2 my-lg-0 float-right justify-content-right my-auto" action="logoutServlet"
@@ -38,4 +40,11 @@
 </div>
 
 </body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //RENDO L'INTERA PAGINA VISIBILE
+        document.getElementById("body").style.visibility = "visible";
+    });
+</script>
 </html>

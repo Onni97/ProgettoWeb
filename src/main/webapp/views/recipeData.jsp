@@ -32,7 +32,9 @@
 <div id="DetailContent" style="text-align: center;">
     <p class="mainText"><c:out value="${requestScope.recipe.quantita}"/> x <c:out
             value="${requestScope.recipe.farmaco}"/></p>
-    <p class="mainText">Descrizione farmaco: <c:out value="${requestScope.recipe.descrizioneFarmaco}"/></p>
+    <c:if test="${requestScope.recipe.descrizioneFarmaco != ''}">
+        <p class="mainText">Descrizione farmaco: <c:out value="${requestScope.recipe.descrizioneFarmaco}"/></p>
+    </c:if>
     <c:if test="${requestScope.isThePatient}">
         <button class="btn btn-info" style="margin-right: 2em"
                 onclick="window.open('${pageContext.request.contextPath}/recipePDF?id=${requestScope.recipe.codice}','_blank')">

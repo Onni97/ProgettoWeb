@@ -113,7 +113,7 @@
             <c:forEach items="${requestScope.examList}" var="exam">
                 <fmt:formatDate value="${exam.dataOraFissata}" pattern="yyyy/MM/d" var="examDate"/>
                 <fmt:formatDate value="${now}" pattern="yyyy/MM/d" var="today"/>
-                <c:if test="${examDate eq today}">
+                <c:if test="${examDate eq today && not exam.fatto}">
                     <div class="col-sm">
                         <div class="scheda">
                             <div class="schedaHeader">

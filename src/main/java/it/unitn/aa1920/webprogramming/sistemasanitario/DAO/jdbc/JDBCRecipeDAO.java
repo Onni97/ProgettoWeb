@@ -194,7 +194,7 @@ public class JDBCRecipeDAO extends JDBCDAO<RecipeBean, Integer> implements Recip
 
     @Override
     public RecipeBean getByPrimaryKey(Integer codiceRicetta) throws DAOException {
-        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.provinciaPrescrizione r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
+        String query = "select r.codice, r.farmaco, r.quantita, r.codiceVisita, r.provinciaPrescrizione, r.codiceEsame, r.dataOraEvasa, r.descrizioneFarmaco, IF(v.dataOra is null, e.dataOraFissata, v.dataOra) as data\n" +
                 "       from ricette r\n" +
                 "       left join visite v on r.codiceVisita = v.codice\n" +
                 "       left join (select esami.*, visite.utente\n" +

@@ -22,7 +22,9 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         LOGIN_OK_AS_DOCTOR,
         LOGIN_OK_AS_USER,
         LOGIN_WRONG,
-        LOGIN_OK_AS_SSP
+        LOGIN_OK_AS_SSP,
+        LOGIN_OK_BUT_NOT_SSP,
+        LOGIN_OK_BUT_NOT_USER
     }
 
     private UserDAO userDAO;
@@ -48,58 +50,53 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         HttpSession session = req.getSession(true);
         String utente = req.getParameter("utente");
         String password = req.getParameter("password");
-        String userLogin = req.getParameter("user");
-        String sspLogin = req.getParameter("ssp");
         String rememberMe = req.getParameter("rememberMe");
+
+        boolean userLogin = false, sspLogin = false, doctorLogin = false;
+        if (req.getParameter("user") != null ) userLogin = true;
+        if (req.getParameter("doctor") != null ) doctorLogin = true;
+        if (req.getParameter("ssp") != null ) sspLogin = true;
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
         try {
-            boolean status = userDAO.checkUserPassword(utente.toUpperCase(), password);
-            LoginStatus loginOk;
+            boolean statusUser = userDAO.checkUserPassword(utente.toUpperCase(), password);
+            boolean statusSsp = sspDAO.checkSspPassword(utente, password);
+            LoginStatus loginAs = LoginStatus.LOGIN_WRONG;
 
-            if (status) {
-                UserBean user = userDAO.getByPrimaryKey(utente);
-
-                //login ok
-                if (userLogin == null) {
-                    //cerco di fare il login come medico
-                    if (user.getIsDoctor()) {
-                        //login ok come medico
-                        loginOk = LoginStatus.LOGIN_OK_AS_DOCTOR;
-                    } else {
-                        //login ok ma non è un medico
-                        loginOk = LoginStatus.LOGIN_OK_BUT_NOT_DOCTOR;
-                    }
-                } else {
-                    //login ok come utente
-                    loginOk = LoginStatus.LOGIN_OK_AS_USER;
-                }
-            } else {
-                //controllo se ha fatto il login come ssp
-                if (sspLogin != null) {
-                    if (sspDAO.checkSspPassword(utente, password)) {
-                        loginOk = LoginStatus.LOGIN_OK_AS_SSP;
-                    } else {
-                        //login errato
-                        loginOk = LoginStatus.LOGIN_WRONG;
-                    }
-                } else {
-                    //login errato
-                    loginOk = LoginStatus.LOGIN_WRONG;
-                }
-
+            if (userLogin) {
+                //cerco di fare il login come utente
+                if (statusUser)
+                    loginAs = LoginStatus.LOGIN_OK_AS_USER;
+                else if (statusSsp)
+                    loginAs = LoginStatus.LOGIN_OK_BUT_NOT_USER;
+            } else if (doctorLogin) {
+                //cerco di fare il login come medico
+                if (statusUser) {
+                    UserBean user = userDAO.getByPrimaryKey(utente);
+                    boolean isDoctor = user.getIsDoctor();
+                    if (isDoctor)
+                        loginAs = LoginStatus.LOGIN_OK_AS_DOCTOR;
+                    else
+                        loginAs = LoginStatus.LOGIN_OK_BUT_NOT_DOCTOR;
+                } else if (statusSsp)
+                    loginAs = LoginStatus.LOGIN_OK_BUT_NOT_DOCTOR;
+            } else if (sspLogin) {
+                if (statusSsp)
+                    loginAs = LoginStatus.LOGIN_OK_AS_SSP;
+                else if (statusUser)
+                    loginAs = LoginStatus.LOGIN_OK_BUT_NOT_SSP;
             }
 
 
-            if (loginOk == LoginStatus.LOGIN_OK_BUT_NOT_DOCTOR) {
+            if (loginAs == LoginStatus.LOGIN_OK_BUT_NOT_DOCTOR) {
                 //login ok ma non è un dotore
                 System.out.println("NON SEI UN DOTTORE");
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "login?error=-2"));
 
-            } else if (loginOk == LoginStatus.LOGIN_OK_AS_DOCTOR) {
+            } else if (loginAs == LoginStatus.LOGIN_OK_AS_DOCTOR) {
                 //login ok come medico
                 System.out.println("LOGIN OK COME MEDICO");
                 session.setAttribute("codiceFiscale", utente.toUpperCase());
@@ -117,7 +114,7 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
 
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "doctorPage"));
 
-            } else if (loginOk == LoginStatus.LOGIN_OK_AS_USER) {
+            } else if (loginAs == LoginStatus.LOGIN_OK_AS_USER) {
                 //login ok come utente
                 System.out.println("LOGIN OK COME UTENTE");
                 session.setAttribute("codiceFiscale", utente.toUpperCase());
@@ -135,12 +132,12 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
 
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "userPage"));
 
-            } else if (loginOk == LoginStatus.LOGIN_WRONG){
+            } else if (loginAs == LoginStatus.LOGIN_WRONG) {
                 //login errato
                 System.out.println("PASSWORD SBAGLIATA");
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "login?error=-1"));
 
-            } else {
+            } else if (loginAs == LoginStatus.LOGIN_OK_AS_SSP){
                 //login ok come ssp
                 System.out.println("LOGIN OK COME SSP");
                 session.setAttribute("ssp", utente.toUpperCase());
@@ -156,6 +153,14 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
                 }
 
                 resp.sendRedirect(resp.encodeRedirectURL(contextPath + "sspPage"));
+            } else if (loginAs == LoginStatus.LOGIN_OK_BUT_NOT_SSP) {
+                //login ok ma non sei un ssp
+                System.out.println("NON SEI UN SSP");
+                resp.sendRedirect(resp.encodeRedirectURL(contextPath + "login?error=-4"));
+            } else {
+                //login ok ma non sei un utente
+                System.out.println("NON SEI UN UTENTE");
+                resp.sendRedirect(resp.encodeRedirectURL(contextPath + "login?error=-5"));
             }
         } catch (DAOException e) {
             System.out.println("500, non riesco a comunicare con il db");

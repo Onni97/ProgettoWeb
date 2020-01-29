@@ -52,7 +52,7 @@ public class JDBCUserDAO extends JDBCDAO<UserBean, String> implements UserDAO {
 
     @Override
     public boolean checkUserPassword(String codiceFiscale, String password) throws DAOException {
-        String query = "select * from utenti where codiceFiscale = '" + codiceFiscale + "' and BINARY password = '" + password + "'";
+        String query = "select * from utenti where codiceFiscale = '" + codiceFiscale + "' and BINARY password = md5('" + password + "')";
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
                 ResultSet result = stmt.executeQuery();
             return result.next();
@@ -105,7 +105,7 @@ public class JDBCUserDAO extends JDBCDAO<UserBean, String> implements UserDAO {
     @Override
     public void changeUserPassword(String codiceFiscale, String newPassword) throws DAOException {
         String query = "update utenti " +
-                "set password = '" + newPassword + "'" +
+                "set password = md5('" + newPassword + "')" +
                 "where codiceFiscale = '" + codiceFiscale + "'";
         try (PreparedStatement stmt = CON.prepareStatement(query)) {
             stmt.executeUpdate(query);

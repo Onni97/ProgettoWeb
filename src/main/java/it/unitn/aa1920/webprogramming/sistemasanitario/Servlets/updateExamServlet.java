@@ -60,7 +60,7 @@ public class updateExamServlet extends HttpServlet {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
             Date dataOra = formatter.parse(stringDataOra);
-            String referto = request.getParameter("referto");
+            String referto = request.getParameter("referto").replace("'", "\\'");
             float ticket = Float.parseFloat(request.getParameter("ticket"));
             String chiudi = request.getParameter("chiudi");
 
